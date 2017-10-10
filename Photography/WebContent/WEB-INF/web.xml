@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Photography</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+<!-- 连接池 -->
+	  <resource-ref>
+		<!-- JDNI资源名 -->
+	  	<res-ref-name>jdbc/OraclePhotography</res-ref-name>
+		<!-- 资源类型 -->
+	  	<res-type>javax.sql.DataSource</res-type>
+		<!-- 资源范围 -->
+	  	<res-auth>Container</res-auth>
+	  </resource-ref>
+<!-- /连接池 -->
+
+<!-- 乱码处理 -->
+	<filter>
+		<filter-name>CharacterEncoding</filter-name>
+		<filter-class>com.da.Photography.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+<!-- /乱码处理 -->
+	
+	
+	
+	
+	
+	
+	
+	
+<!-- 用户管理 -->
+	<!-- 注册 -->
+	<servlet>
+		<servlet-name>Register</servlet-name>
+		<servlet-class>com.da.Photography.control.RegisterServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Register</servlet-name>
+		<url-pattern>/Register</url-pattern>
+	</servlet-mapping>
+	<!-- 登录 -->
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>com.da.Photography.control.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/Login</url-pattern>
+	</servlet-mapping>
+	<!-- 注销 -->
+	<servlet>
+		<servlet-name>LoginOut</servlet-name>
+		<servlet-class>com.da.Photography.control.LoginOutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginOut</servlet-name>
+		<url-pattern>/LoginOut</url-pattern>
+	</servlet-mapping>
+	<!-- 签到 -->
+	<servlet>
+		<servlet-name>LignDay</servlet-name>
+		<servlet-class>com.da.Photography.control.SignInServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LignDay</servlet-name>
+		<url-pattern>/LignDay</url-pattern>
+	</servlet-mapping>
+	<!-- 查询所有用户 -->
+	<servlet>
+		<servlet-name>AllUsers</servlet-name>
+		<servlet-class>com.da.Photography.control.GetAllUsersServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AllUsers</servlet-name>
+		<url-pattern>/AllUsers</url-pattern>
+	</servlet-mapping>
+	<!-- 删除用户 -->
+	<servlet>
+		<servlet-name>DeleteUser</servlet-name>
+		<servlet-class>com.da.Photography.control.DeleteUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteUser</servlet-name>
+		<url-pattern>/DeleteUser</url-pattern>
+	</servlet-mapping>
+	<!-- 修改用户信息 -->
+	<servlet>
+		<servlet-name>AlterUser</servlet-name>
+		<servlet-class>com.da.Photography.control.UpdateUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AlterUser</servlet-name>
+		<url-pattern>/AlterUser</url-pattern>
+	</servlet-mapping>
+<!-- /用户管理 -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 专辑管理 -->
+	<!-- 查询所有专辑 -->
+	<servlet>
+		<servlet-name>AllAblums</servlet-name>
+		<servlet-class>com.da.Photography.control.GetAllAblumsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AllAblums</servlet-name>
+		<url-pattern>/AllAblums</url-pattern>
+	</servlet-mapping>
+	<!-- 创建专辑 -->
+	<servlet>
+		<servlet-name>AddAbums</servlet-name>
+		<servlet-class>com.da.Photography.control.AddAlbumsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddAbums</servlet-name>
+		<url-pattern>/AddAbums</url-pattern>
+	</servlet-mapping>
+	<!-- 查看图片 -->
+	<servlet>
+		<servlet-name>getPic</servlet-name>
+		<servlet-class>com.da.Photography.control.getPicServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getPic</servlet-name>
+		<url-pattern>/getPic</url-pattern>
+	</servlet-mapping>
+	<!-- 修改图片 -->
+	<servlet>
+		<servlet-name>UpdatePic</servlet-name>
+		<servlet-class>com.da.Photography.control.UpdatePicServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdatePic</servlet-name>
+		<url-pattern>/UpdatePic</url-pattern>
+	</servlet-mapping>
+	<!-- 查询专辑 -->
+	<servlet>
+		<servlet-name>GetAlbum</servlet-name>
+		<servlet-class>com.da.Photography.control.GetAlbumsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetAlbum</servlet-name>
+		<url-pattern>/GetAlbum</url-pattern>
+	</servlet-mapping>
+	<!-- 修改专辑信息 -->
+	<servlet>
+		<servlet-name>UpdateAlbums</servlet-name>
+		<servlet-class>com.da.Photography.control.UpdateAlbumsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateAlbums</servlet-name>
+		<url-pattern>/UpdateAlbums</url-pattern>
+	</servlet-mapping>
+	<!-- 删除专辑 -->
+	<servlet>
+		<servlet-name>DeleteAlbums</servlet-name>
+		<servlet-class>com.da.Photography.control.DeleteAlnumsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteAlbums</servlet-name>
+		<url-pattern>/DeleteAlbums</url-pattern>
+	</servlet-mapping>
+<!-- /专辑管理 -->
+
+<!-- 查询条数 -->
+	<servlet>
+		<servlet-name>QueryCount</servlet-name>
+		<servlet-class>com.da.Photography.control.GetCountServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>QueryCount</servlet-name>
+		<url-pattern>/QueryCount</url-pattern>
+	</servlet-mapping>
+
+
+
+
+
+
+
+
+
+
+<!-- 图片管理 -->
+	<!-- 查询专辑内所有图片 -->
+	<servlet>
+		<servlet-name>QueryAlbumsPicture</servlet-name>
+		<servlet-class>com.da.Photography.control.GetAlbumsPictureServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>QueryAlbumsPicture</servlet-name>
+		<url-pattern>/QueryAlbumsPicture</url-pattern>
+	</servlet-mapping>
+	<!-- 添加图片信息 -->
+	<servlet>
+		<servlet-name>AddPicture</servlet-name>
+		<servlet-class>com.da.Photography.control.AddPictureServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddPicture</servlet-name>
+		<url-pattern>/AddPicture</url-pattern>
+	</servlet-mapping>
+	<!-- 查询图片信息 -->
+	<servlet>
+		<servlet-name>QueryPicture</servlet-name>
+		<servlet-class>com.da.Photography.control.GetPictureServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>QueryPicture</servlet-name>
+		<url-pattern>/QueryPicture</url-pattern>
+	</servlet-mapping>
+	<!-- 修改图片信息 -->
+	<servlet>
+		<servlet-name>AlterPicture</servlet-name>
+		<servlet-class>com.da.Photography.control.UpdatePictureServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AlterPicture</servlet-name>
+		<url-pattern>/AlterPicture</url-pattern>
+	</servlet-mapping>
+	<!-- 删除图片 -->
+	<servlet>
+		<servlet-name>DeletePicture</servlet-name>
+		<servlet-class>com.da.Photography.control.DeletePictureServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeletePicture</servlet-name>
+		<url-pattern>/DeletePicture</url-pattern>
+	</servlet-mapping>
+	
+<!-- /图片管理 -->
+  
+</web-app>
