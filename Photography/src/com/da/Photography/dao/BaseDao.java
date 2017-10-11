@@ -1,6 +1,7 @@
 package com.da.Photography.dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ public class BaseDao {
 	public final static String JNDI_NAME="java:comp/env/jdbc/OraclePhotography";
 	
 	public void beginTran(){
-		getConn(JNDI_NAME);
+		getConn();
 		try {
 			conn.setAutoCommit(false);
 		} catch (SQLException e) {
@@ -62,6 +63,21 @@ public class BaseDao {
 			e.printStackTrace();
 		} catch (NamingException e) {
 			Log.LOGGER.debug("数据库连接池失败"  + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 数据库连接
+	 */
+	public void getConn(){
+		try {
+			DbInfo db = DbInfo.getInstance();
+			if(conn == null || conn.isClosed()){
+				Class.forName(db.getDriver());
+				conn = DriverManager.getConnection(db.getUrl(), db.getName(), db.getPwd());
+			}
+		} catch (Exception e) {
+			Log.LOGGER.debug("数据库连接失败"  + e.getMessage());
 			e.printStackTrace();
 		}
 	}

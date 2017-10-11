@@ -48,6 +48,7 @@ public class GetAllAblumsServlet extends HttpServlet{
 					if(!user.getU_role().equals("0")) {
 						request.setAttribute("result", "请登录管理员账户");
 						request.getRequestDispatcher("login.jsp").forward(request, response);
+						return;
 					}
 				}
 				AlbumsBiz aBiz = new AlbumsBiz();

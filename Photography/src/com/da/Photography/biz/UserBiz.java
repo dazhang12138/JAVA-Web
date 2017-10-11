@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.da.Photography.dto.Apply;
 import com.da.Photography.dto.User;
 import com.da.Photography.dao.UserDao;
 import com.da.Photography.util.Log;
@@ -67,6 +68,7 @@ public class UserBiz {
 		uDao.beginTran();
 		try {
 			flag = uDao.queryUserUnameByUname(uname);
+			uDao.commitTran();
 		} catch (SQLException e) {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("检测用户名失败 : "  +e.getMessage());
@@ -76,7 +78,12 @@ public class UserBiz {
 		}
 		return flag;
 	}
-	
+	/**
+	 * 签到
+	 * @param u_id
+	 * @param u_price
+	 * @return
+	 */
 	public int signIn(int u_id, int u_price) {
 		int result = 0;
 		int price = u_price;
@@ -119,6 +126,8 @@ public class UserBiz {
 				int flag = uDao.updateUserLignDay(u_id, result, price); //更新用户签到信息
 				if(flag == 0) {
 					price = u_price;
+				}else {
+					flag = uDao.recordDown(u_id, (price-u_price)); //更新用户签到信息
 				}
 			}
 			uDao.commitTran();
@@ -199,6 +208,179 @@ public class UserBiz {
 		} catch (SQLException e) {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("删除用户失败 : "  +e.getMessage());
+			e.printStackTrace();
+		}finally {
+			uDao.closeAll();
+		}
+		return flag;
+	}
+	/**
+	 * 验证注册邮箱不能重复、通过邮箱找回密码
+	 * @param email
+	 * @return
+	 */
+	public User detecUserEmail(String email) {
+		User user = null;
+		UserDao uDao = new UserDao();
+		uDao.beginTran();
+		try {
+			user = uDao.queryUserUnameByEmail(email);
+			uDao.commitTran();
+		} catch (SQLException e) {
+			uDao.rollbackTran();
+			Log.LOGGER.debug("检测邮箱失败 : "  +e.getMessage());
+			e.printStackTrace();
+		}finally {
+			uDao.closeAll();
+		}
+		return user;
+	}
+	/**
+	 * 申请权限
+	 * @param u_id
+	 * @return
+	 */
+	public boolean applyForAdmin(int u_id) {
+		boolean flag = true;
+		UserDao uDao = new UserDao();
+		uDao.beginTran();
+		try {
+			int result = uDao.applyForAdmin(u_id);
+			if(result != 0)
+				flag = true;
+			uDao.commitTran();
+		} catch (SQLException e) {
+			uDao.rollbackTran();
+			Log.LOGGER.debug("申请权限失败 : "  +e.getMessage());
+			e.printStackTrace();
+		}finally {
+			uDao.closeAll();
+		}
+		return flag;
+	}
+	/**
+	 * 查询所有的管理员申请
+	 * @return
+	 */
+	public List<Apply> queryAllApply() {
+		List<Apply> applys = new ArrayList<>();
+		UserDao uDao = new UserDao();
+		uDao.beginTran();
+		try {
+			applys = uDao.queryAllApply();
+			uDao.commitTran();
+		} catch (SQLException e) {
+			uDao.rollbackTran();
+			Log.LOGGER.debug("查询管理员申请失败 : "  +e.getMessage());
+			e.printStackTrace();
+		}finally {
+			uDao.closeAll();
+		}
+		return applys;
+	}
+	/**
+	 * 用户充值
+	 * @param uname
+	 * @param num
+	 * @return
+	 */
+	public boolean rechargeUser(String uname, String num) {
+		boolean flag = true;
+		UserDao uDao = new UserDao();
+		uDao.beginTran();
+		try {
+			double money = Integer.valueOf(num);
+			if(money <= 10) {
+				money *= 1.01;
+			}else if(money <= 50) {
+				money *= 1.05;
+			}else if(money <= 100) {
+				money *= 1.1;
+			}else if(money <= 500) {
+				money *= 1.15;
+			}else {
+				money *= 1.2;
+			}
+			int result = uDao.rechargeUser(uname,money);
+			if(result != 0)
+				flag = true;
+			uDao.commitTran();
+		} catch (SQLException e) {
+			uDao.rollbackTran();
+			Log.LOGGER.debug("充值失败 : "  +e.getMessage());
+			e.printStackTrace();
+		}finally {
+			uDao.closeAll();
+		}
+		return flag;
+	}
+	/**
+	 * 用户积分兑换
+	 * @param u_id
+	 * @param price
+	 * @param money 
+	 * @return
+	 */
+	public boolean updatePriceUserByid(int u_id, int price, int money) {
+		boolean flag = true;
+		UserDao uDao = new UserDao();
+		uDao.beginTran();
+		try {
+			int r = uDao.minBalance(u_id,money);
+			int result = uDao.updatePriceUserByid(u_id,price);
+			int e = uDao.addDownByid(u_id,price);
+			if(result != 0 && r != 0 && e != 0)
+				flag = true;
+			uDao.commitTran();
+		} catch (SQLException e) {
+			uDao.rollbackTran();
+			Log.LOGGER.debug("积分兑换失败 : "  +e.getMessage());
+			e.printStackTrace();
+		}finally {
+			uDao.closeAll();
+		}
+		return flag;
+	}
+	/**
+	 * 更新用户角色为管理员
+	 * @param uid
+	 * @return
+	 */
+	public boolean updateRoleUserById(String uid) {
+		boolean flag = true;
+		UserDao uDao = new UserDao();
+		uDao.beginTran();
+		try {
+			int r = uDao.updateRoleUserById(uid);
+			if(r != 0)
+				flag = true;
+			uDao.commitTran();
+		} catch (SQLException e) {
+			uDao.rollbackTran();
+			Log.LOGGER.debug("更新用户为管理员失败 : "  +e.getMessage());
+			e.printStackTrace();
+		}finally {
+			uDao.closeAll();
+		}
+		return flag;
+	}
+	/**
+	 * 删除申请表用户
+	 * @param uid
+	 * @return
+	 */
+	public boolean deleteApplyByUId(String uid) {
+		boolean flag = true;
+		UserDao uDao = new UserDao();
+		uDao.beginTran();
+		try {
+			int r = uDao.deleteApplyByUId(uid);
+			if(r != 0)
+				flag = true;
+			uDao.commitTran();
+		} catch (SQLException e) {
+			uDao.rollbackTran();
+			Log.LOGGER.debug("删除用户申请失败 : "  +e.getMessage());
 			e.printStackTrace();
 		}finally {
 			uDao.closeAll();

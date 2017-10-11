@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.da.Photography.dto.Apply;
 import com.da.Photography.dto.User;
 
 public class UserDao extends BaseDao{
@@ -156,5 +157,151 @@ public class UserDao extends BaseDao{
 		int result1 = executeUpdate(sql, params);
 		return result1;
 	}
-
+	/**
+	 * 通过邮箱查询用户
+	 * @param email
+	 * @return
+	 * @throws SQLException
+	 */
+	public User queryUserUnameByEmail(String email) throws SQLException {
+		User user = null;
+		String sql = "select u_name,u_uname,u_pwd from pa_user where u_email=?";
+		Object[] params = {email};
+		rs = executeQuery(sql, params);
+		if(rs.next()) {
+			user = new User();
+			user.setU_pwd(rs.getString("u_pwd"));
+			user.setU_name(rs.getString("u_name"));
+			user.setU_uname(rs.getString("u_uname"));
+		}
+		return user;
+	}
+	/**
+	 * 签到记录
+	 * @param u_id
+	 * @param price
+	 * @return
+	 * @throws SQLException
+	 */
+	public int recordDown(int u_id, int price) throws SQLException {
+		String sql = "insert into pa_down values((select nvl(max(d_id),0)+1 from pa_down),"
+				+ "?,sysdate,1,?,null)";
+		Object[] params = {u_id,"+"+price};
+		int result = executeUpdate(sql, params);
+		return result;
+	}
+	/**
+	 * 添加用户申请权限
+	 * @param u_id
+	 * @return
+	 * @throws SQLException
+	 */
+	public int applyForAdmin(int u_id) throws SQLException {
+		String sql = "insert into PA_APPLYADMIN values((select nvl(max(ad_id),0)+1 from PA_APPLYADMIN),?)";
+		Object[] params = {u_id};
+		int result = executeUpdate(sql, params);
+		return result;
+	}
+	/**
+	 * 查询所有管理员申请
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Apply> queryAllApply() throws SQLException {
+		List<Apply> applys = new ArrayList<>();
+		String sql = "Select DISTINCT u.U_ID,u.U_NAME,u.U_BALANCE,u.U_SIGNDAY,u.U_SIGNDATE,u.U_PHONE,u.U_EMAIL,u.U_PRICE "
+				+ "From PA_APPLYADMIN ad, PA_USER u "
+				+ "Where u.U_ID = ad.U_ID AND u.U_ROLE=1";
+		rs = executeQuery(sql);
+		while(rs.next()) {
+			Apply a = new Apply();
+			a.getUser().setU_id(rs.getInt("u_id"));
+			a.getUser().setU_name(rs.getString("u_name"));
+			a.getUser().setU_balance(rs.getDouble("u_balance"));
+			a.getUser().setU_signday(rs.getInt("u_signday"));
+			a.getUser().setU_signdate(rs.getDate("u_signdate"));
+			a.getUser().setU_phone(rs.getString("u_phone"));
+			a.getUser().setU_email(rs.getString("u_email"));
+			a.getUser().setU_price(rs.getInt("u_price"));
+			applys.add(a);
+		}
+		return applys;
+	}
+	/**
+	 * 用户修改余额
+	 * @param uname
+	 * @param num
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int rechargeUser(String uname, double num) throws SQLException {
+		String sql = "update pa_user set u_balance = u_balance+? where u_uname=?";
+		Object[] params = {num,uname};
+		int result = executeUpdate(sql, params);
+		return result;
+	}
+	/**
+	 * 用户积分增加
+	 * @param u_id
+	 * @param price
+	 * @return
+	 * @throws SQLException
+	 */
+	public int updatePriceUserByid(int u_id, int price) throws SQLException {
+		String sql = "update pa_user set u_price = u_price+? where u_id=?";
+		Object[] params = {price,u_id};
+		int result = executeUpdate(sql, params);
+		return result;
+	}
+	/**
+	 * 用户修改余额减少
+	 * @param u_id
+	 * @param num
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int minBalance(int u_id, int num) throws SQLException {
+		String sql = "update pa_user set u_balance = u_balance-? where u_id=?";
+		Object[] params = {num,u_id};
+		int result = executeUpdate(sql, params);
+		return result;
+	}
+	/**
+	 * 记录积分修改
+	 * @param u_id
+	 * @param price
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int addDownByid(int u_id, int price) throws SQLException {
+		String sql = "insert into pa_down values((select nvl(max(d_id),0)+1 from pa_down),"
+				+ "?,sysdate,?,?,null)";
+		Object[] params = {u_id,4,"+"+price};
+		int result = executeUpdate(sql, params);
+		return result;
+	}
+	/**
+	 * 更新用户角色为管理员
+	 * @param uid
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int updateRoleUserById(String uid) throws SQLException {
+		String sql = "update pa_user set u_role=0 where u_id=?";
+		Object[] params = {uid};
+		int result = executeUpdate(sql, params);
+		return result;
+	}
+	/**
+	 * 删除申请表用户
+	 * @param uid
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int deleteApplyByUId(String uid) throws SQLException {
+		String sql = "delete pa_applyadmin where u_id=?";
+		Object[] params = {uid};
+		int result = executeUpdate(sql, params);
+		return result;
+	}
 }
