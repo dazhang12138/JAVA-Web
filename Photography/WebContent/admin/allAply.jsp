@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%String path = request.getContextPath();
   	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-  	if(session.getAttribute("user") == null){
-  		request.setAttribute("result", "请登录");
-		request.getRequestDispatcher("../login.jsp").forward(request, response);
+	if(request.getAttribute("applys") == null){
+		request.getRequestDispatcher("../AllApplyAdmin").forward(request, response);
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/loader-style.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/js/button/ladda/ladda.min.css">
 
     <link href="assets/js/iCheck/flat/all.css" rel="stylesheet">
     <link href="assets/js/iCheck/line/all.css" rel="stylesheet">
@@ -37,6 +38,7 @@
         <![endif]-->
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="assets/ico/minus.png">
+    
 </head>
 
 <body><div id="awwwards" class="right black"><a href="http://www.awwwards.com/best-websites/apricot-navigation-admin-dashboard-template" target="_blank">best websites of the world</a></div>
@@ -60,17 +62,13 @@
                 </div>
 
             </div>
-
-
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <jsp:include page="Collectthenavlinks.jsp"></jsp:include>
+			<jsp:include page="Collectthenavlinks.jsp"></jsp:include>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-
     <!-- /END OF TOP NAVBAR -->
-
     <!-- SIDE MENU -->
     <div id="skin-select">
         <div id="logo">
@@ -97,8 +95,9 @@
         <div class="skin-part">
             <div id="tree-wrap">
                 <div class="side-bar">
-                    <jsp:include page="menu.jsp"></jsp:include>
-
+					
+					<jsp:include page="menu.jsp"></jsp:include>
+					
                     <div class="side-dash">
                     </div>
                 </div>
@@ -106,21 +105,17 @@
         </div>
     </div>
     <!-- END OF SIDE MENU -->
-
-
-
     <!--  PAPER WRAP -->
-    <div class="wrap-fluid">
+  <div class="wrap-fluid">
         <div class="container-fluid paper-wrap bevel tlbr">
-
-            <!-- CONTENT -->
-            <!--TITLE -->
+            <!-- CONTENT
+            TITLE -->
             <div class="row">
                 <div id="paper-top">
                     <div class="col-sm-3">
                         <h2 class="tittle-content-header">
                             <i class="icon-document-edit"></i> 
-                            <span>创建新专辑
+                            <span>用户申请
                             </span>
                         </h2>
 
@@ -165,94 +160,109 @@
                                 </li>
                             </ul>
                         </div>
-
-
                     </div>
                 </div>
             </div>
-            <!--/ TITLE -->
+          <!--   / TITLE
 
-            <!-- BREADCRUMB -->
+            BREADCRUMB -->
             <ul id="breadcrumb">
                 <li>
                     <span class="entypo-home"></span>
                 </li>
                 <li><i class="fa fa-lg fa-angle-right"></i>
                 </li>
-                <li><a href="#" title="Sample page 1">专辑管理</a>
+                <li><a href="#" title="Sample page 1">用户申请</a>
                 </li>
                 <li><i class="fa fa-lg fa-angle-right"></i>
                 </li>
-                <li><a href="#" title="Sample page 1">创建专辑</a>
+                <li><a href="#" title="Sample page 1">申请管理</a>
                 </li>
                 <li class="pull-right">
                     <div class="input-group input-widget">
-
                         <input style="border-radius:15px" type="text" placeholder="Search..." class="form-control">
                     </div>
                 </li>
             </ul>
 
-            <!-- END OF BREADCRUMB -->
-
-
-            <div class="content-wrap">
+          <!--   END OF BREADCRUMB -->
+          <div align="center" style="margin-top: 10px;">
+          <section class="progress-demo">
+             <a href="<%=basePath %>AllApplyAdmin" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">刷新列表</a>
+             </section>
+             </div>
+		<div class="content-wrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="nest" id="basicClose">
+                        <div class="nest" id="tableStaticClose">
                             <div class="title-alt">
-                                <h6>专辑 :<span style="color: red;">${result }</span></h6>
+                                <h6>所有用户申请列表 : <span style="color: red;">${result }</span></h6>
                                 <div class="titleClose">
-                                    <a class="gone" href="#basicClose">
+                                    <a class="gone" href="#tableStaticClose">
                                         <span class="entypo-cancel"></span>
                                     </a>
                                 </div>
                                 <div class="titleToggle">
-                                    <a class="nav-toggle-alt" href="#basic">
+                                    <a class="nav-toggle-alt" href="#tableStatic">
                                         <span class="entypo-up-open"></span>
                                     </a>
                                 </div>
 
                             </div>
 
-                            <div class="body-nest" id="basic">
-                                <div class="form_center">
-                                    <form role="form" action="<%=basePath %>AddAbums" method="post" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">专辑名称:</label>
-                                            <input name="name" type="text" placeholder="新图片专辑的名称" id="exampleInputEmail1" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">专辑简介</label>
-                                            <textarea name="profile"  placeholder="对这个专辑的描述……" class="textarea form-control2"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">封面图片</label>
-                                            <input name="pic" type="file" id="exampleInputFile">
-                                            <p class="help-block">选择本地的一张图片作为新图片专辑的封面图片,可以是专辑内的一张图片也可以是任意一张图片,但是必须是合法的可以经过审核的图片.</p>
-                                        </div>
-                                        <button class="btn btn-info" type="submit">创建</button>
-                                    </form>
-                                </div>
+                            <div class="body-nest" id="tableStatic">
+
+                                <section id="flip-scroll">
+
+                                    <table class="table table-bordered table-striped cf">
+                                        <thead class="cf">
+                                            <tr>
+                                                <th class="numeric">编号</th>
+                                                <th class="numeric">姓名</th>
+                                                <th class="numeric">积分</th>
+                                                <th class="numeric">余额</th>
+                                                <th class="numeric">手机</th>
+                                                <th class="numeric">邮箱</th>
+                                                <th class="numeric">上次签到日期</th>
+                                                <th class="numeric">签到天数</th>
+                                                <th class="numeric">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                        	<c:forEach items="${applys }" var="a">
+                                            <tr>
+                                                <td class="numeric">${a.user.u_id }</td>
+                                                <td class="numeric">${a.user.u_name }</td>
+                                                <td class="numeric">${a.user.u_price }</td>
+                                                <td class="numeric">${a.user.u_balance }</td>
+                                                <td class="numeric">${a.user.u_phone }</td>
+                                                <td class="numeric">${a.user.u_email }</td>
+                                                <td class="numeric">${a.user.u_signdate }</td>
+                                                <td class="numeric">${a.user.u_signday }</td>
+                                                <td class="numeric">
+                                                <a type="button" class="btn btn-default" href="<%=basePath%>SetAdmin?type=1&uid=${a.user.u_id}">
+                                    <span class="entypo-pencil"></span>&nbsp;&nbsp;通过</a>
+                                                <a type="button" class="btn btn-info"  href="<%=basePath%>SetAdmin?type=2&uid=${a.user.u_id}">
+                                 <span class="entypo-trash"></span>&nbsp;&nbsp;拒绝</a></td>
+                                            </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </section>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-            <!-- /END OF CONTENT -->
-
-            <!-- FOOTER -->
-            <div class="footer-space"></div>
-            <div id="footer">
+		<div id="footer">
                 <div class="devider-footer-left"></div>
                 <div class="time">
                     <p id="spanDate">
-                    <p id="clock">
-                </div>
+                    </p><p id="clock">
+                </p></div>
                 <div class="copyright">创作者|
                     <span class="entypo-heart"></span> | Mr.Da</div>
-                     <div class="devider-footer"></div>
+                <div class="devider-footer"></div>
 
             </div>
             <!-- / END OF FOOTER -->
@@ -262,9 +272,9 @@
     </div>
     <!--  END OF PAPER WRAP -->
     <!-- RIGHT SLIDER CONTENT -->
-    <jsp:include page="RIGHTSLIDERCONTENT.jsp"></jsp:include>
+		<jsp:include page="RIGHTSLIDERCONTENT.jsp"></jsp:include>
     <!-- END OF RIGHT SLIDER CONTENT-->
-<!-- 火箭返回顶部 -->
+		<!-- 火箭返回顶部 -->
 		<jsp:include page="rocket.html"></jsp:include>
     <!-- MAIN EFFECT -->
     <script type="text/javascript" src="assets/js/preloader.js"></script>
@@ -272,11 +282,12 @@
     <script type="text/javascript" src="assets/js/app.js"></script>
     <script type="text/javascript" src="assets/js/load.js"></script>
     <script type="text/javascript" src="assets/js/main.js"></script>
+    
 
     <!-- /MAIN EFFECT -->
-    <script type="text/javascript" src="assets/js/iCheck/jquery.icheck.js"></script>
+   <script type="text/javascript" src="assets/js/iCheck/jquery.icheck.js"></script>
     <script type="text/javascript" src="assets/js/switch/bootstrap-switch.js"></script>
-
+    
     <!--  PLUGIN -->
     <script>
     $(document).ready(function() {
@@ -302,8 +313,5 @@
         $('.make-switch').bootstrapSwitch('setSizeClass', 'switch-small');
     });
     </script>
-
-
 </body>
-
 </html>
