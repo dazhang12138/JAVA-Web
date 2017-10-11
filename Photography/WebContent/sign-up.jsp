@@ -62,7 +62,14 @@
 			}else if(!myreg.test(email)){
 				$("#demail").html('请填写正确邮箱格式');
 			}else{
-				$("#demail").html('');
+				$.ajax({
+					   type: "POST",
+					   url: "DetecEmail",
+					   data: "email=" + email,
+					   success: function(msg){
+							$("#demail").html(msg);
+					  }
+					});
 			}
 		}
 		function DetecPwd() {

@@ -92,7 +92,7 @@
 			<div class="fh5co-gallery">
 				<c:forEach items="${albums }" var="a">
 					<a class="gallery-item" href="QueryAlbumsPicture?path=single.jsp&id=${a.a_id }">
-						<img width="485" height="232" src="<%=basePath %>getPic?type=1&id=${a.a_id}" alt="Free HTML5 Bootstrap Template by FreeHTML5.co">
+						<img width="485" height="232" src="<%=basePath %>getPic?type=1&id=${a.a_id}">
 						<span class="overlay">
 							<h2>${a.a_name }</h2>
 							<span>${a.a_time}</span>

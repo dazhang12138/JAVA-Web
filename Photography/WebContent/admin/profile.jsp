@@ -6,6 +6,10 @@
 	if(session.getAttribute("user") == null){
 		request.setAttribute("result", "请登录");
 		request.getRequestDispatcher("../login.jsp").forward(request, response);
+		return;
+	}
+	if(request.getAttribute("downs") == null){
+		request.getRequestDispatcher("../GetAllDowns?path=admin/profile.jsp&type=1").forward(request, response);
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -33,6 +37,17 @@
         <![endif]-->
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="assets/ico/minus.png">
+    <script type="text/javascript">
+    	function applyfor() {
+    		$.ajax({
+				   type: "POST",
+				   url: "../ApplyFor",
+				   success: function(msg){
+						$("#rreessuu").html(msg);
+				  	}
+			});
+		}
+    </script>
 </head>
 
 <body><div id="awwwards" class="right black"><a href="http://www.awwwards.com/best-websites/apricot-navigation-admin-dashboard-template" target="_blank">best websites of the world</a></div>
@@ -253,11 +268,17 @@
                  							<a type="button" class="btn btn-warning" href="<%=basePath %>admin/alterUser.jsp" >修改个人信息</a>
                  						</li>
                                     </ul>
+                                    <a type="button" class="btn btn-warning" onclick="applyfor()" >申请管理员</a>
+                                    <span id="rreessuu" style="color: red;"></span>
                                 </div>
                                 <div class="col-xs-12 col-sm-8 profile-name">
                                     <h2>个人信息
                                         <span class="pull-right social-profile">
-                                            <i class="entypo-facebook-circled"></i>  <i class="entypo-twitter-circled"></i>  <i class="entypo-linkedin-circled"></i>  <i class="entypo-github-circled"></i>  <i class="entypo-gplus-circled"></i>
+                                            <i class="entypo-facebook-circled"></i>  
+                                            <i class="entypo-twitter-circled"></i>  
+                                            <i class="entypo-linkedin-circled"></i>  
+                                            <i class="entypo-github-circled"></i>  
+                                            <i class="entypo-gplus-circled"></i>
                                         </span>
                                     </h2>
                                     <hr>
@@ -294,34 +315,20 @@
                                     <h5>
                                         <span class="entypo-arrows-ccw"></span>&nbsp;&nbsp;动态</h5>
 
-                                    <div class="table-responsive">
+                                    <div class="table-responsive" style="height: 100px;overflow: auto;">
                                         <table class="table table-hover table-striped table-condensed">
 
                                             <tbody>
+                                            <c:forEach items="${downs }" var="d">
                                                 <tr>
-                                                    <td><i class="pull-right fa fa-edit"></i> Today, 1:00 - Jeff Manzi liked your post.</td>
+                                                    <td><i class="pull-right fa fa-edit"></i>
+                                                     ${d.d_date } : ${d.d_type==1 ? "签到" : d.d_type==2 ? "下载--图片编号：" : d.d_type==3 ? "被下载--图片编号：" : "积分兑换"} ${d.d_type!=1 && d.d_type!=4 ? d.pic.p_id : "" } : 积分 [${d.d_update }]</td>
                                                 </tr>
-                                                <tr>
-                                                    <td><i class="pull-right fa fa-edit"></i> Today, 12:23 - Mark Friendo liked and shared your post.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><i class="pull-right fa fa-edit"></i> Today, 12:20 - You posted a new blog entry title "Why social media is".</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><i class="pull-right fa fa-edit"></i> Yesterday - Karen P. liked your post.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><i class="pull-right fa fa-edit"></i> 2 Days Ago - Philip W. liked your post.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><i class="pull-right fa fa-edit"></i> 2 Days Ago - Jeff Manzi liked your post.</td>
-                                                </tr>
+                                               </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
-
                                 </div>
-
                             </div>
                             <div class="col-xs-12 divider text-center">
                                 <div class="col-xs-12 col-sm-4 emphasis">
@@ -341,7 +348,7 @@
                                     <p>
                                         <small>积分</small>
                                     </p>
-                                    <button class="btn btn-info btn-block">
+                                    <button class="btn btn-info btn-block" onclick="location.href='<%=basePath %>admin/pointsfor.jsp'">
                                         <span class="fa fa-user"></span>&nbsp;&nbsp;兑换积分</button>
                                 </div>
                                <div class="col-sm-4 emphasis">

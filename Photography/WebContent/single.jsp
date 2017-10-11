@@ -1,3 +1,4 @@
+<%@page import="com.da.Photography.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -45,19 +46,31 @@
 	<link rel="stylesheet" href="css/owl.theme.default.min.css">
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
-
+	
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
+	<script type="text/javascript">
+		function dpic(pid) {
+			$.ajax({
+				   type: "POST",
+				   url: "D1",
+				   data: "pid=" + pid,
+				   success: function(msg){
+					 alert(msg);
+					 if(msg == '扣除您响应的下载积分.' || msg == '您之前下载过这张图片,此次免积分下载.'){
+						 window.location.href='D2?pid='+pid;
+					 }
+				  }
+				});
+		}
+	</script>
 	</head>
-	<body>
-
+<body> 
 	<div id="fh5co-page">
-
 		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
 		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
 
@@ -85,16 +98,11 @@
 					<li><a href="http://www.linkedin.com/"><i class="icon-linkedin"></i></a></li>
 				</ul>
 			</div>
-
 		</aside>
-
 		<div id="fh5co-main">
-
-			
-
 			<div class="fh5co-narrow-content animate-box fh5co-border-bottom" data-animate-effect="fadeInLeft">
 				<h2 class="fh5co-heading" ><span>${album.a_name }&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;&nbsp;&nbsp;&nbsp; ${album.user.u_name }</span></h2>
-				<p>${album.a_profile }</p>
+				<p style="word-wrap:break-word;">${album.a_profile }</p>
 				<div class="col-md-12">
 					<p class="text-center"><a href="" class="btn btn-primary btn-outline">下载专辑</a></p>
 				</div>
@@ -104,15 +112,19 @@
 						<span>作者：${p.p_name}</span>
 						&nbsp;&nbsp;&nbsp;&nbsp; <span>拍摄时间：${p.p_time}</span>
 						&nbsp;&nbsp;&nbsp;&nbsp; <span>下载积分：${p.p_price}</span>
-						<figure><img src="<%=basePath %>getPic?type=2&id=${p.p_id}" alt="Free HTML5 Bootstrap Template by FreeHTML5.co" class="img-responsive">
-							<figcaption>${p.p_profile }</figcaption>
+						<figure>
+						<img src="<%=basePath %>getPic?type=2&id=${p.p_id}" class="img-responsive">
+							<figcaption style="word-wrap:break-word;">${p.p_profile }</figcaption>
 						</figure>
 					</div>
 					<div class="col-md-12">
-						<p class="text-center"><a href="" class="btn btn-primary btn-outline">下载</a></p>
+						<p class="text-center"><a onclick="dpic('${p.p_id}')" class="btn btn-primary btn-outline">下载</a></p>
 					</div>
 					</c:forEach>
 				</div>
+			</div>
+			<div align="center">
+			<span style="color: red;">为维护版权利益，所有图片进行加密处理，下载图片可以查看原图片.</span>
 			</div>
 		</div>
 	</div>
@@ -132,7 +144,6 @@
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- Counters -->
 	<script src="js/jquery.countTo.js"></script>
-	
 	
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
