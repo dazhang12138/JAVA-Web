@@ -59,9 +59,6 @@
 							<input name="pwd" type="password" class="form-control" id="password" placeholder="密码" autocomplete="off">
 						</div>
 						<div class="form-group">
-							<label for="remember"><input name="remember" type="checkbox" id="remember">记住我</label>
-						</div>
-						<div class="form-group">
 							<p>还没有注册? <a href="<%=basePath %>sign-up.jsp">注册</a> | <a href="<%=basePath %>forgot.jsp">忘记密码?</a></p>
 						</div>
 						<div class="form-group">

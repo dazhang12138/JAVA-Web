@@ -25,7 +25,6 @@
     <link rel="stylesheet" href="assets/js/button/ladda/ladda.min.css">
 
     <link href="assets/js/iCheck/flat/all.css" rel="stylesheet">
-    <link href="assets/js/iCheck/line/all.css" rel="stylesheet">
 
     <link href="assets/js/colorPicker/bootstrap-colorpicker.css" rel="stylesheet">
     <link href="assets/js/switch/bootstrap-switch.css" rel="stylesheet">
@@ -243,7 +242,7 @@
 
                                 <section id="flip-scroll">
 
-                                    <table class="table table-bordered table-striped cf">
+                                    <table class="table table-bordered table-striped cf" id="devCompanyInfos">
                                         <thead class="cf">
                                             <tr>
                                                 <th class="numeric"><input type="checkbox" id="all" onclick="cheakAll()"></th>
@@ -278,8 +277,23 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
-                                </section>
+								</section>
                             </div>
+                            
+                            <div class="gridItem" style="padding: 5px; width: 300px; float: left; text-align: left; height: 20px; font-size: 15px;" >   
+                共有 <span id="spanTotalInfor"></span> 条记录       
+                当前第<span id="spanPageNum"></span>页     
+                共<span id="spanTotalPage"></span>页  
+        </div>  
+        <div class="gridItem" style="margin-left:50px;  padding: 5px; width: 400px; float: right; text-align: center; height: 20px; vertical-align: middle; font-size: 15px;">     
+            <span id="spanFirst" >首页</span>   
+            <span id="spanPre">上一页</span>  
+            <span id="spanInput" style="margin: 0px; padding: 0px 0px 4px 0px; height:100%; ">   
+                第<input id="Text1" type="text" class="TextBox" onkeyup="changepage()"   style="height:24px; text-align: center;width:30px ;color:red;" />页   
+            </span>  
+            <span id="spanNext">下一页</span>   
+            <span  id="spanLast">尾页</span>   
+        </div>  
                         </div>
                     </div>
                 </div>
@@ -317,8 +331,47 @@
     <!-- /MAIN EFFECT -->
    <script type="text/javascript" src="assets/js/iCheck/jquery.icheck.js"></script>
     <script type="text/javascript" src="assets/js/switch/bootstrap-switch.js"></script>
-    
     <!--  PLUGIN -->
+    
+    <script type="text/javascript">  
+              var theTable = document.getElementById("devCompanyInfos");//Id选择对了就OK！   ${devCompanyInfos }是所有后台返回数据  
+              var txtValue = document.getElementById("Text1").value;  
+              function changepage() {  
+                var txtValue2 = document.getElementById("Text1").value;  
+                if (txtValue != txtValue2) {  
+                  if (txtValue2 > pageCount()) {  
+                  }  
+                  else if (txtValue2 <= 0) {  
+                  }  
+                  else if (txtValue2 == 1) {  
+                    first();  
+                  }  
+                  else if (txtValue2 == pageCount()) {  
+                    last();  
+                  }  
+                  else {  
+                    hideTable();  
+                    page = txtValue2;  
+                    pageNum2.value = page;  
+                    currentRow = pageSize * page;  
+                    maxRow = currentRow - pageSize;  
+                    if (currentRow > numberRowsInTable) currentRow = numberRowsInTable;  
+                    for (var i = maxRow; i < currentRow; i++) {  
+                      theTable.rows[i].style.display = '';  
+                    }  
+                    if (maxRow == 0) { preText(); firstText(); }  
+                    showPage();  
+                    nextLink();  
+                    lastLink();  
+                    preLink();  
+                    firstLink();  
+                   }  
+                  txtValue = txtValue2;  
+                }
+            }  
+        </script>  
+        <!-- 引入分页js -->  
+        <script type="text/javascript" src="assets/js/Pagging.js"></script>  
     <script>
     $(document).ready(function() {
         //CHECKBOX PRETTYFY

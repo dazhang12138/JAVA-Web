@@ -56,6 +56,7 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 	<!-- 签到 -->
+
 	</head>
 	<body>
 	<div id="fh5co-page">
@@ -86,21 +87,25 @@
 					<li><a href="http://www.linkedin.com/"><i class="icon-linkedin"></i></a></li>
 				</ul>
 			</div>
+		
 
 		</aside>
-		<div id="fh5co-main">
-			<div class="fh5co-gallery">
+		 <div id="fh5co-main">
+			 <div class="fh5co-gallery">
 				<c:forEach items="${albums }" var="a">
+					<div class="grid__item">
 					<a class="gallery-item" href="QueryAlbumsPicture?path=single.jsp&id=${a.a_id }">
-						<img width="485" height="232" src="<%=basePath %>getPic?type=1&id=${a.a_id}">
+						 <%-- <img width="485" height="232" src="<%=basePath %>getPic?type=1&id=${a.a_id}">  --%>
+						<img src="<%=basePath %>getPic?type=1&id=${a.a_id}">
 						<span class="overlay">
 							<h2>${a.a_name }</h2>
 							<span>${a.a_time}</span>
 						</span>
 					</a>
+					</div>
 				</c:forEach>
-			</div>
-		</div>
+			</div>  
+		
 	</div>
 	<!-- 返回顶部 -->
 	<jsp:include page="rocket.html"></jsp:include>
@@ -121,8 +126,7 @@
 	
 	
 	<!-- MAIN JS -->
-	<script src="js/main.js"></script>
-
+	<script src="show/js/main.js"></script> 
 	</body>
 </html>
 

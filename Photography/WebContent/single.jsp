@@ -67,6 +67,20 @@
 				  }
 				});
 		}
+		function downAlbums(aid) {
+			$.ajax({
+				   type: "POST",
+				   url: "AD1",
+				   data: "aid=" + aid,
+				   success: function(msg){
+					  alert(msg);
+					 if(msg == '已经下载专辑内所有图片，如果您之前下载过其中的图片，将不会扣除您对应的积分.'){
+						 window.location.href='AD2?aid='+aid;
+					 }
+				  }
+				});
+		}
+		
 	</script>
 	</head>
 <body> 
@@ -104,7 +118,7 @@
 				<h2 class="fh5co-heading" ><span>${album.a_name }&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;&nbsp;&nbsp;&nbsp; ${album.user.u_name }</span></h2>
 				<p style="word-wrap:break-word;">${album.a_profile }</p>
 				<div class="col-md-12">
-					<p class="text-center"><a href="" class="btn btn-primary btn-outline">下载专辑</a></p>
+					<p class="text-center"><a onclick="downAlbums(${album.a_id})" class="btn btn-primary btn-outline">下载专辑</a></p>
 				</div>
 				<div class="row">
 					<c:forEach items="${album.pictures }" var="p">

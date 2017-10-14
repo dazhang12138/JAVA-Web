@@ -38,6 +38,7 @@ public class RechargeServlet extends HttpServlet {
 				boolean flag = uBiz.rechargeUser(uname,num);
 				if(flag) {
 					request.setAttribute("result", "充值成功");
+					//邮箱提醒充值成功
 				}else {
 					request.setAttribute("result", "充值失败！");
 				}

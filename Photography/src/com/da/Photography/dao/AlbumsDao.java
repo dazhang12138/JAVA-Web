@@ -265,4 +265,21 @@ public class AlbumsDao extends BaseDao{
 			result = rs.getInt("c");
 		return result;
 	}
+	/**
+	 * 查询专辑内所有图片的图片
+	 * @param aid
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<byte[]> getAllAPicPicByaid(String aid) throws SQLException {
+		List<byte[]> pics = new ArrayList<>();
+		String sql = "Select t.P_PIC From PA_PICTURE t Where t.A_ID = ?";
+		Object[] params = {aid};
+		rs = executeQuery(sql, params);
+		while(rs.next()) {
+			byte[] p = rs.getBytes("P_PIC");
+			pics.add(p);
+		}
+		return pics;
+	}
 }

@@ -45,7 +45,7 @@ public class UpdateUserServlet extends HttpServlet {
 				request.getSession().removeAttribute("user");
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			}else {
-				request.setAttribute("result", "修改个人信息失败.");
+				request.setAttribute("result", "修改个人信息失败.邮箱可能已被注册!");
 				request.getRequestDispatcher("admin/alterUser.jsp").forward(request, response);
 			}
 		}

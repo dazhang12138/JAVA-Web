@@ -23,6 +23,23 @@
 		<servlet-name>D2</servlet-name>
 		<url-pattern>/D2</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>AD1</servlet-name>
+		<servlet-class>com.da.Photography.control.AD1Servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AD1</servlet-name>
+		<url-pattern>/AD1</url-pattern>
+	</servlet-mapping>
+			<servlet>
+		<servlet-name>AD2</servlet-name>
+		<servlet-class>com.da.Photography.control.AD2Servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AD2</servlet-name>
+		<url-pattern>/AD2</url-pattern>
+	</servlet-mapping>
+	
 
 
 <!-- 连接池 -->
@@ -347,4 +364,6 @@
 		<servlet-name>Pointsfor</servlet-name>
 		<url-pattern>/Pointsfor</url-pattern>
 	</servlet-mapping>
+	
+	
 </web-app>

@@ -276,18 +276,33 @@ figure figcaption {
 }
 
 .fh5co-gallery {
-  position: relative;
-  margin-bottom: 7em;
+ width: 100%; 
+  /* -moz-column-count:4; */ /* Firefox */
+ /*  -webkit-column-count:4; */ /* Safari �ˠChrome */
+    column-count:4; 
+  -moz-column-gap: 1em;
+  -webkit-column-gap: 1em;
+  column-gap: 1em; 
   float: left;
-  width: 100%;
+  margin: 1em 0 0 1em; 
 }
-.fh5co-gallery .gallery-item {
-  width: 25%;
+
+.fh5co-gallery .grid__item{
+		margin-left: -10px;
+		margin-bottom: 10px;
+      -moz-page-break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      break-inside: avoid;
+}
+
+
+
+.fh5co-gallery .grid__item .gallery-item {
   position: relative;
   overflow: hidden;
   display: block;
-  float: left;
   z-index: 110;
+  width: 100%;
 }
 .fh5co-gallery .gallery-item img {
   position: relative;
