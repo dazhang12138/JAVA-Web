@@ -98,6 +98,22 @@ public class AlbumsBiz {
 		}
 		return pic;
 	}
+	public List<byte[]> getAllAPicPicByaid(String aid) {
+		AlbumsDao aDao = new AlbumsDao();
+		aDao.beginTran();
+		List<byte[]> pics = new ArrayList<>();
+		try {
+			pics = aDao.getAllAPicPicByaid(aid);
+			aDao.commitTran();
+		} catch (SQLException e) {
+			aDao.rollbackTran();
+			Log.LOGGER.debug("获取专辑内所有图片的图片失败 : " + e.getMessage());
+			e.printStackTrace();
+		}finally {
+			aDao.closeAll();
+		}
+		return pics;
+	}
 	/**
 	 * 修改图片
 	 * @param pic 图片
