@@ -9,8 +9,8 @@ import javax.mail.internet.MimeMessage;
 
 public class Email {
 	 // 发件人的 邮箱 和 密码 和smtp服务地址
-    public static String myEmailAccount = "photographyweb@163.com";
-    public static String myEmailPassword = "zd1125";
+    public static String myEmailAccount = "***@163.com";//网站管理邮箱
+    public static String myEmailPassword = "***";//邮箱密码
     public static String myEmailSMTPHost = "smtp.163.com";
     
     /**
