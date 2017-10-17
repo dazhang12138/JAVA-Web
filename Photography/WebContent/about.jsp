@@ -303,7 +303,7 @@
 				</div>
 			</div>
 			<div id="fh5co-main">
-				<div class="fh5co-more-contact">
+				<div class="fh5co-more-contact" style="background: #fff;">
 					<div class="fh5co-narrow-content">
 						<div class="row">
 							<div class="col-md-4">

@@ -143,8 +143,8 @@
 						<div class="form-group">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="submit" value="注册" class="btn btn-primary">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="button" value="返回" class="btn btn-primary" onclick="window.history.back();">
+							<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+							<input type="button" value="返回" class="btn btn-primary" onclick="window.history.back();" style="margin-left:20%">
 						</div>
 					</form>
 					<!-- END Sign In Form -->
