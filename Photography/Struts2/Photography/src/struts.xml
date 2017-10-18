@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<package name="User" extends="struts-default">  
+		<action name="User_*" class="com.da.Photography.control.UserAction" method="{1}">
+			<result name="Login_True">index.jsp</result>
+			<result name="Login_False">login.jsp</result>
+			<result name="register">sign-up.jsp</result>
+			<result name="deleteUser_True">admin/allUser.jsp</result>
+			<result name="pointsfor_True">admin/profile.jsp</result>
+			<result name="pointsfor_False">admin/pointsfor.jsp</result>
+			<result name="allApplys_True">admin/allAply.jsp</result>
+		</action>
+		
+		<action name="Upload_*" class="com.da.Photography.control.UploadAction" method="{1}">
+			<result name="addAblums_True">admin/addAbums.jsp</result>
+			<result name="login">login.jsp</result>
+			<result name="addPicture_True">admin/addPicture.jsp</result>
+		</action>
+		
+		<action name="Albums_*" method="{1}" class="com.da.Photography.control.AlbumsAction">
+			<result name="deleteAlbums_True">admin/index.jsp</result>
+			<result name="deletePicture_True" type="chain">Albums_queryAlbumsPicture</result>
+			<result name="path">${path}</result>
+			<result name="login">login.jsp</result>
+			<result name="count">about.jsp</result>
+			<result name="alterAlbums">admin/alterAlbums.jsp</result>
+		</action>
+		
+	</package>
+	
+</struts>
