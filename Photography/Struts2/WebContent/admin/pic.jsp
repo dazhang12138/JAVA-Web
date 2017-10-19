@@ -202,7 +202,7 @@
                             <div class="body-nest" id="Blank_Page_Content" >
 								<img width="100%" alt="" src="<%=basePath %>getPic?type=<%=request.getParameter("type") %>&id=<%=request.getParameter("id") %>" >
                             	<br><br><br>
-                            	<form action="<%=basePath %>UpdatePic?type=<%=request.getParameter("type") %>&id=<%=request.getParameter("id") %>" method="post" enctype="multipart/form-data">
+                            	<form action="<%=basePath %>Upload_updatePic.action?type=<%=request.getParameter("type") %>&id=<%=request.getParameter("id") %>" method="post" enctype="multipart/form-data">
                             		<div class="form-group">
                                             <label for="exampleInputFile">图片</label>
                                             <input name="pic" type="file" id="exampleInputFile">

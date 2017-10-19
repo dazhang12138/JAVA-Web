@@ -273,7 +273,7 @@
                                                 <a type="button" class="btn btn-primary" href="<%=basePath %>admin/pic.jsp?type=2&id=${p.p_id }">查看图片</a> 
                                                 </td>
                                                 <td class="numeric">
-                                                <a type="button" class="btn btn-default" href="<%= basePath%>QueryPicture?id=${p.p_id}">
+                                                <a type="button" class="btn btn-default" href="<%= basePath%>Albums_getPictrue.action?id=${p.p_id}">
                                     <span class="entypo-pencil"></span>&nbsp;&nbsp;修改</a>
                                                 <a type="button" class="btn btn-info"  href="<%= basePath%>Albums_deletePicture.action?pid=${p.p_id}&id=${album.a_id}&path=admin/albumsDetails.jsp"  onclick="return confirm('是否删除 : '+'${p.p_name }' + '\n操作不可逆，请谨慎操作')" >
                                  <span class="entypo-trash"></span>&nbsp;&nbsp;删除</a></td>

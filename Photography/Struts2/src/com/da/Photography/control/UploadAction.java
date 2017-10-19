@@ -119,6 +119,70 @@ public class UploadAction extends ActionSupport {
 		return result;
 	}
 	
+	/**
+	 * 修改图片信息
+	 * @return
+	 */
+	public String updatePictrue(){
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String date = request.getParameter("date");
+		//这里除了简介可以为空，其他都不能空
+		if(picture.getP_profile() == null)
+			picture.setP_profile("");
+		if(picture.getP_name() == null || date == null || picture.getP_name().equals("") || date.equals("")) {
+			request.setAttribute("result", "修改信息失败");
+		}else {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				picture.setP_time(format.parse(date));
+			} catch (ParseException e) {
+				Log.LOGGER.debug("时间转换失败");
+				e.printStackTrace();
+			}
+			AlbumsBiz aBiz = new AlbumsBiz();
+			boolean flag = aBiz.updatePicture(picture);
+			if(flag) {
+				request.setAttribute("result", "修改信息成功");
+			}else {
+				request.setAttribute("result", "修改信息失败");
+			}
+		}
+		return "updatepictrue";
+	}
+	
+	/**
+	 * 修改图片(专辑封面或者图片图片)
+	 * @return
+	 */
+	public String updatePic(){
+		HttpServletRequest request = ServletActionContext.getRequest();
+		byte[] pics = null;
+		try {
+			pics = FileUtils.readFileToByteArray(pic);
+		} catch (IOException e) {
+			Log.LOGGER.debug("上传图片失败 : " + e.getMessage());
+			e.printStackTrace();
+		}
+		if(pics == null){
+			request.setAttribute("result", "上传图片失败");
+		}else{
+			String type = request.getParameter("type");
+			String id = request.getParameter("id");
+			if (type != null && id != null) {
+				AlbumsBiz aBiz = new AlbumsBiz();
+				boolean flag = aBiz.updatePic(pics, id, type);
+				if (flag) {
+					request.setAttribute("result", "修改图片成功");
+				} else {
+					request.setAttribute("result", "修改图片失败");
+				}
+			} else {
+				request.setAttribute("result", "修改图片失败");
+			}
+		}
+		return "updatePic";
+	}
+	
 	public File getPic() {
 		return pic;
 	}

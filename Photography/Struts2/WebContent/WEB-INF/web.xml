@@ -54,15 +54,6 @@
 	
 	
 <!-- 用户管理 -->
-	<!-- 注册 -->
-	<servlet>
-		<servlet-name>Register</servlet-name>
-		<servlet-class>com.da.Photography.control.RegisterServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Register</servlet-name>
-		<url-pattern>/Register</url-pattern>
-	</servlet-mapping>
 	<!-- 签到 -->
 	<servlet>
 		<servlet-name>LignDay</servlet-name>
@@ -71,33 +62,6 @@
 	<servlet-mapping>
 		<servlet-name>LignDay</servlet-name>
 		<url-pattern>/LignDay</url-pattern>
-	</servlet-mapping>
-	<!-- 查询所有用户 -->
-	<servlet>
-		<servlet-name>AllUsers</servlet-name>
-		<servlet-class>com.da.Photography.control.GetAllUsersServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AllUsers</servlet-name>
-		<url-pattern>/AllUsers</url-pattern>
-	</servlet-mapping>
-	<!-- 修改用户信息 -->
-	<servlet>
-		<servlet-name>AlterUser</servlet-name>
-		<servlet-class>com.da.Photography.control.UpdateUserServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AlterUser</servlet-name>
-		<url-pattern>/AlterUser</url-pattern>
-	</servlet-mapping>
-	<!-- 找回密码 -->
-	<servlet>
-		<servlet-name>ForgotPwd</servlet-name>
-		<servlet-class>com.da.Photography.control.ForgotPwdServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ForgotPwd</servlet-name>
-		<url-pattern>/ForgotPwd</url-pattern>
 	</servlet-mapping>
 	<!-- 验证邮箱 -->
 	<servlet>
@@ -127,19 +91,6 @@
 		</servlet-mapping>  
 <!-- /用户管理 -->
 
-
-
-
-<!-- 专辑管理 -->
-	<!-- 创建专辑 -->
-	<servlet>
-		<servlet-name>AddAbums</servlet-name>
-		<servlet-class>com.da.Photography.control.AddAlbumsServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AddAbums</servlet-name>
-		<url-pattern>/AddAbums</url-pattern>
-	</servlet-mapping>
 	<!-- 查看图片 -->
 	<servlet>
 		<servlet-name>getPic</servlet-name>
@@ -149,59 +100,7 @@
 		<servlet-name>getPic</servlet-name>
 		<url-pattern>/getPic</url-pattern>
 	</servlet-mapping>
-	<!-- 修改图片 -->
-	<servlet>
-		<servlet-name>UpdatePic</servlet-name>
-		<servlet-class>com.da.Photography.control.UpdatePicServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>UpdatePic</servlet-name>
-		<url-pattern>/UpdatePic</url-pattern>
-	</servlet-mapping>
 <!-- /专辑管理 -->
-
-<!-- 查询记录 -->
-	<servlet>
-		<servlet-name>GetAllDowns</servlet-name>
-		<servlet-class>com.da.Photography.control.GetAllDownServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GetAllDowns</servlet-name>
-		<url-pattern>/GetAllDowns</url-pattern>
-	</servlet-mapping>
-
-
-
-<!-- 图片管理 -->
-	<!-- 查询图片信息 -->
-	<servlet>
-		<servlet-name>QueryPicture</servlet-name>
-		<servlet-class>com.da.Photography.control.GetPictureServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>QueryPicture</servlet-name>
-		<url-pattern>/QueryPicture</url-pattern>
-	</servlet-mapping>
-	<!-- 修改图片信息 -->
-	<servlet>
-		<servlet-name>AlterPicture</servlet-name>
-		<servlet-class>com.da.Photography.control.UpdatePictureServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AlterPicture</servlet-name>
-		<url-pattern>/AlterPicture</url-pattern>
-	</servlet-mapping>
-	<!-- 下载 -->
-	<servlet>
-		<servlet-name>DownPic</servlet-name>
-		<servlet-class>com.da.Photography.control.DownServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DownPic</servlet-name>
-		<url-pattern>/DownPic</url-pattern>
-	</servlet-mapping>
-<!-- /图片管理 -->
-  
 
 <!-- 申请管理员 -->
   	<servlet>
@@ -212,24 +111,4 @@
 		<servlet-name>ApplyFor</servlet-name>
 		<url-pattern>/ApplyFor</url-pattern>
 	</servlet-mapping>
-<!-- 申请通过或失败 -->
-	<servlet>
-		<servlet-name>SetAdmin</servlet-name>
-		<servlet-class>com.da.Photography.control.SetUserAdminServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>SetAdmin</servlet-name>
-		<url-pattern>/SetAdmin</url-pattern>
-	</servlet-mapping>
-	<!-- 充值 -->
-	 <servlet>
-		<servlet-name>Recharge</servlet-name>
-		<servlet-class>com.da.Photography.control.RechargeServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Recharge</servlet-name>
-		<url-pattern>/Recharge</url-pattern>
-	</servlet-mapping>
-	
-	
 </web-app>

@@ -59,7 +59,7 @@
 	<li><a class="tooltip-tip" href="<%=basePath%>admin/allUser.jsp"> <i class="fontawesome-group"></i>
 			<span>用户管理</span>
 	</a></li>
-	<li><a class="tooltip-tip" href="<%=basePath%>GetAllDowns?path=admin/allDowns.jsp&type=2"> <i class="icon icon-window"></i>
+	<li><a class="tooltip-tip" href="<%=basePath%>Albums_allDown.action?path=admin/allDowns.jsp&type=2"> <i class="icon icon-window"></i>
 			<span>所有动态</span>
 	</a></li>
 	<li><a class="tooltip-tip" href="#"> <i class="fontawesome-eye-open"></i>

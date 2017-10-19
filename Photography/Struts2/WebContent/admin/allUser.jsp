@@ -4,7 +4,7 @@
 <%String path = request.getContextPath();
   	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 	if(request.getAttribute("users") == null){
-		request.getRequestDispatcher("../AllUsers?path=admin/allUser.jsp&stat=1").forward(request, response);
+		response.sendRedirect("../User_allUser.action?path=admin/allUser.jsp&stat=1");
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -216,7 +216,7 @@
           <!--   END OF BREADCRUMB -->
           <div align="center" style="margin-top: 10px;">
           <section class="progress-demo">
-             <a href="<%=basePath %>AllUsers?path=admin/allUser.jsp&stat=1" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">刷新列表</a>
+             <a href="<%=basePath %>User_allUser.action?path=admin/allUser.jsp&stat=1" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">刷新列表</a>
              <button class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs" onclick="deleteAll()">删除选择的用户</button>
              </section>
              </div>

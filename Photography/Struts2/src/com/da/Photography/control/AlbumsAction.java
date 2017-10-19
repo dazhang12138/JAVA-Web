@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 
 import com.da.Photography.biz.AlbumsBiz;
+import com.da.Photography.biz.DownBiz;
 import com.da.Photography.dto.Albums;
+import com.da.Photography.dto.Down;
+import com.da.Photography.dto.Picture;
 import com.da.Photography.dto.User;
 
 public class AlbumsAction {
@@ -190,9 +193,50 @@ public class AlbumsAction {
 		return "count";
 	}
 	
+	/**
+	 * 获取图片信息
+	 * @return
+	 */
+	public String getPictrue(){
+		HttpServletRequest request = ServletActionContext.getRequest();
+		if(id != null && !id.equals("")) {
+			AlbumsBiz aBiz = new AlbumsBiz();
+			Picture picture = aBiz.queryPictureByAid(id);
+			if(picture == null) {
+				request.setAttribute("result", "查询图片详情失败");
+			}else {
+				request.setAttribute("picture", picture);
+			}
+		}else {
+			request.setAttribute("result", "查询图片详情失败");
+		}
+		return "alterPictrue";
+	}
 	
-	
-	
+	/**
+	 * 获取全部下载记录
+	 * @return
+	 */
+	public String allDown(){
+		String result = "";
+		HttpServletRequest request = ServletActionContext.getRequest();
+		User user = (User) request.getSession().getAttribute("user");
+	  	if(user == null){
+			request.setAttribute("result", "请登录管理员账户");
+			result = "login";
+		}else {
+			if(!type.equals("1") && !user.getU_role().equals("0")){
+				request.setAttribute("result", "请登录管理员账户");
+				result = "login";
+			}else {
+				DownBiz dBiz = new DownBiz();
+				List<Down> downs = dBiz.queryAllDown(type,user.getU_id());
+				request.setAttribute("downs", downs);
+				result = "path";
+			}
+		}
+	  	return result;
+	}
 	
 	
 	

@@ -249,7 +249,7 @@
                                 </div>
                             </div>
                             <div class="body-nest" id="Blank_Page_Content">
-								<form action="<%=basePath %>Recharge" method="post">
+								<form action="<%=basePath %>User_recharge.action" method="post">
 									用户名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<input style="color: black;" type="text" id="uname" name="uname" onblur="DetecUName()"><span id="duname" style="color: red;"></span>
 									<br><br>

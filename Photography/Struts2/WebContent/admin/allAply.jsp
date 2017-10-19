@@ -240,9 +240,9 @@
                                                 <td class="numeric">${a.user.u_signdate }</td>
                                                 <td class="numeric">${a.user.u_signday }</td>
                                                 <td class="numeric">
-                                                <a type="button" class="btn btn-default" href="<%=basePath%>SetAdmin?type=1&uid=${a.user.u_id}">
+                                                <a type="button" class="btn btn-default" href="<%=basePath%>User_setUserAdmin.action?type=1&uid=${a.user.u_id}">
                                     <span class="entypo-pencil"></span>&nbsp;&nbsp;通过</a>
-                                                <a type="button" class="btn btn-info"  href="<%=basePath%>SetAdmin?type=2&uid=${a.user.u_id}">
+                                                <a type="button" class="btn btn-info"  href="<%=basePath%>User_setUserAdmin.action?type=2&uid=${a.user.u_id}">
                                  <span class="entypo-trash"></span>&nbsp;&nbsp;拒绝</a></td>
                                             </tr>
                                             </c:forEach>

@@ -216,19 +216,19 @@
                             </div>
                             <div class="body-nest" id="basic">
                                 <div class="form_center">
-                                      <form action="<%= basePath%>AlterPicture" method="get" class="form-horizontal bucket-form">
+                                      <form action="<%= basePath%>Upload_updatePictrue.action" method="get" class="form-horizontal bucket-form">
 										<div class="form-group">
                                             <label for="exampleInputEmail1">名称</label>
-                                            	<input type="hidden" name="id" value="${picture.p_id}">
-                                                <input name="name" type="text" value="${picture.p_name }" id="focusedInput" class="form-control">
+                                            	<input type="hidden" name="picture.p_id" value="${picture.p_id}">
+                                                <input name="picture.p_name" type="text" value="${picture.p_name }" id="focusedInput" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">简介</label>
-                                        <textarea name="profile" class="textarea form-control2">${picture.p_profile}</textarea>
+                                        <textarea name="picture.p_profile" class="textarea form-control2">${picture.p_profile}</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">下载需要积分:</label>
-                                       	<select name="price">
+                                       	<select name="picture.p_price">
                                        		<option value="${picture.p_price}">${picture.p_price} </option>
                                        		<option value="2">2</option>
                                        		<option value="5">5</option>
