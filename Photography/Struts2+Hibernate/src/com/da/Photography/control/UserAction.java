@@ -12,6 +12,7 @@ import com.da.Photography.dao.DownDaoInterface;
 import com.da.Photography.daoImpl.DownHibDao;
 import com.da.Photography.dto.Apply;
 import com.da.Photography.dto.User;
+import com.da.Photography.entity.PaUser;
 import com.da.Photography.util.Email;
 import com.da.Photography.util.HibernateSessionFactory;
 import com.da.Photography.util.Log;
@@ -228,7 +229,13 @@ public class UserAction{
 			result = "updateUser";
 		}else {
 			UserBiz uBiz = new UserBiz();
-			boolean flag = uBiz.updateUser(String.valueOf(user.getU_id()),user.getU_name(),user.getU_pwd(),user.getU_phone(),user.getU_email());
+			PaUser pu = new PaUser();
+			pu.setUId(Long.valueOf(user.getU_id()));
+			pu.setUName(user.getU_name());
+			pu.setUPwd(user.getU_pwd());
+			pu.setUPhone(user.getU_phone());
+			pu.setUEmail(user.getU_email());
+			boolean flag = uBiz.updateUser(pu);
 			if(flag) {
 				request.setAttribute("result", "请重新登录.");
 				request.getSession().removeAttribute("user");

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="hibernate.connection.password">zd1125</property>
+        <property name="hibernate.connection.url">jdbc:oracle:thin:@127.0.0.1:1521:orcl</property>
+        <property name="hibernate.connection.username">photography</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <property name="show_sql">true</property>
+		<property name="connection.autocommit">true</property>
+		<mapping resource="com/da/Photography/entity/PaAlbums.hbm.xml" />
+		<mapping resource="com/da/Photography/entity/PaApplyadmin.hbm.xml" />
+		<mapping resource="com/da/Photography/entity/PaDown.hbm.xml" />
+		<mapping resource="com/da/Photography/entity/PaPicture.hbm.xml" />
+		<mapping resource="com/da/Photography/entity/PaUser.hbm.xml" />
+    </session-factory>
+    
+</hibernate-configuration>

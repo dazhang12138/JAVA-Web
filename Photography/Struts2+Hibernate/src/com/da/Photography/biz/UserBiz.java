@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.da.Photography.dao.UserDaoInterface;
-import com.da.Photography.daoImpl.UserDao;
 import com.da.Photography.daoImpl.UserHibDao;
 import com.da.Photography.dto.Apply;
 import com.da.Photography.dto.User;
@@ -55,7 +54,7 @@ public class UserBiz {
 	 */
 	public User login(String uname, String pwd) {
 		User user = null;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			user = uDao.queryUserByUnameAndPwd(uname,pwd);
@@ -77,7 +76,7 @@ public class UserBiz {
 	 */
 	public boolean detecUserName(String uname) {
 		boolean flag = true;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			flag = uDao.queryUserUnameByUname(uname);
@@ -100,7 +99,7 @@ public class UserBiz {
 	public int signIn(int u_id, int u_price) {
 		int result = 0;
 		int price = u_price;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			result = uDao.queryUserSignDay(u_id) + 1; //查询连续签到天数，为0时表示今日以签到,不为0时表示可以签到
@@ -140,7 +139,7 @@ public class UserBiz {
 				if(flag == 0) {
 					price = u_price;
 				}else {
-					flag = uDao.recordDown(u_id, (price-u_price)); //更新用户签到信息
+					uDao.recordDown(u_id, (price-u_price)); //更新用户签到信息
 				}
 			}
 			uDao.commitTran();
@@ -161,7 +160,7 @@ public class UserBiz {
 	 */
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<>();
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			users = uDao.getAllUsers();
@@ -182,15 +181,13 @@ public class UserBiz {
 	 */
 	public boolean deleteUser(String uid) {
 		boolean flag = false;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
-			int result = uDao.deleteUser(uid);
-			if(result != 0) {
-				flag = true;
-			}
+			uDao.deleteUser(uid);
+			flag = true;
 			uDao.commitTran();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("删除用户失败 : "  +e.getMessage());
 			e.printStackTrace();
@@ -208,15 +205,13 @@ public class UserBiz {
 	 * @param email 邮箱
 	 * @return 返回修改结果
 	 */
-	public boolean updateUser(String uid, String name, String pwd, String phone, String email) {
+	public boolean updateUser(PaUser pu) {
 		boolean flag = false;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
-			int result = uDao.updateUser(uid, name, pwd, phone, email);
-			if(result != 0) {
-				flag = true;
-			}
+			uDao.updateUser(pu);
+			flag = true;
 			uDao.commitTran();
 		} catch (SQLException e) {
 			uDao.rollbackTran();
@@ -234,7 +229,7 @@ public class UserBiz {
 	 */
 	public User detecUserEmail(String email) {
 		User user = null;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			user = uDao.queryUserUnameByEmail(email);
@@ -255,12 +250,11 @@ public class UserBiz {
 	 */
 	public boolean applyForAdmin(int u_id) {
 		boolean flag = true;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
-			int result = uDao.applyForAdmin(u_id);
-			if(result != 0)
-				flag = true;
+			uDao.applyForAdmin(u_id);
+			flag = true;
 			uDao.commitTran();
 		} catch (SQLException e) {
 			uDao.rollbackTran();
@@ -277,7 +271,7 @@ public class UserBiz {
 	 */
 	public List<Apply> queryAllApply() {
 		List<Apply> applys = new ArrayList<>();
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			applys = uDao.queryAllApply();
@@ -299,7 +293,7 @@ public class UserBiz {
 	 */
 	public boolean rechargeUser(String uname, String num) {
 		boolean flag = true;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			double money = Integer.valueOf(num);
@@ -336,7 +330,7 @@ public class UserBiz {
 	 */
 	public boolean updatePriceUserByid(int u_id, int price, int money) {
 		boolean flag = true;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			int r = uDao.minBalance(u_id,money);
@@ -361,7 +355,7 @@ public class UserBiz {
 	 */
 	public boolean updateRoleUserById(String uid) {
 		boolean flag = true;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			int r = uDao.updateRoleUserById(uid);
@@ -384,7 +378,7 @@ public class UserBiz {
 	 */
 	public boolean deleteApplyByUId(String uid) {
 		boolean flag = true;
-		UserDao uDao = new UserDao();
+		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			int r = uDao.deleteApplyByUId(uid);

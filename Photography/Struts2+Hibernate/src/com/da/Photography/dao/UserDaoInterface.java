@@ -21,15 +21,15 @@ public interface UserDaoInterface extends BaseDaoInterface{
 	// 查询所有用户信息
 	public List<User> getAllUsers() throws SQLException;
 	//删除用户信息通过用户编号,级联删除
-	public int deleteUser(String uid) throws SQLException;
+	public void deleteUser(String uid) throws Exception;
 	//修改用户信息
-	public int updateUser(String uid, String name, String pwd, String phone, String email) throws SQLException;
+	public void updateUser(PaUser pu) throws SQLException;
 	//通过邮箱查询用户
 	public User queryUserUnameByEmail(String email) throws SQLException;
 	//签到记录
-	public int recordDown(int u_id, int price) throws SQLException;
+	public void recordDown(int u_id, int price) throws SQLException;
 	//添加用户申请权限
-	public int applyForAdmin(int u_id) throws SQLException ;
+	public void applyForAdmin(int u_id) throws SQLException ;
 	//查询所有管理员申请
 	public List<Apply> queryAllApply() throws SQLException;
 	//用户修改余额
