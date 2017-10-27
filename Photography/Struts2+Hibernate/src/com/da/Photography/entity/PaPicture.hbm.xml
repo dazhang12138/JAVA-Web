@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-10-24 11:02:27 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.da.Photography.entity.PaPicture" table="PA_PICTURE" schema="PHOTOGRAPHY">
+        <id name="PId" type="long">
+            <column name="P_ID" precision="11" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="paAlbums" class="com.da.Photography.entity.PaAlbums" fetch="select">
+            <column name="A_ID" precision="11" scale="0">
+                <comment>&#203;&#249;&#202;&#244;&#215;&#168;&#188;&#173;</comment>
+            </column>
+        </many-to-one>
+        <property name="PName" type="string">
+            <column name="P_NAME">
+                <comment>&#205;&#188;&#198;&#172;&#195;&#251;&#179;&#198;</comment>
+            </column>
+        </property>
+        <property name="PTime" type="date">
+            <column name="P_TIME" length="7">
+                <comment>&#197;&#196;&#201;&#227;&#202;&#177;&#188;&#228;</comment>
+            </column>
+        </property>
+        <property name="PPic" type="blob">
+            <column name="P_PIC">
+                <comment>&#205;&#188;&#198;&#172;</comment>
+            </column>
+        </property>
+        <property name="PPrice" type="java.lang.Long">
+            <column name="P_PRICE" precision="10" scale="0">
+                <comment>&#187;&#253;&#183;&#214;</comment>
+            </column>
+        </property>
+        <property name="PProfile" type="string">
+            <column name="P_PROFILE" length="3000">
+                <comment>&#189;&#233;&#201;&#220;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

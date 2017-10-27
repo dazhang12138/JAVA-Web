@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+  <Resource name="jdbc/OraclePhotography" auth="Container"  type="javax.sql.DataSource" 
+            username="Photography"  password="zd1125"   driverClassName="oracle.jdbc.driver.OracleDriver"
+            url="jdbc:oracle:thin:@10.0.15.229:1521:orcl"         
+            maxActive="100" maxIdle="30" maxWait="10000"/>
+</Context>
+

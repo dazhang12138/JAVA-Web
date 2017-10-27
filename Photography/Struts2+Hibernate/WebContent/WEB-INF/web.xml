@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Photography</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+
+
+
+<!-- 下载 -->
+ 	<servlet>
+		<servlet-name>D1</servlet-name>
+		<servlet-class>com.da.Photography.control.D1Servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>D1</servlet-name>
+		<url-pattern>/D1</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>D2</servlet-name>
+		<servlet-class>com.da.Photography.control.D2Servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>D2</servlet-name>
+		<url-pattern>/D2</url-pattern>
+	</servlet-mapping>
+		<servlet>
+		<servlet-name>AD1</servlet-name>
+		<servlet-class>com.da.Photography.control.AD1Servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AD1</servlet-name>
+		<url-pattern>/AD1</url-pattern>
+	</servlet-mapping>
+			<servlet>
+		<servlet-name>AD2</servlet-name>
+		<servlet-class>com.da.Photography.control.AD2Servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AD2</servlet-name>
+		<url-pattern>/AD2</url-pattern>
+	</servlet-mapping>
+	
+	
+<!-- 用户管理 -->
+	<!-- 签到 -->
+	<servlet>
+		<servlet-name>LignDay</servlet-name>
+		<servlet-class>com.da.Photography.control.SignInServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LignDay</servlet-name>
+		<url-pattern>/LignDay</url-pattern>
+	</servlet-mapping>
+	<!-- 验证邮箱 -->
+	<servlet>
+		<servlet-name>DetecEmail</servlet-name>
+		<servlet-class>com.da.Photography.control.RegisterEmailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DetecEmail</servlet-name>
+		<url-pattern>/DetecEmail</url-pattern>
+	</servlet-mapping>
+	<!-- 检测用户名 -->
+		<servlet>
+			<servlet-name>DetecName</servlet-name>
+			<servlet-class>com.da.Photography.control.RegisterUnameServlet</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>DetecName</servlet-name>
+			<url-pattern>/DetecName</url-pattern>
+		</servlet-mapping>  
+		<servlet>
+			<servlet-name>DetecName2</servlet-name>
+			<servlet-class>com.da.Photography.control.RegisterUname2Servlet</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>DetecName2</servlet-name>
+			<url-pattern>/DetecName2</url-pattern>
+		</servlet-mapping>  
+<!-- /用户管理 -->
+
+	<!-- 查看图片 -->
+	<servlet>
+		<servlet-name>getPic</servlet-name>
+		<servlet-class>com.da.Photography.control.getPicServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getPic</servlet-name>
+		<url-pattern>/getPic</url-pattern>
+	</servlet-mapping>
+<!-- /专辑管理 -->
+
+<!-- 申请管理员 -->
+  	<servlet>
+		<servlet-name>ApplyFor</servlet-name>
+		<servlet-class>com.da.Photography.control.ApplyForServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ApplyFor</servlet-name>
+		<url-pattern>/ApplyFor</url-pattern>
+	</servlet-mapping>
+</web-app>
