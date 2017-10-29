@@ -6,9 +6,9 @@ import java.util.List;
 
 import com.da.Photography.dao.DownDaoInterface;
 import com.da.Photography.daoImpl.DownHibDao;
-import com.da.Photography.dto.Down;
-import com.da.Photography.dto.Picture;
-import com.da.Photography.dto.User;
+import com.da.Photography.entity.PaDown;
+import com.da.Photography.entity.PaPicture;
+import com.da.Photography.entity.PaUser;
 import com.da.Photography.util.Log;
 
 public class DownBiz{
@@ -69,19 +69,19 @@ public class DownBiz{
 	 * @param pic
 	 * @return
 	 */
-	public boolean down2(int u_id, List<Picture> pics) {
+	public boolean down2(int u_id, List<PaPicture> pics) {
 		boolean flag = false;
 		DownDaoInterface dDao = new DownHibDao();
 		dDao.beginTran();
 		try {
-			for (Picture pic : pics) {
-				boolean orOne = dDao.queryDownByUidAndPid(u_id, String.valueOf(pic.getP_id()));// 判断是否有下载记录
+			for (PaPicture pic : pics) {
+				boolean orOne = dDao.queryDownByUidAndPid(u_id, String.valueOf(pic.getPId()));// 判断是否有下载记录
 				if (!orOne) {
-					int minus = dDao.deductUserPrice(u_id, String.valueOf(pic.getP_id()));// 扣除下载人积分
-					int downupdate = dDao.recordDown(u_id, String.valueOf(pic.getP_id()));// 记录积分走向
+					int minus = dDao.deductUserPrice(u_id, String.valueOf(pic.getPId()));// 扣除下载人积分
+					int downupdate = dDao.recordDown(u_id, String.valueOf(pic.getPId()));// 记录积分走向
 					if (minus != 0 && downupdate != 0) {
-						int add = dDao.addUserPrice(String.valueOf(pic.getP_id()));// 增加创建人积分
-						downupdate = dDao.recordDown2(String.valueOf(pic.getP_id()));// 记录积分走向
+						int add = dDao.addUserPrice(String.valueOf(pic.getPId()));// 增加创建人积分
+						downupdate = dDao.recordDown2(String.valueOf(pic.getPId()));// 记录积分走向
 						if (add != 0 && downupdate != 0) {
 							flag = true;// 成功
 						} else {
@@ -110,8 +110,8 @@ public class DownBiz{
 	 * @param u_id
 	 * @return
 	 */
-	public List<Down> queryAllDown(String type, int u_id) {
-		List<Down> downs = new ArrayList<>();
+	public List<PaDown> queryAllDown(String type, int u_id) {
+		List<PaDown> downs = new ArrayList<>();
 		DownDaoInterface dDao = new DownHibDao();
 		dDao.beginTran();
 		try {
@@ -133,8 +133,8 @@ public class DownBiz{
 	 * @param uid
 	 * @return
 	 */
-	public User queryUserByuid(int uid) {
-		User user = null;
+	public PaUser queryUserByuid(int uid) {
+		PaUser user = null;
 		DownDaoInterface dDao = new DownHibDao();
 		dDao.beginTran();
 		try {

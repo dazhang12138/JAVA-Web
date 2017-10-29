@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.da.Photography.biz.UserBiz;
-import com.da.Photography.dto.User;
+import com.da.Photography.entity.PaUser;
+import com.da.Photography.util.HibernateSessionFactory;
 
 /**
  * 签到操作
@@ -28,17 +29,18 @@ public class SignInServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User user = (User) request.getSession().getAttribute("user");
+		PaUser user = (PaUser) request.getSession().getAttribute("user");
 		if(user == null) {
 			request.setAttribute("result", "请登录");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}else {
 			UserBiz uBiz = new UserBiz();
-			int price = uBiz.signIn(user.getU_id(),user.getU_price());
-			user.setU_price(user.getU_price() + price);
+			long price = uBiz.signIn(user.getUId(),user.getUPrice());
+			user.setUPrice(user.getUPrice() + price);
 			response.setCharacterEncoding("utf-8");
 			PrintWriter out = response.getWriter();
-			out.println("您的积分:" + (user.getU_price()) + "  +" + price);
+			out.println("您的积分:" + (user.getUPrice()) + "  +" + price);
+			HibernateSessionFactory.closeSession();
 			out.flush();
 			out.close();
 		}

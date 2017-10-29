@@ -1,12 +1,14 @@
 package com.da.Photography.biz;
 
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.da.Photography.daoImpl.AlbumsDao;
-import com.da.Photography.dto.Albums;
-import com.da.Photography.dto.Picture;
+import com.da.Photography.dao.AlbumsDaoInterface;
+import com.da.Photography.daoImpl.AlbumsHibDao;
+import com.da.Photography.entity.PaAlbums;
+import com.da.Photography.entity.PaPicture;
 import com.da.Photography.util.Log;
 
 public class AlbumsBiz {
@@ -16,14 +18,14 @@ public class AlbumsBiz {
 	 * @param stat 1为用户查看0为管理员查看
 	 * @return
 	 */
-	public List<Albums> getAlbums(int u_id, String stat) {
-		List<Albums> albums = new ArrayList<>();
-		AlbumsDao aDao = new AlbumsDao();
+	public List<PaAlbums> getAlbums(long u_id, String stat) {
+		List<PaAlbums> albums = new ArrayList<>();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
 			albums = aDao.queryAlbums(u_id,stat);
 			aDao.commitTran();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("查询专辑失败 : " + e.getMessage());
 			e.printStackTrace();
@@ -38,9 +40,9 @@ public class AlbumsBiz {
 	 * @param albums 专辑信息
 	 * @return 是否成功创建专辑
 	 */
-	public boolean addAlbums(int u_id, Albums albums) {
+	public boolean addAlbums(int u_id, PaAlbums albums) {
 		boolean flag = false;
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
 			int result = aDao.addAlbums(u_id,albums);
@@ -61,10 +63,10 @@ public class AlbumsBiz {
 	 * @param id 专辑编号
 	 * @return 封面图片
 	 */
-	public byte[] getAlbumPicByid(String id) {
-		AlbumsDao aDao = new AlbumsDao();
+	public Blob getAlbumPicByid(String id) {
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
-		byte[] pic = null;
+		Blob pic = null;
 		try {
 			pic = aDao.queryAlbumsPicById(id);
 			aDao.commitTran();
@@ -72,8 +74,6 @@ public class AlbumsBiz {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("获取封面图片失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return pic;
 	}
@@ -83,7 +83,7 @@ public class AlbumsBiz {
 	 * @return 图片
 	 */
 	public byte[] getPicturePicByid(String id) {
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		byte[] pic = null;
 		try {
@@ -99,7 +99,7 @@ public class AlbumsBiz {
 		return pic;
 	}
 	public List<byte[]> getAllAPicPicByaid(String aid) {
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		List<byte[]> pics = new ArrayList<>();
 		try {
@@ -123,7 +123,7 @@ public class AlbumsBiz {
 	 */
 	public boolean updatePic(byte[] pic, String id, String type) {
 		boolean flag = false;
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		if(type.equals("1")) {
 			try {
@@ -159,7 +159,7 @@ public class AlbumsBiz {
 	 */
 	public Albums queryAlbumsById(String id) {
 		Albums album = null;
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
 			album = aDao.queryAlbumsById(id);
@@ -182,7 +182,7 @@ public class AlbumsBiz {
 	 */
 	public boolean updateAlbums(String id, String name, String profile) {
 		boolean flag = false;
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
 			int result = aDao.updateAlbums(id, name, profile);
@@ -206,7 +206,7 @@ public class AlbumsBiz {
 	 */
 	public boolean deleteAlbums(String id) {
 		boolean flag = false;
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
 			int result = aDao.deleteAlbums(id);
@@ -227,9 +227,9 @@ public class AlbumsBiz {
 	 * @param id
 	 * @return
 	 */
-	public Albums queryAPictureByAid(String id) {
-		Albums album = null;
-		AlbumsDao aDao = new AlbumsDao();
+	public PaAlbums queryAPictureByAid(String id) {
+		PaAlbums album = null;
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
 			album = aDao.queryAlbumsById(id);
@@ -249,9 +249,9 @@ public class AlbumsBiz {
 	 * @param p 图片详情
 	 * @return
 	 */
-	public boolean addPicture(Picture p) {
+	public boolean addPicture(PaPicture p) {
 		boolean flag = false;
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
 			int result = aDao.addPicture(p);
@@ -272,9 +272,9 @@ public class AlbumsBiz {
 	 * @param id 图片编号
 	 * @return
 	 */
-	public Picture queryPictureByAid(String id) {
-		Picture picture = null;
-		AlbumsDao aDao = new AlbumsDao();
+	public PaPicture queryPictureByAid(String id) {
+		PaPicture picture = null;
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
 			picture = aDao.queryPictureByAid(id);
@@ -293,9 +293,9 @@ public class AlbumsBiz {
 	 * @param picture
 	 * @return 
 	 */
-	public boolean updatePicture(Picture picture) {
+	public boolean updatePicture(PaPicture picture) {
 		boolean flag = false;
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
 			int result = aDao.updatePicture(picture);
@@ -318,7 +318,7 @@ public class AlbumsBiz {
 	 */
 	public boolean deletePicture(String id) {
 		boolean flag = false;
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
 			int result = aDao.deletePicture(id);
@@ -340,13 +340,14 @@ public class AlbumsBiz {
 	 * @return
 	 */
 	public int[] queryCount() {
-		AlbumsDao aDao = new AlbumsDao();
+		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		int result[] = new int[3];
 		aDao.beginTran();
 		try {
 			for (int i = 0; i < 3; i++) {
 				result[i] = aDao.queryCount(i+1);
 			}
+			result[2] += result[1];
 			aDao.commitTran();
 		} catch (SQLException e) {
 			aDao.rollbackTran();

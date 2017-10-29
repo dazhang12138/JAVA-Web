@@ -10,8 +10,7 @@ import org.apache.struts2.ServletActionContext;
 import com.da.Photography.biz.UserBiz;
 import com.da.Photography.dao.DownDaoInterface;
 import com.da.Photography.daoImpl.DownHibDao;
-import com.da.Photography.dto.Apply;
-import com.da.Photography.dto.User;
+import com.da.Photography.entity.PaApplyadmin;
 import com.da.Photography.entity.PaUser;
 import com.da.Photography.util.Email;
 import com.da.Photography.util.HibernateSessionFactory;
@@ -25,7 +24,7 @@ public class UserAction{
 	/**
 	 * 用户信息
 	 */
-	private User user;
+	private PaUser user;
 	/**
 	 * 兑换积分，兑换的金额
 	 */
@@ -48,7 +47,7 @@ public class UserAction{
 		String result = "";
 		HttpServletRequest request = ServletActionContext.getRequest();
 		UserBiz uBiz = new UserBiz();
-		User u = uBiz.login(user.getU_uname(),user.getU_pwd());
+		PaUser u = uBiz.login(user.getUUname(),user.getUPwd());
 		if(u != null) {
 			request.getSession().setAttribute("user", u);
 			result = "Login_True";
@@ -56,6 +55,7 @@ public class UserAction{
 			request.setAttribute("result", "用户名或密码不正确");
 			result = "Login_False";
 		}
+		HibernateSessionFactory.closeSession();
 		return result;
 	}
 	/**
@@ -111,15 +111,15 @@ public class UserAction{
 	public String pointsfor(){
 		String result = "";
 		HttpServletRequest request = ServletActionContext.getRequest();
-		User user = (User) request.getSession().getAttribute("user");
+		PaUser user = (PaUser) request.getSession().getAttribute("user");
 		if(money != null && !money.equals("")){
 			int m = Integer.valueOf(money);
 			UserBiz uBiz = new UserBiz();
-			boolean flag = uBiz.updatePriceUserByid(user.getU_id(),m*100,m);
+			boolean flag = uBiz.updatePriceUserByid(user.getUId(),m*100,m);
 			if(flag) {
 				request.setAttribute("result", "积分兑换成功");
-				user.setU_balance(user.getU_balance()-m);
-				user.setU_price(user.getU_price()+m*100);
+				user.setUBalance(user.getUBalance()-m);
+				user.setUPrice(user.getUPrice()+m*100);
 				request.getSession().setAttribute("user", user);
 				result = "pointsfor_True";
 			}else {
@@ -139,10 +139,10 @@ public class UserAction{
 	public String allApply(){
 		String result = "";
 		HttpServletRequest request = ServletActionContext.getRequest();
-		User user = (User) request.getSession().getAttribute("user");
-		if(user != null && user.getU_role().equals("0")) {
+		PaUser user = (PaUser) request.getSession().getAttribute("user");
+		if(user != null && user.getURole().equals("0")) {
 			UserBiz uBiz = new UserBiz();
-			List<Apply> applys = uBiz.queryAllApply();
+			List<PaApplyadmin> applys = uBiz.queryAllApply();
 			request.setAttribute("applys", applys);
 			result = "allApplys_True";
 		}else {
@@ -195,16 +195,16 @@ public class UserAction{
 				uBiz.updateRoleUserById(uid);
 			}
 			uBiz.deleteApplyByUId(uid);
-			User user;
+			PaUser user;
 			try {
 				dDao.beginTran();
 				user = dDao.queryUserByuid(Integer.valueOf(uid));
 				dDao.commitTran();
-				String Text = "您好  " + user.getU_name() + " 先生/小姐。<br> 我是Photography摄影网站后台管理员.<br>我们收到您的申请网站管理的要求,首先非常感谢您对我们网站的贡献及支持,我们很希望更多的人加入我们，以及加入我们内部管理.<br>我们管理人员经过大会讨论对于用户您的申请我们给出处理结果如下:"
+				String Text = "您好  " + user.getUName() + " 先生/小姐。<br> 我是Photography摄影网站后台管理员.<br>我们收到您的申请网站管理的要求,首先非常感谢您对我们网站的贡献及支持,我们很希望更多的人加入我们，以及加入我们内部管理.<br>我们管理人员经过大会讨论对于用户您的申请我们给出处理结果如下:"
 						+ "<br><span style=\"color: red;\">" + (type.equals("1") ? "通过,恭喜您，你已经是我们Photography摄影网站的后台管理员，请您务必遵守管理员守则。" : "不通过，抱歉！经过我们讨论您不适合做我们社区管理员，请您谅解。") +"</span>"
 						+ "<br>我们的承诺:<br><br>    为了营造一个开放和欢迎的环境，我们的贡献者和维护者承诺，无论年龄、体型、残疾、种族、性别身份和表情、经验、国籍、个人外貌、种族、宗教、性别身份和取向，都将参与到我们的平台和社区中，为每个人提供免费的体验。"
 						+ "<br>    In the interest of fostering an open and welcoming environment, we ascontributors and maintainers pledge to making participation in our project andour community a harassment-free experience for everyone, regardless of age, bodysize, disability, ethnicity, gender identity and expression, level of experience,nationality, personal appearance, race, religion, or sexual identity andorientation.";
-				Email.sendEmail(user.getU_email(),Text);
+				Email.sendEmail(user.getUEmail(),Text);
 			} catch (SQLException e) {
 				Log.LOGGER.debug("查询用户信息出错" + e.getMessage());
 				e.printStackTrace();
@@ -222,19 +222,19 @@ public class UserAction{
 	public String updateUser(){
 		String result = "";
 		HttpServletRequest request = ServletActionContext.getRequest();
-		if(user.getU_name() == null || user.getU_name().equals("") 
-				|| user.getU_pwd() == null || user.getU_pwd().equals("") || user.getU_phone() == null 
-				|| user.getU_phone().equals("") || user.getU_email() == null || user.getU_email().equals("") ) {
+		if(user.getUName() == null || user.getUName().equals("") 
+				|| user.getUPwd() == null || user.getUPwd().equals("") || user.getUPhone() == null 
+				|| user.getUPhone().equals("") || user.getUEmail() == null || user.getUEmail().equals("") ) {
 			request.setAttribute("result", "修改个人信息失败,所有项不能为空.");
 			result = "updateUser";
 		}else {
 			UserBiz uBiz = new UserBiz();
 			PaUser pu = new PaUser();
-			pu.setUId(Long.valueOf(user.getU_id()));
-			pu.setUName(user.getU_name());
-			pu.setUPwd(user.getU_pwd());
-			pu.setUPhone(user.getU_phone());
-			pu.setUEmail(user.getU_email());
+			pu.setUId(Long.valueOf(user.getUId()));
+			pu.setUName(user.getUName());
+			pu.setUPwd(user.getUPwd());
+			pu.setUPhone(user.getUPhone());
+			pu.setUEmail(user.getUEmail());
 			boolean flag = uBiz.updateUser(pu);
 			if(flag) {
 				request.setAttribute("result", "请重新登录.");
@@ -255,8 +255,8 @@ public class UserAction{
 	public String allUser(){
 		String result = "";
 		HttpServletRequest request = ServletActionContext.getRequest();
-		User u = (User) request.getSession().getAttribute("user");
-		if(u == null || !u.getU_role().equals("0")) {
+		PaUser u = (PaUser) request.getSession().getAttribute("user");
+		if(u == null || !u.getURole().equals("0")) {
 			request.setAttribute("result", "请登录管理员账户");
 			result = "Login_False";
 		}else {
@@ -285,13 +285,13 @@ public class UserAction{
 			request.setAttribute("result", "邮件发送失败！邮箱不能为空.");
 		}else {
 			UserBiz uBiz = new UserBiz();
-			User user = uBiz.detecUserEmail(email);
+			PaUser user = uBiz.detecUserEmail(email);
 			if(user == null) {
 				request.setAttribute("result", "邮件发送失败！此邮箱未注册.");
 			}else {
 				try {
-					String Text = "您好  " + user.getU_name() + " 先生/小姐。<br> 我是Photography摄影网站后台管理员.<br>我们收到您的找回密码要求,已将您的Photography网站登录用户名和密码发送至您的邮箱.<br>如果是您本人操作请记住登录信息并尽快删除邮件.<br>如果不是您本人在操作找回Photography网站密码，请尽快前往我们网站修改个人信息,并注意个人信息以及登录信息泄露问题.<br>我们Photography网站承诺不会将个人信息及隐私泄露给任何人,请您放心."
-			        		+ "您的登录用户名:" + user.getU_uname() + ";登录密码:" + user.getU_pwd() + ";请牢记您的用户名密码。"
+					String Text = "您好  " + user.getUName() + " 先生/小姐。<br> 我是Photography摄影网站后台管理员.<br>我们收到您的找回密码要求,已将您的Photography网站登录用户名和密码发送至您的邮箱.<br>如果是您本人操作请记住登录信息并尽快删除邮件.<br>如果不是您本人在操作找回Photography网站密码，请尽快前往我们网站修改个人信息,并注意个人信息以及登录信息泄露问题.<br>我们Photography网站承诺不会将个人信息及隐私泄露给任何人,请您放心."
+			        		+ "您的登录用户名:" + user.getUUname() + ";登录密码:" + user.getUPwd() + ";请牢记您的用户名密码。"
 	        				+ "<br>我们的承诺:<br><br>    为了营造一个开放和欢迎的环境，我们的贡献者和维护者承诺，无论年龄、体型、残疾、种族、性别身份和表情、经验、国籍、个人外貌、种族、宗教、性别身份和取向，都将参与到我们的平台和社区中，为每个人提供免费的体验。"
 	        				+ "<br>    In the interest of fostering an open and welcoming environment, we ascontributors and maintainers pledge to making participation in our project andour community a harassment-free experience for everyone, regardless of age, bodysize, disability, ethnicity, gender identity and expression, level of experience,nationality, personal appearance, race, religion, or sexual identity andorientation.";
 					Email.sendEmail(email,Text);
@@ -319,10 +319,10 @@ public class UserAction{
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-	public User getUser() {
+	public PaUser getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(PaUser user) {
 		this.user = user;
 	}
 	public String getType() {

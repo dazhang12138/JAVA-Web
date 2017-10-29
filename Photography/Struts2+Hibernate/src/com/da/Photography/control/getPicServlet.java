@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.da.Photography.biz.AlbumsBiz;
+import com.da.Photography.util.HibernateSessionFactory;
 import com.da.Photography.util.Log;
 
 /**
@@ -41,7 +44,13 @@ public class getPicServlet extends HttpServlet {
 			byte[] pic = null;
 			AlbumsBiz aBiz = new AlbumsBiz();
 			if(type.equals("1")) {
-				pic = aBiz.getAlbumPicByid(id);
+				Blob picBlob = aBiz.getAlbumPicByid(id);
+				try {
+					pic = picBlob.getBytes(1, (int) picBlob.length());
+				} catch (SQLException e) {
+					Log.LOGGER.info("查询封面图片失败"  + e.getMessage());
+					e.printStackTrace();
+				}
 				out.write(pic);
 			}else if(type.equals("2")){
 				pic = aBiz.getPicturePicByid(id);
@@ -49,6 +58,7 @@ public class getPicServlet extends HttpServlet {
 				out.write(pic);
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		out.flush();
 		out.close();
 	}

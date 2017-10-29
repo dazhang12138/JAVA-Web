@@ -3,12 +3,17 @@ package com.da.Photography.biz;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.catalina.User;
+
+import com.da.Photography.dao.DownDaoInterface;
 import com.da.Photography.dao.UserDaoInterface;
+import com.da.Photography.daoImpl.DownHibDao;
 import com.da.Photography.daoImpl.UserHibDao;
-import com.da.Photography.dto.Apply;
-import com.da.Photography.dto.User;
+import com.da.Photography.entity.PaApplyadmin;
+import com.da.Photography.entity.PaDown;
 import com.da.Photography.entity.PaUser;
 import com.da.Photography.util.Log;
 
@@ -19,24 +24,17 @@ public class UserBiz {
 	 * @param user 注册用户信息
 	 * @return 注册结果 true 成功  false 失败
 	 */
-	public boolean register(User user) {
+	public boolean register(PaUser user) {
 		boolean flag = true;
 		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
-			PaUser pu = new PaUser();
-			pu.setUId(user.getU_id());
-			pu.setUName(user.getU_name());
-			pu.setUUname(user.getU_uname());
-			pu.setUPwd(user.getU_pwd());
-			pu.setUPhone(user.getU_phone());
-			pu.setUEmail(user.getU_email());
-			pu.setUPrice(new Long(user.getU_price()));
-			pu.setUBalance(new BigDecimal(user.getU_balance()));
-			pu.setUSignday(new Long(user.getU_signday()));
-			pu.setUSigndate(user.getU_signdate());
-			pu.setURole(user.getU_role());
-			uDao.addUser(pu);
+			user.setUId(uDao.maxUid()+1);
+			user.setURole("1");
+			user.setUPrice((long)0);
+			user.setUBalance(new BigDecimal(0));
+			user.setUSignday((long)0);
+			uDao.addUser(user);
 			uDao.commitTran();
 		} catch (Exception e) {
 			uDao.rollbackTran();
@@ -52,8 +50,8 @@ public class UserBiz {
 	 * @param pwd 密码
 	 * @return 返回登录用户信息  user为null时登录失败
 	 */
-	public User login(String uname, String pwd) {
-		User user = null;
+	public PaUser login(String uname, String pwd) {
+		PaUser user = null;
 		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
@@ -63,8 +61,6 @@ public class UserBiz {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("登录操作失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return user;
 	}
@@ -96,9 +92,9 @@ public class UserBiz {
 	 * @param u_price
 	 * @return
 	 */
-	public int signIn(int u_id, int u_price) {
+	public long signIn(long u_id, long u_price) {
 		int result = 0;
-		int price = u_price;
+		long price = u_price;
 		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
@@ -139,7 +135,10 @@ public class UserBiz {
 				if(flag == 0) {
 					price = u_price;
 				}else {
-					uDao.recordDown(u_id, (price-u_price)); //更新用户签到信息
+					DownDaoInterface dDao = new DownHibDao();
+					dDao.getConn();
+					PaDown d = new PaDown(dDao.maxId()+1, new PaUser(u_id), new Date(),(short) 1, "+"+(price-u_price), null);
+					uDao.recordDown(d); //更新用户签到信息签到记录
 				}
 			}
 			uDao.commitTran();
@@ -148,8 +147,6 @@ public class UserBiz {
 			price = u_price;
 			Log.LOGGER.debug("签到失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return price-u_price;
 	}
@@ -158,8 +155,8 @@ public class UserBiz {
 	 * @param stat 状态
 	 * @return
 	 */
-	public List<User> getAllUsers() {
-		List<User> users = new ArrayList<>();
+	public List<PaUser> getAllUsers() {
+		List<PaUser> users = new ArrayList<>();
 		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
@@ -227,8 +224,8 @@ public class UserBiz {
 	 * @param email
 	 * @return
 	 */
-	public User detecUserEmail(String email) {
-		User user = null;
+	public PaUser detecUserEmail(String email) {
+		PaUser user = null;
 		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
@@ -269,8 +266,8 @@ public class UserBiz {
 	 * 查询所有的管理员申请
 	 * @return
 	 */
-	public List<Apply> queryAllApply() {
-		List<Apply> applys = new ArrayList<>();
+	public List<PaApplyadmin> queryAllApply() {
+		List<PaApplyadmin> applys = new ArrayList<>();
 		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {

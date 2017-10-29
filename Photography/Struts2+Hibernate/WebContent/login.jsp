@@ -53,10 +53,10 @@
 					<form action="<%=basePath %>User_login.action" method="post" class="fh5co-form animate-box" data-animate-effect="fadeIn">
 						<h2>登录</h2>
 						<div class="form-group">
-							<input name="user.u_uname" type="text" class="form-control" id="username" placeholder="用户名" autocomplete="off">
+							<input name="user.UUname" type="text" class="form-control" id="username" placeholder="用户名" autocomplete="off">
 						</div>
 						<div class="form-group">
-							<input name="user.u_pwd" type="password" class="form-control" id="password" placeholder="密码" autocomplete="off">
+							<input name="user.UPwd" type="password" class="form-control" id="password" placeholder="密码" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<p>还没有注册? <a href="<%=basePath %>sign-up.jsp">注册</a> | <a href="<%=basePath %>forgot.jsp">忘记密码?</a></p>

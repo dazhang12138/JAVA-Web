@@ -118,23 +118,23 @@
 							<div class="alert alert-success" role="alert">请认真填写注册信息.</div>
 						</div>
 						<div class="form-group">
-							<input name="user.u_name" type="text" class="form-control" id="name" placeholder="姓名" autocomplete="off" onblur="DetecName()">
+							<input name="user.UName" type="text" class="form-control" id="name" placeholder="姓名" autocomplete="off" onblur="DetecName()">
 							<span style="color: red;" id="dname"></span>
 						</div>
 						<div class="form-group">
-							<input name="user.u_uname" type="text" class="form-control" id="uname" placeholder="用户名" autocomplete="off" onblur="DetecUName()">
+							<input name="user.UUname" type="text" class="form-control" id="uname" placeholder="用户名" autocomplete="off" onblur="DetecUName()">
 							<span style="color: red;" id="duname"></span>
 						</div>
 						<div class="form-group">
-							<input name="user.u_pwd" type="password" class="form-control" id="password" placeholder="密码" autocomplete="off" onblur="DetecPwd()">
+							<input name="user.UPwd" type="password" class="form-control" id="password" placeholder="密码" autocomplete="off" onblur="DetecPwd()">
 							<span style="color: red;" id="dpwd"></span>
 						</div>
 						<div class="form-group">
-							<input name="user.u_phone" type="text" class="form-control" id="phone" placeholder="手机号" autocomplete="off" onblur="DetecPhone()">
+							<input name="user.UPhone" type="text" class="form-control" id="phone" placeholder="手机号" autocomplete="off" onblur="DetecPhone()">
 							<span style="color: red;" id="dphone"></span>
 						</div>
 						<div class="form-group">
-							<input name="user.u_email" type="email" class="form-control" id="email" placeholder="邮箱" autocomplete="off" onblur="DetecEmail()">
+							<input name="user.UEmail" type="email" class="  form-control" id="email" placeholder="邮箱" autocomplete="off" onblur="DetecEmail()">
 							<span style="color: red;" id="demail"></span>
 						</div>
 						<div class="form-group">

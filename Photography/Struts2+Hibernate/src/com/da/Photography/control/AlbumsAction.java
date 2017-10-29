@@ -8,10 +8,11 @@ import org.apache.struts2.ServletActionContext;
 
 import com.da.Photography.biz.AlbumsBiz;
 import com.da.Photography.biz.DownBiz;
-import com.da.Photography.dto.Albums;
-import com.da.Photography.dto.Down;
-import com.da.Photography.dto.Picture;
-import com.da.Photography.dto.User;
+import com.da.Photography.entity.PaAlbums;
+import com.da.Photography.entity.PaDown;
+import com.da.Photography.entity.PaPicture;
+import com.da.Photography.entity.PaUser;
+import com.da.Photography.util.HibernateSessionFactory;
 
 public class AlbumsAction {
 	
@@ -42,7 +43,7 @@ public class AlbumsAction {
 	/**
 	 * 专辑信息获取
 	 */
-	private Albums albums;
+	private PaAlbums albums;
 	
 	/**
 	 * 删除专辑
@@ -92,7 +93,7 @@ public class AlbumsAction {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		if(id != null && !id.equals("")) {
 			AlbumsBiz aBiz = new AlbumsBiz();
-			Albums album = aBiz.queryAPictureByAid(id);
+			PaAlbums album = aBiz.queryAPictureByAid(id);
 			request.setAttribute("album", album);
 		}else {
 			request.setAttribute("result", "查询失败");	
@@ -106,7 +107,7 @@ public class AlbumsAction {
 	public String getAllAblums(){
 		String result = "";
 		HttpServletRequest request = ServletActionContext.getRequest();
-		User user = (User) request.getSession().getAttribute("user");
+		PaUser user = (PaUser) request.getSession().getAttribute("user");
 		if(type == null) {
 			if(user == null || path == null || stat == null || path.equals("") || stat.equals("")) {
 				if(stat == null || stat.equals("1")) {
@@ -117,20 +118,20 @@ public class AlbumsAction {
 				result = "login";
 			}else {
 				if(!stat.equals("1")) {
-					if(!user.getU_role().equals("0")) {
+					if(!user.getURole().equals("0")) {
 						request.setAttribute("result", "请登录管理员账户");
 						result = "login";
 						return result;
 					}
 				}
 				AlbumsBiz aBiz = new AlbumsBiz();
-				List<Albums> albums = aBiz.getAlbums(user.getU_id(),stat);
+				List<PaAlbums> albums = aBiz.getAlbums(user.getUId(),stat);
 				request.setAttribute("albums", albums);
 				result = "path";
 			}
 		}else {
 			AlbumsBiz aBiz = new AlbumsBiz();
-			List<Albums> albums = aBiz.getAlbums(0,"0");
+			List<PaAlbums> albums = aBiz.getAlbums(0,"0");
 			request.setAttribute("albums", albums);
 			result = "path";
 		}
@@ -142,14 +143,14 @@ public class AlbumsAction {
 	 */
 	public String updateAlbums(){
 		HttpServletRequest request = ServletActionContext.getRequest();
-		if(albums.getA_profile() == null)
-			albums.setA_profile("");
+		if(albums.getAProfile() == null)
+			albums.setAProfile("");
 		//这里修改信息时专辑名称不能为空，编号是控制修改条件不能为空，但是专辑简介是可以为空的
-		if(albums.getA_name() == null || albums.getA_name().equals("")) {
+		if(albums.getAName() == null || albums.getAName().equals("")) {
 			request.setAttribute("result", "修改信息失败,除去简介不能为空");
 		}else {
 			AlbumsBiz aBiz = new AlbumsBiz();
-			boolean flag = aBiz.updateAlbums(String.valueOf(albums.getA_id()),albums.getA_name(),albums.getA_profile());
+			boolean flag = aBiz.updateAlbums(String.valueOf(albums.getAId()),albums.getAName(),albums.getAProfile());
 			if(flag) {
 				request.setAttribute("result", "修改信息成功");
 			}else {
@@ -167,7 +168,7 @@ public class AlbumsAction {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		if(id != null && !id.equals("")) {
 			AlbumsBiz aBiz = new AlbumsBiz();
-			Albums album = aBiz.queryAlbumsById(id);
+			PaAlbums album = aBiz.queryAlbumsById(id);
 			if(album == null) {
 				request.setAttribute("result", "查询详情信息失败");
 			}else {
@@ -190,6 +191,7 @@ public class AlbumsAction {
 		request.setAttribute("ca", count[0]);
 		request.setAttribute("cu", count[1]);
 		request.setAttribute("cp", count[2]);
+		HibernateSessionFactory.closeSession();
 		return "count";
 	}
 	
@@ -201,7 +203,7 @@ public class AlbumsAction {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		if(id != null && !id.equals("")) {
 			AlbumsBiz aBiz = new AlbumsBiz();
-			Picture picture = aBiz.queryPictureByAid(id);
+			PaPicture picture = aBiz.queryPictureByAid(id);
 			if(picture == null) {
 				request.setAttribute("result", "查询图片详情失败");
 			}else {
@@ -220,17 +222,17 @@ public class AlbumsAction {
 	public String allDown(){
 		String result = "";
 		HttpServletRequest request = ServletActionContext.getRequest();
-		User user = (User) request.getSession().getAttribute("user");
+		PaUser user = (PaUser) request.getSession().getAttribute("user");
 	  	if(user == null){
 			request.setAttribute("result", "请登录管理员账户");
 			result = "login";
 		}else {
-			if(!type.equals("1") && !user.getU_role().equals("0")){
+			if(!type.equals("1") && !user.getURole().equals("0")){
 				request.setAttribute("result", "请登录管理员账户");
 				result = "login";
 			}else {
 				DownBiz dBiz = new DownBiz();
-				List<Down> downs = dBiz.queryAllDown(type,user.getU_id());
+				List<PaDown> downs = dBiz.queryAllDown(type,user.getUId());
 				request.setAttribute("downs", downs);
 				result = "path";
 			}
@@ -242,11 +244,11 @@ public class AlbumsAction {
 	
 	
 
-	public Albums getAlbums() {
+	public PaAlbums getAlbums() {
 		return albums;
 	}
 
-	public void setAlbums(Albums albums) {
+	public void setAlbums(PaAlbums albums) {
 		this.albums = albums;
 	}
 

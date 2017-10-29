@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.da.Photography.biz.UserBiz;
-import com.da.Photography.dto.User;
+import com.da.Photography.entity.PaUser;
 
 /**
  * 判断邮箱是否可以注册
@@ -37,7 +37,7 @@ public class RegisterEmailServlet extends HttpServlet {
 		if(email == null || email.equals("")) {
 			out.println("不能为空");
 		}else {
-			User user = uBiz.detecUserEmail(email);
+			PaUser user = uBiz.detecUserEmail(email);
 			if(user == null) {
 				out.println("邮箱可用");
 			}else {

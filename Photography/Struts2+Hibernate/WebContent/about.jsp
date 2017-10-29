@@ -78,8 +78,8 @@
 
 			<div class="fh5co-footer">
 				<c:if test="${user != null}">
-					<h4 style="color: gray;">${user.u_name },下午好</h4>
-					<h5 id="priceadd" style="color: gray;">您的积分:${user.u_price }</h5>
+					<h4 style="color: gray;">${user.UName },下午好</h4>
+					<h5 id="priceadd" style="color: gray;">您的积分:${user.UPrice }</h5>
 					<h5 style="color: gray;"><jsp:include page="lignday.html"></jsp:include><button onclick="location.href='User_loginOut.action';">注销</button></h5>
 				</c:if>
 				<ul>
