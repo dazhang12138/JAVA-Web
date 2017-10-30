@@ -98,6 +98,7 @@ public class AlbumsAction {
 		}else {
 			request.setAttribute("result", "查询失败");	
 		}
+//		HibernateSessionFactory.closeSession();
 		return "path";
 	}
 	/**
@@ -135,6 +136,8 @@ public class AlbumsAction {
 			request.setAttribute("albums", albums);
 			result = "path";
 		}
+		//不能关闭资源。否则admin/index.jsp页面的el表达式${a.paUser.UName }报错
+//		HibernateSessionFactory.closeSession();
 		return result;
 	}
 	/**
@@ -212,6 +215,7 @@ public class AlbumsAction {
 		}else {
 			request.setAttribute("result", "查询图片详情失败");
 		}
+		HibernateSessionFactory.closeSession();
 		return "alterPictrue";
 	}
 	

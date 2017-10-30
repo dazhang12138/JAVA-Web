@@ -4,16 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Hibernate;
 
 import com.da.Photography.biz.AlbumsBiz;
-import com.da.Photography.dto.Albums;
-import com.da.Photography.dto.Picture;
-import com.da.Photography.dto.User;
+import com.da.Photography.entity.PaAlbums;
+import com.da.Photography.entity.PaPicture;
+import com.da.Photography.entity.PaUser;
+import com.da.Photography.util.HibernateSessionFactory;
 import com.da.Photography.util.Log;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -28,9 +31,9 @@ public class UploadAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = -3663438042790990237L;
 
-	private Albums albums; //专辑信息
+	private PaAlbums albums; //专辑信息
 	private File pic; //专辑封面图片或图片图片
-	private Picture picture; //图片信息
+	private PaPicture picture; //图片信息
 	
 	/**
 	 * 添加图片
@@ -39,22 +42,22 @@ public class UploadAction extends ActionSupport {
 	public String addPicture(){
 		String result = "";
 		HttpServletRequest request = ServletActionContext.getRequest();
-		User user = (User) request.getSession().getAttribute("user");
+		PaUser user = (PaUser) request.getSession().getAttribute("user");
 		if(user == null) {
 			request.setAttribute("result", "请登录");
 			result = "login";
 		}else {
 			try {
 				String date = request.getParameter("date");
-				if(picture.getP_name() == null || picture.getP_name().equals("")|| date == null || date.equals("")) {
+				if(picture.getPName() == null || picture.getPName().equals("")|| date == null || date.equals("")) {
 					request.setAttribute("result", "除去介绍栏，不能为空。");
 				}else {
 					//设置时间
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-					picture.setP_time(format.parse(date));
+					picture.setPTime(format.parse(date));
 					//设置图片
 					byte[] pics = FileUtils.readFileToByteArray(pic);
-					picture.setP_pic(pics);
+					picture.setPPic(Hibernate.createBlob(pics));
 					AlbumsBiz aBiz = new AlbumsBiz();
 					boolean flag = aBiz.addPicture(picture);
 					if(flag ) {
@@ -73,7 +76,7 @@ public class UploadAction extends ActionSupport {
 				e.printStackTrace();
 			}
 			result = "addPicture_True";
-			request.setAttribute("id", picture.getAlbums().getA_id());
+			request.setAttribute("id", picture.getPaAlbums().getAId());
 		}
 		return result;
 	}
@@ -86,7 +89,7 @@ public class UploadAction extends ActionSupport {
 	public String addAblums(){
 		String result = "";
 		HttpServletRequest request = ServletActionContext.getRequest();
-		User user = (User) request.getSession().getAttribute("user");
+		PaUser user = (PaUser) request.getSession().getAttribute("user");
 		if(user == null) {
 			request.setAttribute("result", "请登录");
 			result = "login";
@@ -94,12 +97,14 @@ public class UploadAction extends ActionSupport {
 			try {
 				if(pic != null){
 					byte[] pics = FileUtils.readFileToByteArray(pic);
-					albums.setA_pic(pics);
-					if(albums.getA_name() == null || albums.getA_name().equals("")) {
+					albums.setAPic(Hibernate.createBlob(pics));
+					if(albums.getAName() == null || albums.getAName().equals("")) {
 						request.setAttribute("result", "专辑名不能为空");
 					}else {
 						AlbumsBiz aBiz = new AlbumsBiz();
-						boolean flag = aBiz.addAlbums(user.getU_id(),albums);
+						albums.setPaUser(new PaUser(user.getUId()));
+						albums.setATime(new Date());
+						boolean flag = aBiz.addAlbums(albums);
 						if(flag) {
 							request.setAttribute("result", "创建专辑成功");
 						}else {
@@ -116,6 +121,7 @@ public class UploadAction extends ActionSupport {
 			}
 			result = "addAblums_True";
 		}
+		HibernateSessionFactory.closeSession();
 		return result;
 	}
 	
@@ -127,14 +133,14 @@ public class UploadAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String date = request.getParameter("date");
 		//这里除了简介可以为空，其他都不能空
-		if(picture.getP_profile() == null)
-			picture.setP_profile("");
-		if(picture.getP_name() == null || date == null || picture.getP_name().equals("") || date.equals("")) {
+		if(picture.getPProfile() == null)
+			picture.setPProfile("");
+		if(picture.getPName() == null || date == null || picture.getPName().equals("") || date.equals("")) {
 			request.setAttribute("result", "修改信息失败");
 		}else {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			try {
-				picture.setP_time(format.parse(date));
+				picture.setPTime(format.parse(date));
 			} catch (ParseException e) {
 				Log.LOGGER.debug("时间转换失败");
 				e.printStackTrace();
@@ -147,6 +153,7 @@ public class UploadAction extends ActionSupport {
 				request.setAttribute("result", "修改信息失败");
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		return "updatepictrue";
 	}
 	
@@ -191,24 +198,21 @@ public class UploadAction extends ActionSupport {
 		this.pic = pic;
 	}
 
-	public Albums getAlbums() {
+	public PaAlbums getAlbums() {
 		return albums;
 	}
 
-	public void setAlbums(Albums albums) {
+	public void setAlbums(PaAlbums albums) {
 		this.albums = albums;
 	}
 
-
-	public Picture getPicture() {
+	public PaPicture getPicture() {
 		return picture;
 	}
 
-
-	public void setPicture(Picture picture) {
+	public void setPicture(PaPicture picture) {
 		this.picture = picture;
 	}
-
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

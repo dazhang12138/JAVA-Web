@@ -1,5 +1,6 @@
 package com.da.Photography.control;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -113,23 +114,30 @@ public class UserAction{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		PaUser user = (PaUser) request.getSession().getAttribute("user");
 		if(money != null && !money.equals("")){
-			int m = Integer.valueOf(money);
-			UserBiz uBiz = new UserBiz();
-			boolean flag = uBiz.updatePriceUserByid(user.getUId(),m*100,m);
-			if(flag) {
-				request.setAttribute("result", "积分兑换成功");
-				user.setUBalance(user.getUBalance()-m);
-				user.setUPrice(user.getUPrice()+m*100);
-				request.getSession().setAttribute("user", user);
-				result = "pointsfor_True";
-			}else {
-				request.setAttribute("result", "积分兑换失败");
+			long m = Integer.valueOf(money);
+			BigDecimal bm = new BigDecimal(m);
+			if(bm.max(user.getUBalance()).equals(bm)){
+				request.setAttribute("result", "积分兑换失败!余额不足!");
 				result = "pointsfor_False";
+			}else{
+				UserBiz uBiz = new UserBiz();
+				boolean flag = uBiz.updatePriceUserByid(user.getUId(),m*100,m);
+				if(flag) {
+					request.setAttribute("result", "积分兑换成功");
+					user.setUBalance(user.getUBalance().subtract(bm));
+					user.setUPrice(user.getUPrice()+m*100);
+					request.getSession().setAttribute("user", user);
+					result = "pointsfor_True";
+				}else {
+					request.setAttribute("result", "积分兑换失败");
+					result = "pointsfor_False";
+				}
 			}
 		}else{
 			request.setAttribute("result", "积分兑换失败");
 			result = "pointsfor_False";
 		}
+		HibernateSessionFactory.closeSession();
 		return result;
 	}
 	/**
@@ -229,13 +237,7 @@ public class UserAction{
 			result = "updateUser";
 		}else {
 			UserBiz uBiz = new UserBiz();
-			PaUser pu = new PaUser();
-			pu.setUId(Long.valueOf(user.getUId()));
-			pu.setUName(user.getUName());
-			pu.setUPwd(user.getUPwd());
-			pu.setUPhone(user.getUPhone());
-			pu.setUEmail(user.getUEmail());
-			boolean flag = uBiz.updateUser(pu);
+			boolean flag = uBiz.updateUser(user);
 			if(flag) {
 				request.setAttribute("result", "请重新登录.");
 				request.getSession().removeAttribute("user");
@@ -264,7 +266,7 @@ public class UserAction{
 				request.setAttribute("result", "查询失败");
 			}else {
 				UserBiz uBiz = new UserBiz();
-				List<User> users = uBiz.getAllUsers();
+				List<PaUser> users = uBiz.getAllUsers();
 				request.setAttribute("users", users);
 			}
 			if(path == null || path.equals(""))
