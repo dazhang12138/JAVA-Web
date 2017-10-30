@@ -110,7 +110,7 @@ public class DownBiz{
 	 * @param u_id
 	 * @return
 	 */
-	public List<PaDown> queryAllDown(String type, int u_id) {
+	public List<PaDown> queryAllDown(String type, long u_id) {
 		List<PaDown> downs = new ArrayList<>();
 		DownDaoInterface dDao = new DownHibDao();
 		dDao.beginTran();
@@ -121,8 +121,6 @@ public class DownBiz{
 			dDao.rollbackTran();
 			Log.LOGGER.debug("查询记录失败" + e.getMessage());
 			e.printStackTrace();
-		} finally {
-			dDao.closeAll();
 		}
 		return downs;
 	}
@@ -144,8 +142,6 @@ public class DownBiz{
 			dDao.rollbackTran();
 			Log.LOGGER.debug("查询用户通过编号失败 : " + e.getMessage());
 			e.printStackTrace();
-		} finally {
-			dDao.closeAll();
 		}
 		return user;
 	}

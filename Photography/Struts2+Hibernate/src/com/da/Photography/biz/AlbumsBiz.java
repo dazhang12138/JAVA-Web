@@ -3,7 +3,9 @@ package com.da.Photography.biz;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.da.Photography.dao.AlbumsDaoInterface;
 import com.da.Photography.daoImpl.AlbumsHibDao;
@@ -29,8 +31,6 @@ public class AlbumsBiz {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("查询专辑失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return albums;
 	}
@@ -40,21 +40,19 @@ public class AlbumsBiz {
 	 * @param albums 专辑信息
 	 * @return 是否成功创建专辑
 	 */
-	public boolean addAlbums(int u_id, PaAlbums albums) {
+	public boolean addAlbums(PaAlbums albums) {
 		boolean flag = false;
 		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
-			int result = aDao.addAlbums(u_id,albums);
-			if(result != 0)
-				flag = true;
+			albums.setAId(aDao.maxAlbId()+1);
+			aDao.addAlbums(albums);
+			flag = true;
 			aDao.commitTran();
 		} catch (SQLException e) {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("创建专辑失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return flag;
 	}
@@ -82,10 +80,10 @@ public class AlbumsBiz {
 	 * @param id 图片编号
 	 * @return 图片
 	 */
-	public byte[] getPicturePicByid(String id) {
+	public Blob getPicturePicByid(String id) {
 		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
-		byte[] pic = null;
+		Blob pic = null;
 		try {
 			pic = aDao.queryPicturePicByid(id);
 			aDao.commitTran();
@@ -93,11 +91,14 @@ public class AlbumsBiz {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("获取图片失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return pic;
 	}
+	/**
+	 * 获取图片集合
+	 * @param aid
+	 * @return
+	 */
 	public List<byte[]> getAllAPicPicByaid(String aid) {
 		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
@@ -109,8 +110,6 @@ public class AlbumsBiz {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("获取专辑内所有图片的图片失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return pics;
 	}
@@ -157,8 +156,8 @@ public class AlbumsBiz {
 	 * @param id 专辑编号
 	 * @return 返回专辑详情，null时为失败查询
 	 */
-	public Albums queryAlbumsById(String id) {
-		Albums album = null;
+	public PaAlbums queryAlbumsById(String id) {
+		PaAlbums album = null;
 		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
@@ -168,8 +167,6 @@ public class AlbumsBiz {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("查询专辑详情失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return album;
 	}
@@ -194,8 +191,6 @@ public class AlbumsBiz {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("修改专辑信息失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return flag;
 	}
@@ -217,8 +212,6 @@ public class AlbumsBiz {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("删除专辑失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return flag;
 	}
@@ -233,14 +226,14 @@ public class AlbumsBiz {
 		aDao.beginTran();
 		try {
 			album = aDao.queryAlbumsById(id);
-			album.setPictures(aDao.queryAPictureByAid(id));
+			Set<PaPicture> pics = new HashSet<>();
+			pics.addAll(aDao.queryAPictureByAid(id));
+			album.setPaPictures(pics);
 			aDao.commitTran();
 		} catch (SQLException e) {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("查询专辑图片失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return album;
 	}
@@ -254,16 +247,14 @@ public class AlbumsBiz {
 		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
 		try {
-			int result = aDao.addPicture(p);
-			if(result != 0)
-				flag = true;
+			p.setPId(aDao.maxPicId()+1);
+			aDao.addPicture(p);
+			flag = true;
 			aDao.commitTran();
 		} catch (SQLException e) {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("添加图片失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return flag;
 	}
@@ -283,8 +274,6 @@ public class AlbumsBiz {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("查询图片信息失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return picture;
 	}
@@ -306,8 +295,6 @@ public class AlbumsBiz {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("修改图片信息失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return flag;
 	}
@@ -329,8 +316,6 @@ public class AlbumsBiz {
 			aDao.rollbackTran();
 			Log.LOGGER.debug("删除图片失败 : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			aDao.closeAll();
 		}
 		return flag;
 	}

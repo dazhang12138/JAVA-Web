@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.catalina.User;
-
 import com.da.Photography.dao.DownDaoInterface;
 import com.da.Photography.dao.UserDaoInterface;
 import com.da.Photography.daoImpl.DownHibDao;
@@ -81,8 +79,6 @@ public class UserBiz {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("检测用户名失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return flag;
 	}
@@ -166,8 +162,6 @@ public class UserBiz {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("注册失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return users;
 	}
@@ -181,15 +175,15 @@ public class UserBiz {
 		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
-			uDao.deleteUser(uid);
-			flag = true;
+			int result = uDao.deleteUser(uid);
+			if(result != 0){
+				flag = true;
+			}
 			uDao.commitTran();
 		} catch (Exception e) {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("删除用户失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return flag;
 	}
@@ -207,15 +201,15 @@ public class UserBiz {
 		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
-			uDao.updateUser(pu);
-			flag = true;
+			int result = uDao.updateUser(pu);
+			if(result != 0){
+				flag = true;
+			}
 			uDao.commitTran();
 		} catch (SQLException e) {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("删除用户失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return flag;
 	}
@@ -235,8 +229,6 @@ public class UserBiz {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("检测邮箱失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return user;
 	}
@@ -245,20 +237,19 @@ public class UserBiz {
 	 * @param u_id
 	 * @return
 	 */
-	public boolean applyForAdmin(int u_id) {
+	public boolean applyForAdmin(long u_id) {
 		boolean flag = true;
 		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
-			uDao.applyForAdmin(u_id);
+			PaApplyadmin pa = new PaApplyadmin(uDao.maxAdminid()+1,new PaUser(u_id));
+			uDao.applyForAdmin(pa);
 			flag = true;
 			uDao.commitTran();
 		} catch (SQLException e) {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("申请权限失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return flag;
 	}
@@ -277,8 +268,6 @@ public class UserBiz {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("查询管理员申请失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return applys;
 	}
@@ -313,8 +302,6 @@ public class UserBiz {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("充值失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return flag;
 	}
@@ -325,23 +312,22 @@ public class UserBiz {
 	 * @param money 
 	 * @return
 	 */
-	public boolean updatePriceUserByid(int u_id, int price, int money) {
+	public boolean updatePriceUserByid(long u_id, long price, long money) {
 		boolean flag = true;
 		UserDaoInterface uDao = new UserHibDao();
 		uDao.beginTran();
 		try {
 			int r = uDao.minBalance(u_id,money);
 			int result = uDao.updatePriceUserByid(u_id,price);
-			int e = uDao.addDownByid(u_id,price);
-			if(result != 0 && r != 0 && e != 0)
+			PaDown d = new PaDown(uDao.maxDownid()+1, new PaUser(u_id), new Date(), (short) 4, "+"+price, null);
+			uDao.addDownByid(d);
+			if(result != 0 && r != 0)
 				flag = true;
 			uDao.commitTran();
 		} catch (SQLException e) {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("积分兑换失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return flag;
 	}
@@ -363,8 +349,6 @@ public class UserBiz {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("更新用户为管理员失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return flag;
 	}
@@ -386,8 +370,6 @@ public class UserBiz {
 			uDao.rollbackTran();
 			Log.LOGGER.debug("删除用户申请失败 : "  +e.getMessage());
 			e.printStackTrace();
-		}finally {
-			uDao.closeAll();
 		}
 		return flag;
 	}
