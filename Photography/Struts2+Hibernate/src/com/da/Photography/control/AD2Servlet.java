@@ -2,6 +2,8 @@ package com.da.Photography.control;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.da.Photography.biz.AlbumsBiz;
+import com.da.Photography.util.HibernateSessionFactory;
 
 /**
  * 下载图片
@@ -37,8 +40,13 @@ public class AD2Servlet extends HttpServlet {
 		AlbumsBiz aBiz = new AlbumsBiz();
 		//获取数据
 		List<byte[]> pics = aBiz.getAllAPicPicByaid(aid);
-		byte[] apic = aBiz.getAlbumPicByid(aid);
-		pics.add(apic);
+		Blob apic = aBiz.getAlbumPicByid(aid);
+		try {
+			pics.add(apic.getBytes(0, (int)apic.length()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//字节数组流
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		//压缩流
@@ -56,6 +64,7 @@ public class AD2Servlet extends HttpServlet {
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-disposition", "attachment; filename=Album" + aid + ".zip");
 		ServletOutputStream out = response.getOutputStream();
+		HibernateSessionFactory.closeSession();
 		out.write(baos.toByteArray());
 		out.flush();
 		out.close();

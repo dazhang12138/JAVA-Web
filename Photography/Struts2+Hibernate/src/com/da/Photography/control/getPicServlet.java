@@ -53,7 +53,13 @@ public class getPicServlet extends HttpServlet {
 				}
 				out.write(pic);
 			}else if(type.equals("2")){
-				pic = aBiz.getPicturePicByid(id);
+				Blob picBlob = aBiz.getPicturePicByid(id);
+				try {
+					pic = picBlob.getBytes(1, (int) picBlob.length());
+				} catch (SQLException e) {
+					Log.LOGGER.info("查询封面图片失败"  + e.getMessage());
+					e.printStackTrace();
+				}
 				pic = logoPic(pic);
 				out.write(pic);
 			}

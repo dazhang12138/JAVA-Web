@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.da.Photography.biz.DownBiz;
-import com.da.Photography.daoImpl.AlbumsDao;
-import com.da.Photography.dto.Picture;
-import com.da.Photography.dto.User;
+import com.da.Photography.dao.AlbumsDaoInterface;
+import com.da.Photography.daoImpl.AlbumsHibDao;
+import com.da.Photography.entity.PaPicture;
+import com.da.Photography.entity.PaUser;
 import com.da.Photography.util.HibernateSessionFactory;
 import com.da.Photography.util.Log;
 
@@ -42,7 +43,7 @@ public class AD1Servlet extends HttpServlet {
 		String aid = request.getParameter("aid");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		User user = (User) request.getSession().getAttribute("user");
+		PaUser user = (PaUser) request.getSession().getAttribute("user");
 		if (user == null) {
 			out.write("请先登录");
 		} else {
@@ -50,11 +51,11 @@ public class AD1Servlet extends HttpServlet {
 				out.write("下载出错!请稍后重试.");
 			} else {
 				// 检测用户积分是否够下载、积分扣除、专辑创建者增加积分、记录下载记录
-				int uid = user.getU_id();
+				long uid = user.getUId();
 				DownBiz dBiz = new DownBiz();
-				AlbumsDao aDao = new AlbumsDao();
+				AlbumsDaoInterface aDao = new AlbumsHibDao();
 				aDao.beginTran();
-				List<Picture> pics = new ArrayList<>(); // 专辑内图片集
+				List<PaPicture> pics = new ArrayList<>(); // 专辑内图片集
 				try {
 					pics = aDao.queryAPictureByAid(aid);
 				} catch (SQLException e) {
@@ -65,13 +66,13 @@ public class AD1Servlet extends HttpServlet {
 					out.write("已经下载专辑内所有图片，如果您之前下载过其中的图片，将不会扣除您对应的积分.");
 				}else {
 					int prices = 0;
-					for (Picture pic : pics) {
-						prices += pic.getP_price();
+					for (PaPicture pic : pics) {
+						prices += pic.getPPrice();
 					}
-					if (user.getU_price() >= prices) {
+					if (user.getUPrice() >= prices) {
 						// 积分足够
 						// 记录、扣除、增加积分
-						boolean flag = dBiz.down2(Integer.valueOf(uid), pics);
+						boolean flag = dBiz.down2((int)uid, pics);
 						if (flag) {
 							out.write("已经下载专辑内所有图片，如果您之前下载过其中的图片，将不会扣除您对应的积分.");
 						}else {

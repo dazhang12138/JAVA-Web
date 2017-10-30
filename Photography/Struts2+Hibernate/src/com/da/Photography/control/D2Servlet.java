@@ -1,6 +1,8 @@
 package com.da.Photography.control;
 
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -32,11 +34,16 @@ public class D2Servlet extends HttpServlet {
 		String pid = request.getParameter("pid");
 		AlbumsBiz aBiz = new AlbumsBiz();
 		//获取数据库图片通过图片编号
-		byte[] pics = aBiz.getPicturePicByid(pid);
+		Blob pics = aBiz.getPicturePicByid(pid);
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-disposition", "attachment; filename=" + pid + ".jpg");
 		ServletOutputStream out = response.getOutputStream();
-		out.write(pics);
+		try {
+			out.write(pics.getBytes(0, (int) pics.length()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		out.flush();
 		out.close();
 	}

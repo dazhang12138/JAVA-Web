@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.da.Photography.biz.UserBiz;
-import com.da.Photography.dto.User;
+import com.da.Photography.entity.PaUser;
+import com.da.Photography.util.HibernateSessionFactory;
 
 /**
  * 申请管理员
@@ -29,20 +30,21 @@ public class ApplyForServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User user = (User) request.getSession().getAttribute("user");
+		PaUser user = (PaUser) request.getSession().getAttribute("user");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		if(user == null) {
 			out.print("尝试失败！请稍后再试!");
 		}else {
 			UserBiz uBiz = new UserBiz();
-			boolean flag = uBiz.applyForAdmin(user.getU_id());
+			boolean flag = uBiz.applyForAdmin(user.getUId());
 			if(flag) {
 				out.print("申请中,请稍后查看权限!");
 			}else {
 				out.print("尝试失败！请稍后再试!");
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		out.flush();
 		out.close();
 	}
