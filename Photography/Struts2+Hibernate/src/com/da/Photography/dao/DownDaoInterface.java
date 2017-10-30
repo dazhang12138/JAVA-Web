@@ -20,7 +20,7 @@ public interface DownDaoInterface extends BaseDaoInterface {
 	//查找下载记录是否存在
 	public boolean queryDownByUidAndPid(int u_id, String pid) throws SQLException;
 	//查询记录
-	public List<PaDown> queryAllDown(String type, int u_id) throws SQLException;
+	public List<PaDown> queryAllDown(String type, long u_id) throws SQLException;
 	//查询用户信息通过用户编号
 	public PaUser queryUserByuid(int uid) throws SQLException;
 	//查询记录的最大编号

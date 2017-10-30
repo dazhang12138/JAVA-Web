@@ -1,9 +1,12 @@
 package com.da.Photography.daoImpl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -91,23 +94,39 @@ public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 		int result1 = q.executeUpdate();
 		return result1;
 	}
-
+	/**
+	 * 获取全部用户信息
+	 */
 	@Override
 	public List<PaUser> getAllUsers() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "from PaUser";
+		Query q = session.createQuery(hql);
+		return q.list();
 	}
-
+	/**
+	 * 删除用户
+	 */
 	@Override
-	public void deleteUser(String uid) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public int deleteUser(String uid) throws Exception {
+		String hql = "delete PaUser where UId=" + uid;
+		Query q = session.createQuery(hql);
+		int result = q.executeUpdate();
+		return result;
 	}
-
+	/**
+	 * 修改用户信息
+	 */
 	@Override
-	public void updateUser(PaUser pu) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public int updateUser(PaUser pu) throws SQLException {
+		String hql = "update PaUser set UName=?,UPwd=?,UPhone=?,UEmail=? where UId=?";
+		Query q = session.createQuery(hql);
+		q.setString(0, pu.getUName());
+		q.setString(1, pu.getUPwd());
+		q.setString(2, pu.getUPhone());
+		q.setString(3, pu.getUEmail());
+		q.setLong(4, pu.getUId());
+		int result = q.executeUpdate();
+		return result;
 	}
 	/**
 	 * 查询用户信息通过邮箱
@@ -132,49 +151,84 @@ public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 		session.save(down);
 		session.flush();
 	}
-
+	/**
+	 * 用户申请管理员
+	 */
 	@Override
-	public void applyForAdmin(int u_id) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void applyForAdmin(PaApplyadmin pa) throws SQLException {
+		session.save(pa);
+		session.flush();
 	}
-
+	/**
+	 * 查询所有用户申请
+	 */
 	@Override
 	public List<PaApplyadmin> queryAllApply() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "select DISTINCT p from PaApplyadmin p";
+		Query q = session.createQuery(hql);
+		List<PaApplyadmin> list = q.list();
+		List<PaApplyadmin> as = new ArrayList<>();
+		Set<Long> set = new HashSet<>();
+		
+		for (PaApplyadmin a : list) {
+			if(set.add(a.getPaUser().getUId())){
+				as.add(a);
+			}
+		}
+		return as;
 	}
-
+	/**
+	 * 用户充值
+	 */
 	@Override
 	public int rechargeUser(String uname, double num) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "update PaUser set UBalance = UBalance+? where UUname=?";
+		Query q = session.createQuery(sql);
+		q.setDouble(0, num);
+		q.setString(1, uname);
+		int result = q.executeUpdate();
+		return result;
 	}
-
+	/**
+	 * 更新用户积分
+	 */
 	@Override
-	public int updatePriceUserByid(int u_id, int price) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updatePriceUserByid(long u_id, long price) throws SQLException {
+		String hql = "update PaUser set UPrice = UPrice+? where UId=?";
+		Query q = session.createQuery(hql);
+		q.setLong(0, price);
+		q.setLong(1, u_id);
+		int result = q.executeUpdate();
+		return result;
 	}
-
+	/**
+	 * 修改用户余额
+	 */
 	@Override
-	public int minBalance(int u_id, int num) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int minBalance(long u_id, long num) throws SQLException {
+		String hql = "update PaUser set UBalance = UBalance-? where UId=?";
+		Query q = session.createQuery(hql);
+		q.setLong(0, num);
+		q.setLong(1, u_id);
+		int result = q.executeUpdate();
+		return result;
 	}
-
+	/**
+	 * 添加用户积分动态
+	 */
 	@Override
-	public int addDownByid(int u_id, int price) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public void addDownByid(PaDown d) throws SQLException {
+		session.save(d);
+		session.flush();
 	}
-
+	/**
+	 * 更新用户积分
+	 */
 	@Override
 	public int updateRoleUserById(String uid) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 	@Override
 	public int deleteApplyByUId(String uid) throws SQLException {
 		// TODO Auto-generated method stub
@@ -191,5 +245,18 @@ public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 		long result = Long.valueOf(sq.list().get(0).toString());
 		return result;
 	}
-	
+	@Override
+	public long maxAdminid() {
+		String sql = "select nvl(max(ad_id),0) from PA_APPLYADMIN";
+		SQLQuery sq = session.createSQLQuery(sql);
+		long result = Long.valueOf(sq.list().get(0).toString());
+		return result;
+	}
+	@Override
+	public long maxDownid() {
+		String sql = "select nvl(max(d_id),0) from Pa_Down";
+		SQLQuery sq = session.createSQLQuery(sql);
+		long result = Long.valueOf(sq.list().get(0).toString());
+		return result;
+	}
 }

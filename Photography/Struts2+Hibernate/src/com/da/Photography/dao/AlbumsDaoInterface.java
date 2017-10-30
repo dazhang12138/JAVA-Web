@@ -12,11 +12,11 @@ public interface AlbumsDaoInterface extends BaseDaoInterface{
 	//查询所有专辑
 	public List<PaAlbums> queryAlbums(long u_id, String stat) throws Exception;
 	//添加专辑
-	public void addAlbums(int u_id, PaAlbums albums) throws SQLException;
+	public void addAlbums(PaAlbums albums) throws SQLException;
 	//查询专辑的封面图片通过专辑编号
 	public Blob queryAlbumsPicById(String id) throws SQLException;
 	//查询图片的图片通过图片编号
-	public byte[] queryPicturePicByid(String id) throws SQLException;
+	public Blob queryPicturePicByid(String id) throws SQLException;
 	//修改封面图片
 	public int updateAPic(byte[] pic, String id) throws SQLException;
 	// 修改图片图片
@@ -30,7 +30,7 @@ public interface AlbumsDaoInterface extends BaseDaoInterface{
 	// 查询专辑内图片信息
 	public List<PaPicture> queryAPictureByAid(String id) throws SQLException ;
 	//添加图片信息
-	public int addPicture(PaPicture p) throws SQLException;
+	public void addPicture(PaPicture p) throws SQLException;
 	//查询图片详情信息 
 	public PaPicture queryPictureByAid(String id) throws SQLException;
 	//修改图片信息
@@ -41,4 +41,8 @@ public interface AlbumsDaoInterface extends BaseDaoInterface{
 	public int queryCount(int type) throws SQLException ;
 	//查询专辑内所有图片的图片
 	public List<byte[]> getAllAPicPicByaid(String aid) throws SQLException;
+	
+	public long maxPicId();
+	public long maxAlbId();
+	
 }

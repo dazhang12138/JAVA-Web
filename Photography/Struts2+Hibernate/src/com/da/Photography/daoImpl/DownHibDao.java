@@ -3,12 +3,12 @@ package com.da.Photography.daoImpl;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 
 import com.da.Photography.dao.DownDaoInterface;
 import com.da.Photography.entity.PaDown;
 import com.da.Photography.entity.PaUser;
-import com.da.Photography.util.HibernateSessionFactory;
 
 public class DownHibDao extends BaseHibDao implements DownDaoInterface {
 
@@ -47,11 +47,18 @@ public class DownHibDao extends BaseHibDao implements DownDaoInterface {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	/**
+	 * 查询全部积分动态
+	 */
 	@Override
-	public List<PaDown> queryAllDown(String type, int u_id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PaDown> queryAllDown(String type, long u_id) throws SQLException {
+		String hql = "from PaDown ";
+		if(type.equals("1")) {
+			hql += " where paUser.UId=" + u_id;
+		}
+		hql += " order by DId DESC ";
+		Query q = session.createQuery(hql);
+		return q.list();
 	}
 
 	@Override
