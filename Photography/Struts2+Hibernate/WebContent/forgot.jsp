@@ -49,7 +49,7 @@
 			<div class="row">
 				<div class="col-md-4 col-md-offset-4">
 					<!-- Start Sign In Form -->
-					<form action="<%=basePath %>ForgotPwd" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+					<form action="<%=basePath %>User_forgotPwd.action" class="fh5co-form animate-box" data-animate-effect="fadeIn">
 						<h2>找回密码</h2>
 						<div class="form-group">
 							<div class="alert alert-success" role="alert">我们会将您的账户信息通过注册邮箱发送到您的手里.请注意查看您的注册邮箱</div>

@@ -1,15 +1,14 @@
-<%@page import="com.da.Photography.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
-	User user = (User) session.getAttribute("user");
+	/* User user = (User) session.getAttribute("user");
 	if( user == null || !user.getU_role().equals("0")){
   		request.setAttribute("result", "请登录管理员账户");
 		request.getRequestDispatcher("../login.jsp").forward(request, response);
-	}
+	} */
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 

@@ -261,17 +261,17 @@
                                         <tbody>
                                          	<c:forEach items="${users }" var="u">
                                             <tr>
-                                                <td class="numeric"><input type="checkbox" name="allcheck" value="${u.u_id }"></td>
-                                                <td class="numeric">${u.u_id }</td>
-                                                <td class="numeric">${u.u_name }</td>
-                                                <td class="numeric">${u.u_uname }</td>
-                                                <td class="numeric">${u.u_phone }</td>
-                                                <td class="numeric">${u.u_email }</td>
-                                                <td class="numeric">${u.u_price }</td>
-                                                <td class="numeric">${u.u_balance }</td>
-                                                <td class="numeric">${u.u_role=='0'?'管理员':'用户' }</td>
+                                                <td class="numeric"><input type="checkbox" name="allcheck" value="${u.UId }"></td>
+                                                <td class="numeric">${u.UId }</td>
+                                                <td class="numeric">${u.UName }</td>
+                                                <td class="numeric">${u.UUname }</td>
+                                                <td class="numeric">${u.UPhone }</td>
+                                                <td class="numeric">${u.UEmail }</td>
+                                                <td class="numeric">${u.UPrice }</td>
+                                                <td class="numeric">${u.UBalance }</td>
+                                                <td class="numeric">${u.URole=='0'?'管理员':'用户' }</td>
                                                 <td class="numeric">
-                                                <a type="button" class="btn btn-info"  href="<%=basePath %>User_deleteUser.action?uid=${u.u_id }"  onclick="return confirm('是否删除 : '+'${u.u_uname }'+' 用户\n这将会删除用户下所有关联，请三思。')" >
+                                                <a type="button" class="btn btn-info"  href="<%=basePath %>User_deleteUser.action?uid=${u.UId }"  onclick="return confirm('是否删除 : '+'${u.UName }'+' 用户\n这将会删除用户下所有关联，请三思。')" >
                                  <span class="entypo-trash"></span>&nbsp;&nbsp;删除</a></td>
                                             </tr>
                                             </c:forEach> 

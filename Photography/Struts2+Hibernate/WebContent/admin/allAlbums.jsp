@@ -258,20 +258,20 @@
                                         <tbody>
                                         	<c:forEach items="${albums }" var="a">
                                             <tr>
-                                                <td class="numeric"><input type="checkbox" name="allcheck" value="${a.a_id }"></td>
-                                                <td class="numeric">${a.a_id }</td>
-                                                <td class="numeric">${a.a_name }</td>
-                                                <td class="numeric">${a.user.u_name }</td>
-                                                <td class="numeric">${a.a_time }</td>
-                                                <td class="numeric" style="max-width: 700px;word-wrap:break-word;">${a.a_profile }</td>
+                                                <td class="numeric"><input type="checkbox" name="allcheck" value="${a.AId }"></td>
+                                                <td class="numeric">${a.AId }</td>
+                                                <td class="numeric">${a.AName }</td>
+                                                <td class="numeric">${a.paUser.UName }</td>
+                                                <td class="numeric">${a.ATime }</td>
+                                                <td class="numeric" style="max-width: 700px;word-wrap:break-word;">${a.AProfile }</td>
                                                 <td class="numeric"> 
-                                                <a type="button" class="btn btn-primary" href="<%=basePath %>admin/pic.jsp?type=1&id=${a.a_id }">查看封面</a> 
-                                                <a type="button" class="btn btn-danger" href="<%=basePath %>Albums_queryAlbumsPicture.action?path=admin/albumsDetails.jsp&id=${a.a_id}">专辑图片</a>
+                                                <a type="button" class="btn btn-primary" href="<%=basePath %>admin/pic.jsp?type=1&id=${a.AId }">查看封面</a> 
+                                                <a type="button" class="btn btn-danger" href="<%=basePath %>Albums_queryAlbumsPicture.action?path=admin/albumsDetails.jsp&id=${a.AId}">专辑图片</a>
                                                 </td>
                                                 <td class="numeric">
-                                                <a type="button" class="btn btn-default" href="<%=basePath %>Albums_getAlbumsByaid.action?id=${a.a_id}">
+                                                <a type="button" class="btn btn-default" href="<%=basePath %>Albums_getAlbumsByaid.action?id=${a.AId}">
                                     <span class="entypo-pencil"></span>&nbsp;&nbsp;修改</a>
-                                                <a type="button" class="btn btn-info"  href="<%=basePath %>Albums_deleteAlbums.action?id=${a.a_id}"  onclick="return confirm('是否删除 : '+'${a.a_name}'+' 专辑\n这将会删除专辑下所有图片，请三思。')" >
+                                                <a type="button" class="btn btn-info"  href="<%=basePath %>Albums_deleteAlbums.action?id=${a.AId}"  onclick="return confirm('是否删除 : '+'${a.AName}'+' 专辑\n这将会删除专辑下所有图片，请三思。')" >
                                  <span class="entypo-trash"></span>&nbsp;&nbsp;删除</a></td>
                                             </tr>
                                             </c:forEach>

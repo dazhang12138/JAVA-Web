@@ -188,7 +188,7 @@
           <!--   END OF BREADCRUMB -->
           <div align="center" style="margin-top: 10px;">
           <section class="progress-demo">
-             <a href="<%=basePath %>AllApplyAdmin" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">刷新列表</a>
+             <a href="<%=basePath %>User_allApply.action" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">刷新列表</a>
              </section>
              </div>
 		<div class="content-wrap">
@@ -231,18 +231,18 @@
                                         <tbody >
                                         	<c:forEach items="${applys }" var="a">
                                             <tr>
-                                                <td class="numeric">${a.user.u_id }</td>
-                                                <td class="numeric">${a.user.u_name }</td>
-                                                <td class="numeric">${a.user.u_price }</td>
-                                                <td class="numeric">${a.user.u_balance }</td>
-                                                <td class="numeric">${a.user.u_phone }</td>
-                                                <td class="numeric">${a.user.u_email }</td>
-                                                <td class="numeric">${a.user.u_signdate }</td>
-                                                <td class="numeric">${a.user.u_signday }</td>
+                                                <td class="numeric">${a.paUser.UId }</td>
+                                                <td class="numeric">${a.paUser.UName }</td>
+                                                <td class="numeric">${a.paUser.UPrice }</td>
+                                                <td class="numeric">${a.paUser.UBalance }</td>
+                                                <td class="numeric">${a.paUser.UPhone }</td>
+                                                <td class="numeric">${a.paUser.UEmail }</td>
+                                                <td class="numeric">${a.paUser.USigndate }</td>
+                                                <td class="numeric">${a.paUser.USignday }</td>
                                                 <td class="numeric">
-                                                <a type="button" class="btn btn-default" href="<%=basePath%>User_setUserAdmin.action?type=1&uid=${a.user.u_id}">
+                                                <a type="button" class="btn btn-default" href="<%=basePath%>User_setUserAdmin.action?type=1&uid=${a.paUser.UId}">
                                     <span class="entypo-pencil"></span>&nbsp;&nbsp;通过</a>
-                                                <a type="button" class="btn btn-info"  href="<%=basePath%>User_setUserAdmin.action?type=2&uid=${a.user.u_id}">
+                                                <a type="button" class="btn btn-info"  href="<%=basePath%>User_setUserAdmin.action?type=2&uid=${a.paUser.UId}">
                                  <span class="entypo-trash"></span>&nbsp;&nbsp;拒绝</a></td>
                                             </tr>
                                             </c:forEach>

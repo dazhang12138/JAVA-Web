@@ -1,11 +1,10 @@
-<%@page import="com.da.Photography.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%String path = request.getContextPath();
   	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
   	if(request.getAttribute("downs") == null){
-		request.getRequestDispatcher("../GetAllDowns?path=admin/allDowns.jsp&type=2").forward(request, response);
+		request.getRequestDispatcher("../Downs_getAllDowns.action?path=admin/allDowns.jsp&type=2").forward(request, response);
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -219,7 +218,7 @@
           <!--   END OF BREADCRUMB -->
           <div align="center" style="margin-top: 10px;">
           <section class="progress-demo">
-             <a href="<%=basePath %>GetAllDowns?path=admin/allDowns.jsp&type=2" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">刷新列表</a>
+             <a href="<%=basePath %>Downs_getAllDowns.action?path=admin/allDowns.jsp&type=2" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">刷新列表</a>
              </section>
              </div>
 		<div class="content-wrap">
@@ -259,12 +258,12 @@
                                         <tbody >
                                         	<c:forEach items="${downs }" var="d">
                                             <tr>
-                                                <td class="numeric">${d.d_id }</td>
-                                                <td class="numeric">${d.user.u_id }</td>
-                                                <td class="numeric">${d.pic.p_id }</td>
-                                                <td class="numeric">${d.d_date }</td>
-                                                <td class="numeric">${d.d_type==1 ? "签到" : d.d_type==2 ? "下载" : d.d_type==3 ? "被下载" : "积分兑换"}</td>
-                                                <td class="numeric" >${d.d_update }</td>
+                                                <td class="numeric">${d.DId }</td>
+                                                <td class="numeric">${d.paUser.UId }</td>
+                                                <td class="numeric">${d.PId }</td>
+                                                <td class="numeric">${d.DDate }</td>
+                                                <td class="numeric">${d.DType==1 ? "签到" : d.DType==2 ? "下载" : d.DType==3 ? "被下载" : "积分兑换"}</td>
+                                                <td class="numeric" >${d.DUpdate }</td>
                                             </tr>
                                             </c:forEach>
                                         </tbody>

@@ -1,4 +1,3 @@
-<%@page import="com.da.Photography.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -229,14 +228,15 @@
                             </div>
                             <div class="body-nest" id="Blank_Page_Content">
                            	<c:choose>
-                           		<c:when test="${user.u_balance >= 1 }">
+                           		<c:when test="${user.UBalance >= 1 }">
                            		<form action="<%=basePath %>User_pointsfor.action" method="post">
                             		<span>选择金额:</span>
-                            		<select id="money" name="money" onchange="p()">
-                            			<c:forEach step="1" end="${user.u_balance }" begin="1" var="i">
+                            		<%-- <select id="money" name="money" onchange="p()">
+                            			<c:forEach step="1" end="${user.UBalance }" begin="1" var="i">
                             			<option value="${i }">${i }</option>
                             			</c:forEach>
-                            		</select>
+                            		</select> --%>
+                            		<input id="money" name="money" onchange="p()" type="text" style="color: red;"/>
                             		<br><br>
                             		<span>兑换积分:</span>
                             		<span id="userprice"  style="color: red;font-size: 15px;">100</span>

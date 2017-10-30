@@ -1,4 +1,3 @@
-<%@page import="com.da.Photography.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -101,8 +100,8 @@
 
 			<div class="fh5co-footer">
 			<c:if test="${user != null}">
-					<h4 style="color: gray;">${user.u_name },下午好</h4>
-					<h5 id="priceadd" style="color: gray;">您的积分:${user.u_price }</h5>
+					<h4 style="color: gray;">${user.UName },下午好</h4>
+					<h5 id="priceadd" style="color: gray;">您的积分:${user.UPrice }</h5>
 					<h5 style="color: gray;"><jsp:include page="lignday.html"></jsp:include><button onclick="location.href='User_loginOut.action';">注销</button></h5>
 				</c:if>
 				<ul>
@@ -115,24 +114,24 @@
 		</aside>
 		<div id="fh5co-main">
 			<div class="fh5co-narrow-content animate-box fh5co-border-bottom" data-animate-effect="fadeInLeft">
-				<h2 class="fh5co-heading" ><span>${album.a_name }&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;&nbsp;&nbsp;&nbsp; ${album.user.u_name }</span></h2>
-				<p style="word-wrap:break-word;">${album.a_profile }</p>
+				<h2 class="fh5co-heading" ><span>${album.AName }&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;&nbsp;&nbsp;&nbsp; ${album.paUser.UName }</span></h2>
+				<p style="word-wrap:break-word;">${album.AProfile }</p>
 				<div class="col-md-12">
-					<p class="text-center"><a onclick="downAlbums(${album.a_id})" class="btn btn-primary btn-outline">下载专辑</a></p>
+					<p class="text-center"><a onclick="downAlbums(${album.AId})" class="btn btn-primary btn-outline">下载专辑</a></p>
 				</div>
 				<div class="row">
-					<c:forEach items="${album.pictures }" var="p">
+					<c:forEach items="${album.paPictures }" var="p">
 					<div class="col-md-12">
-						<span>作者：${p.p_name}</span>
-						&nbsp;&nbsp;&nbsp;&nbsp; <span>拍摄时间：${p.p_time}</span>
-						&nbsp;&nbsp;&nbsp;&nbsp; <span>下载积分：${p.p_price}</span>
+						<span>作者：${p.PName}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp; <span>拍摄时间：${p.PTime}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp; <span>下载积分：${p.PPrice}</span>
 						<figure>
-						<img src="<%=basePath %>getPic?type=2&id=${p.p_id}" class="img-responsive">
-							<figcaption style="word-wrap:break-word;">${p.p_profile }</figcaption>
+						<img src="<%=basePath %>getPic?type=2&id=${p.PId}" class="img-responsive">
+							<figcaption style="word-wrap:break-word;">${p.PProfile }</figcaption>
 						</figure>
 					</div>
 					<div class="col-md-12">
-						<p class="text-center"><a onclick="dpic('${p.p_id}')" class="btn btn-primary btn-outline">下载</a></p>
+						<p class="text-center"><a onclick="dpic('${p.PId}')" class="btn btn-primary btn-outline">下载</a></p>
 					</div>
 					</c:forEach>
 				</div>

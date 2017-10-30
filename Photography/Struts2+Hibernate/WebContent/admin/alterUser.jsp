@@ -218,30 +218,30 @@
 										<div class="form-group">
                                             <label class="col-sm-3 control-label">名称</label>
                                             <div class="col-sm-6">
-                                            <input type="hidden" name="user.u_id" value="${user.u_id }">
-                                                <input name="user.u_name" type="text" value="${user.u_name }" id="focusedInput" class="form-control">
+                                            <input type="hidden" name="user.UId" value="${user.UId }">
+                                                <input name="user.UName" type="text" value="${user.UName }" id="focusedInput" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">用户名</label>
-                                            <span style="margin-left: 20px;font-size: 20px;">${user.u_uname }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(不能修改)</span>	
+                                            <span style="margin-left: 20px;font-size: 20px;">${user.UUname }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(不能修改)</span>	
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">密码</label>
                                             <div class="col-sm-6">
-                                                <input name="user.u_pwd" type="password" value="${user.u_pwd }" id="focusedInput" class="form-control">
+                                                <input name="user.UPwd" type="password" value="${user.UPwd }" id="focusedInput" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">电话</label>
                                             <div class="col-sm-6">
-                                                <input name="user.u_phone" type="text" value="${user.u_phone }" id="focusedInput" class="form-control">
+                                                <input name="user.UPhone" type="text" value="${user.UPhone }" id="focusedInput" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">邮箱</label>
                                             <div class="col-sm-6">
-                                                <input name="user.u_email" type="text" value="${user.u_email }" id="focusedInput" class="form-control">
+                                                <input name="user.UEmail" type="text" value="${user.UEmail }" id="focusedInput" class="form-control">
                                             </div>
                                         </div>
                                         <button style="margin-left: 48%;" class="btn btn-info" type="submit">修改</button>

@@ -218,14 +218,14 @@
 										<div class="form-group">
                                             <label class="col-sm-3 control-label">名称</label>
                                             <div class="col-sm-6">
-                                            	<input type="hidden" name="albums.a_id" value="${album.a_id}">
-                                                <input name="albums.a_name" type="text" value="${album.a_name }" id="focusedInput" class="form-control">
+                                            	<input type="hidden" name="albums.a_id" value="${album.AId}">
+                                                <input name="albums.a_name" type="text" value="${album.AName }" id="focusedInput" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">简介</label>
 											<textarea name="albums.a_profile"
-												style="background-color: #FFFFFF; background-image: none; border: 1px solid !important; border-radius: 4px; box-shadow: none !important; color: #C7D5E0 !important; font-size: 13px !important; max-width: 788px; max-height: 100px; min-height: 100px; min-width: 788px;">${album.a_profile}</textarea>
+												style="background-color: #FFFFFF; background-image: none; border: 1px solid !important; border-radius: 4px; box-shadow: none !important; color: #C7D5E0 !important; font-size: 13px !important; max-width: 788px; max-height: 100px; min-height: 100px; min-width: 788px;">${album.AProfile}</textarea>
 										</div>
                                         <button style="margin-left: 48%;" class="btn btn-info" type="submit">修改</button>
                                     </form>

@@ -220,11 +220,11 @@
                                     <form role="form" action="<%=basePath %>Upload_addAblums.action" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">专辑名称:</label>
-                                            <input name="albums.a_name" type="text" placeholder="新图片专辑的名称" id="exampleInputEmail1" class="form-control">
+                                            <input name="albums.AName" type="text" placeholder="新图片专辑的名称" id="exampleInputEmail1" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">专辑简介</label>
-                                            <textarea name="albums.a_profile"  placeholder="对这个专辑的描述……" class="textarea form-control2"></textarea>
+                                            <textarea name="albums.AProfile"  placeholder="对这个专辑的描述……" class="textarea form-control2"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">封面图片</label>

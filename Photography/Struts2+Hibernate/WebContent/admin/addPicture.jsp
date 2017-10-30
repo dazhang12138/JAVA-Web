@@ -221,16 +221,16 @@
                                     <form role="form" action="<%=basePath %>Upload_addPicture.action" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">图片名称:</label>
-                                        	<input name="picture.albums.a_id" type="hidden" value="<%=request.getParameter("id") %>">
-                                            <input name="picture.p_name" type="text" id="exampleInputEmail1" class="form-control">
+                                        	<input name="picture.paAlbums.AId" type="hidden" value="<%=request.getParameter("id") %>">
+                                            <input name="picture.PName" type="text" id="exampleInputEmail1" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">图片简介</label>
-                                       		<textarea name="picture.p_profile"  placeholder="对这张图片的描述……" class="textarea form-control2"></textarea>
+                                       		<textarea name="picture.PProfile"  placeholder="对这张图片的描述……" class="textarea form-control2"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">下载需要积分:</label>
-                                       	<select name="picture.p_price">
+                                       	<select name="picture.PPrice">
                                        		<option value="2">2</option>
                                        		<option value="5">5</option>
                                        		<option value="10">10</option>

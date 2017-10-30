@@ -9,7 +9,7 @@
 		return;
 	}
 	if(request.getAttribute("downs") == null){
-		request.getRequestDispatcher("../GetAllDowns?path=admin/profile.jsp&type=1").forward(request, response);
+		response.sendRedirect("../Downs_getAllDowns.action?path=admin/profile.jsp&type=1");
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -39,9 +39,10 @@
     <link rel="shortcut icon" href="assets/ico/minus.png">
     <script type="text/javascript">
     	function applyfor() {
+    		alert();
     		$.ajax({
 				   type: "POST",
-				   url: "../ApplyFor",
+				   url: "ApplyFor",
 				   success: function(msg){
 						$("#rreessuu").html(msg);
 				  	}
@@ -245,19 +246,19 @@
                                         <li class="list-group-item text-right">
                                             <span class="pull-left">
                                                 <strong>登录天数</strong>
-                                            </span>${user.u_signday }</li>
+                                            </span>${user.USignday }</li>
                                         <li class="list-group-item text-right">
                                             <span class="pull-left">
                                                 <strong>上次签到日期</strong>
-                                            </span>${user.u_signdate != null ? user.u_signdate : "暂无签到" }</li>
+                                            </span>${user.USigndate != null ? user.USigndate : "暂无签到" }</li>
                                         <li class="list-group-item text-right">
                                             <span class="pull-left">
                                                 <strong>角色</strong>
                                             </span>
-                 						<c:if test="${user.u_role == '0' }">
+                 						<c:if test="${user.URole == '0' }">
                  						管理员
                  						</c:if>
-                 						<c:if test="${user.u_role == '1' }">
+                 						<c:if test="${user.URole == '1' }">
                  						普通用户
                  						</c:if>
                  						</li>
@@ -285,28 +286,28 @@
 
                                     <dl class="dl-horizontal-profile">
                                         <dt><span class="tags">编号</span></dt>
-                                        <dd>${user.u_id }</dd>
+                                        <dd>${user.UId }</dd>
 
                                         <dt><span class="tags">姓名</span></dt>
-                                        <dd>${user.u_name }</dd>
+                                        <dd>${user.UName }</dd>
 
                                         <dt><span class="tags">邮箱</span></dt>
-                                        <dd>${user.u_email }</dd>
+                                        <dd>${user.UEmail }</dd>
 
                                         <dt><span class="tags">手机号</span></dt>
-                                        <dd>${user.u_phone }</dd>
+                                        <dd>${user.UPhone }</dd>
 
                                         <dt><span class="tags">用户名</span></dt>
-                                        <dd>${user.u_uname }</dd>
+                                        <dd>${user.UUname }</dd>
 
                                         <dt><span class="tags">密码</span></dt>
                                         <dd>******</dd>
 
                                         <dt><span class="tags">积分</span></dt>
-                                        <dd>${user.u_price }</dd>
+                                        <dd>${user.UPrice }</dd>
 
                                         <dt><span class="tags">余额</span></dt>
-                                        <dd>${user.u_balance }</dd>
+                                        <dd>${user.UBalance }</dd>
 
                                         <dt><span class="tags">状态</span></dt>
                                         <dd>正常</dd>
@@ -322,7 +323,7 @@
                                             <c:forEach items="${downs }" var="d">
                                                 <tr>
                                                     <td><i class="pull-right fa fa-edit"></i>
-                                                     ${d.d_date } : ${d.d_type==1 ? "签到" : d.d_type==2 ? "下载--图片编号：" : d.d_type==3 ? "被下载--图片编号：" : "积分兑换"} ${d.d_type!=1 && d.d_type!=4 ? d.pic.p_id : "" } : 积分 [${d.d_update }]</td>
+                                                     ${d.DDate } : ${d.DType==1 ? "签到" : d.DType==2 ? "下载--图片编号：" : d.DType==3 ? "被下载--图片编号：" : "积分兑换"} ${d.DType!=1 && d.DType!=4 ? d.PId : "" } : 积分 [${d.DUpdate }]</td>
                                                 </tr>
                                                </c:forEach>
                                             </tbody>
@@ -333,7 +334,7 @@
                             <div class="col-xs-12 divider text-center">
                                 <div class="col-xs-12 col-sm-4 emphasis">
                                     <h2>
-                                        <strong>${user.u_balance } ￥</strong>
+                                        <strong>${user.UBalance } ￥</strong>
                                     </h2>
                                     <p>
                                         <small>余额</small>
@@ -343,7 +344,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-4 emphasis">
                                     <h2>
-                                        <strong>${user.u_price }</strong>
+                                        <strong>${user.UPrice }</strong>
                                     </h2>
                                     <p>
                                         <small>积分</small>
@@ -353,7 +354,7 @@
                                 </div>
                                <div class="col-sm-4 emphasis">
                                     <h2>
-                                        <strong>${user.u_signday }</strong>
+                                        <strong>${user.USignday }</strong>
                                     </h2>
                                     <p>
                                         <small>登录天数</small>

@@ -219,17 +219,17 @@
                                       <form action="<%= basePath%>Upload_updatePictrue.action" method="get" class="form-horizontal bucket-form">
 										<div class="form-group">
                                             <label for="exampleInputEmail1">名称</label>
-                                            	<input type="hidden" name="picture.p_id" value="${picture.p_id}">
-                                                <input name="picture.p_name" type="text" value="${picture.p_name }" id="focusedInput" class="form-control">
+                                            	<input type="hidden" name="picture.PId" value="${picture.PId}">
+                                                <input name="picture.PName" type="text" value="${picture.PName }" id="focusedInput" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">简介</label>
-                                        <textarea name="picture.p_profile" class="textarea form-control2">${picture.p_profile}</textarea>
+                                        <textarea name="picture.PProfile" class="textarea form-control2">${picture.PProfile}</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">下载需要积分:</label>
-                                       	<select name="picture.p_price">
-                                       		<option value="${picture.p_price}">${picture.p_price} </option>
+                                       	<select name="picture.PPrice">
+                                       		<option value="${picture.PPrice}">${picture.PPrice} </option>
                                        		<option value="2">2</option>
                                        		<option value="5">5</option>
                                        		<option value="10">10</option>
@@ -241,8 +241,8 @@
                                         <div class="form-group">
                                             <label for="exampleInputFile">拍摄时间</label>
                                             <div class="well">
-                                        	<div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="${picture.p_time}" id="dpYears" class="input-group date">
-                                            	<input name="date" type="text" value="${picture.p_time}" class="form-control" id="ssn2">
+                                        	<div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="${picture.PTime}" id="dpYears" class="input-group date">
+                                            	<input name="date" type="text" value="${picture.PTime}" class="form-control" id="ssn2">
                                             	<span class="input-group-addon add-on entypo-calendar "></span>
                                         	</div>
                                     	</div>

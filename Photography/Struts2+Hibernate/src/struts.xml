@@ -11,14 +11,15 @@
 			<result name="path">${path}</result>
 			<result name="Login_False">login.jsp</result>
 			<result name="register">sign-up.jsp</result>
-			<result name="deleteUser_True">admin/allUser.jsp</result>
-			<result name="pointsfor_True">admin/profile.jsp</result>
+			<result name="deleteUser_True" type="redirect">admin/allUser.jsp</result>
+			<result name="pointsfor_True" type="redirect">admin/profile.jsp</result>
 			<result name="pointsfor_False">admin/pointsfor.jsp</result>
 			<result name="allApplys_True">admin/allAply.jsp</result>
 			<result name="recharge">admin/recharge.jsp</result>
 			<result name="setuseradmin">admin/allAply.jsp</result>
 			<result name="updateUser">admin/alterUser.jsp</result>
 			<result name="updateUser">forgot.jsp</result>
+			<result name="forgot">forgot.jsp</result>
 		</action>
 		
 		<action name="Upload_*" class="com.da.Photography.control.UploadAction" method="{1}">
@@ -30,7 +31,7 @@
 		</action>
 		
 		<action name="Albums_*" method="{1}" class="com.da.Photography.control.AlbumsAction">
-			<result name="deleteAlbums_True">admin/index.jsp</result>
+			<result name="deleteAlbums_True" type="redirect">admin/index.jsp</result>
 			<result name="deletePicture_True" type="chain">Albums_queryAlbumsPicture</result>
 			<result name="path">${path}</result>
 			<result name="login">login.jsp</result>
@@ -38,7 +39,10 @@
 			<result name="alterAlbums">admin/alterAlbums.jsp</result>
 			<result name="alterPictrue">admin/alterPicture.jsp</result>
 		</action>
-		
+		<action name="Downs_*" method="{1}" class="com.da.Photography.control.DownAction">
+			<result name="login">login.jsp</result>
+			<result name="path">${path}</result>
+		</action>
 	</package>
 	
 </struts>

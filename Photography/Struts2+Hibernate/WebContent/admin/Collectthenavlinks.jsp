@@ -129,7 +129,7 @@
                 <ul style="margin-right:0;" class="nav navbar-nav navbar-right">
                     <li>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <img alt="" class="admin-pic img-circle" src="<%=basePath %>./image/1~1.jpg">Hi, ${user.u_name } <b class="caret"></b>
+                            <img alt="" class="admin-pic img-circle" src="<%=basePath %>./image/1~1.jpg">Hi, ${user.UName } <b class="caret"></b>
                         </a>
                         <ul style="margin-top:14px;" role="menu" class="dropdown-setting dropdown-menu">
                             <li>

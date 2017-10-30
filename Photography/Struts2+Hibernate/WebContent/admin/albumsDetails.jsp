@@ -219,7 +219,7 @@
               </div>
               <div  style="width: 90%;">
              <div class="progress-demo" align="center">
-             <a href="<%=basePath %>Albums_queryAlbumsPicture.action?id=${album.a_id}&path=admin/albumsDetails.jsp" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">刷新列表</a>
+             <a href="<%=basePath %>Albums_queryAlbumsPicture.action?id=${album.AId}&path=admin/albumsDetails.jsp" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">刷新列表</a>
              <button class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs" onclick="deleteAll()">删除选择的图片</button>
              </div> 
               </div>
@@ -229,7 +229,7 @@
                     <div class="col-sm-12">
                         <div class="nest" id="tableStaticClose">
                             <div class="title-alt">
-                                <h6><span style="color: red;">${album.a_name }</span>专辑详情列表 : <span style="color: red;">${result }</span></h6>
+                                <h6><span style="color: red;">${album.AName }</span>专辑详情列表 : <span style="color: red;">${result }</span></h6>
                                 <div class="titleClose">
                                     <a class="gone" href="#tableStaticClose">
                                         <span class="entypo-cancel"></span>
@@ -261,21 +261,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        	<c:forEach items="${album.pictures }" var="p">
+                                        	<c:forEach items="${album.paPictures }" var="p">
                                             <tr>
-                                                <td class="numeric"><input type="checkbox" name="allcheck" value="${p.p_id }"></td>
-                                                <td class="numeric">${p.p_id }</td>
-                                                <td class="numeric">${p.p_name }</td>
-                                                <td class="numeric">${p.p_time }</td>
-                                                <td class="numeric">${p.p_price }</td>
-                                                <td class="numeric" style="max-width: 700px;word-wrap:break-word;">${p.p_profile }</td>
+                                                <td class="numeric"><input type="checkbox" name="allcheck" value="${p.PId }"></td>
+                                                <td class="numeric">${p.PId }</td>
+                                                <td class="numeric">${p.PName }</td>
+                                                <td class="numeric">${p.PTime }</td>
+                                                <td class="numeric">${p.PPrice }</td>
+                                                <td class="numeric" style="max-width: 700px;word-wrap:break-word;">${p.PProfile }</td>
                                                 <td class="numeric"> 
-                                                <a type="button" class="btn btn-primary" href="<%=basePath %>admin/pic.jsp?type=2&id=${p.p_id }">查看图片</a> 
+                                                <a type="button" class="btn btn-primary" href="<%=basePath %>admin/pic.jsp?type=2&id=${p.PId }">查看图片</a> 
                                                 </td>
                                                 <td class="numeric">
-                                                <a type="button" class="btn btn-default" href="<%= basePath%>Albums_getPictrue.action?id=${p.p_id}">
+                                                <a type="button" class="btn btn-default" href="<%= basePath%>Albums_getPictrue.action?id=${p.PId}">
                                     <span class="entypo-pencil"></span>&nbsp;&nbsp;修改</a>
-                                                <a type="button" class="btn btn-info"  href="<%= basePath%>Albums_deletePicture.action?pid=${p.p_id}&id=${album.a_id}&path=admin/albumsDetails.jsp"  onclick="return confirm('是否删除 : '+'${p.p_name }' + '\n操作不可逆，请谨慎操作')" >
+                                                <a type="button" class="btn btn-info"  href="<%= basePath%>Albums_deletePicture.action?pid=${p.PId}&id=${album.AId}&path=admin/albumsDetails.jsp"  onclick="return confirm('是否删除 : '+'${p.PName }' + '\n操作不可逆，请谨慎操作')" >
                                  <span class="entypo-trash"></span>&nbsp;&nbsp;删除</a></td>
                                             </tr>
                                             </c:forEach>
@@ -306,7 +306,7 @@
             </div>
              <div align="center" style="margin-top: 10px;">
         <section class="progress-demo">
-             <a href="<%=basePath %>admin/addPicture.jsp?id=${album.a_id}" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">添加图片</a>
+             <a href="<%=basePath %>admin/addPicture.jsp?id=${album.AId}" class="ladda-button" data-color="mint" data-style="expand-right" data-size="xs">添加图片</a>
         </section>
         </div>
 		<div id="footer">
