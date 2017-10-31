@@ -62,6 +62,7 @@ public class AlbumsAction {
 				request.setAttribute("result", "删除专辑失败,请先清空专辑内所有图片");
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		return "deleteAlbums_True";
 	}
 	
@@ -82,6 +83,7 @@ public class AlbumsAction {
 				request.setAttribute("result", "删除图片失败");
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		return "deletePicture_True";
 	}
 	
@@ -160,6 +162,7 @@ public class AlbumsAction {
 				request.setAttribute("result", "修改信息失败");
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		return "alterAlbums";
 	}
 	
@@ -180,6 +183,7 @@ public class AlbumsAction {
 		}else {
 			request.setAttribute("result", "查询详情信息失败");
 		}
+		HibernateSessionFactory.closeSession();
 		return "alterAlbums";
 	}
 	
@@ -241,6 +245,7 @@ public class AlbumsAction {
 				result = "path";
 			}
 		}
+	  	HibernateSessionFactory.closeSession();
 	  	return result;
 	}
 	

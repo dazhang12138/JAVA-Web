@@ -81,9 +81,9 @@ public class AlbumsHibDao extends BaseHibDao implements AlbumsDaoInterface {
 		String hql = "from PaAlbums where AId=?";
 		Query q = session.createQuery(hql);
 		q.setString(0, id);
-		List list = q.list();
+		List<PaAlbums> list = q.list();
 		if(list.size()>0){
-			albums = (PaAlbums) list.get(0);
+			albums = list.get(0);
 		}
 		return albums;
 	}
@@ -179,10 +179,9 @@ public class AlbumsHibDao extends BaseHibDao implements AlbumsDaoInterface {
 			sql = "select count(p_id) c from PA_PICTURE";
 		}
 		SQLQuery sq = session.createSQLQuery(sql);
-		List list = sq.list();
+		List<Integer> list = sq.list();
 		if(list.size()>0) {
-			Object obj = list.get(0);
-			result =  Integer.valueOf(obj.toString());
+			result = list.get(0);
 		}
 		return result;
 	}

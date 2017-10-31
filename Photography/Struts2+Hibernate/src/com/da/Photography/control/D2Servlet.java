@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.da.Photography.biz.AlbumsBiz;
+import com.da.Photography.util.HibernateSessionFactory;
 
 /**
  * 下载图片
@@ -44,6 +45,7 @@ public class D2Servlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		HibernateSessionFactory.closeSession();
 		out.flush();
 		out.close();
 	}

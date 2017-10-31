@@ -78,6 +78,7 @@ public class UploadAction extends ActionSupport {
 			result = "addPicture_True";
 			request.setAttribute("id", picture.getPaAlbums().getAId());
 		}
+		HibernateSessionFactory.closeSession();
 		return result;
 	}
 	
@@ -187,6 +188,7 @@ public class UploadAction extends ActionSupport {
 				request.setAttribute("result", "修改图片失败");
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		return "updatePic";
 	}
 	

@@ -32,11 +32,11 @@ public class DownBiz{
 				boolean orDown = dDao.queryPriceSupport(u_id, pid);// 判断积分是否足够
 				if (orDown) {
 					int minus = dDao.deductUserPrice(u_id, pid);// 扣除下载人积分
-					int downupdate = dDao.recordDown(u_id, pid);// 记录积分走向
-					if (minus != 0 && downupdate != 0) {
+					dDao.recordDown(u_id, pid);// 记录积分走向
+					if (minus != 0) {
 						int add = dDao.addUserPrice(pid);// 增加创建人积分
-						downupdate = dDao.recordDown2(pid);// 记录积分走向
-						if (add != 0 && downupdate != 0) {
+						dDao.recordDown2(pid);// 记录积分走向
+						if (add != 0) {
 							result = 0;// 成功
 						} else {
 							result = 3;
@@ -78,11 +78,11 @@ public class DownBiz{
 				boolean orOne = dDao.queryDownByUidAndPid(u_id, String.valueOf(pic.getPId()));// 判断是否有下载记录
 				if (!orOne) {
 					int minus = dDao.deductUserPrice(u_id, String.valueOf(pic.getPId()));// 扣除下载人积分
-					int downupdate = dDao.recordDown(u_id, String.valueOf(pic.getPId()));// 记录积分走向
-					if (minus != 0 && downupdate != 0) {
+					dDao.recordDown(u_id, String.valueOf(pic.getPId()));// 记录积分走向
+					if (minus != 0) {
 						int add = dDao.addUserPrice(String.valueOf(pic.getPId()));// 增加创建人积分
-						downupdate = dDao.recordDown2(String.valueOf(pic.getPId()));// 记录积分走向
-						if (add != 0 && downupdate != 0) {
+						dDao.recordDown2(String.valueOf(pic.getPId()));// 记录积分走向
+						if (add != 0) {
 							flag = true;// 成功
 						} else {
 							throw new SQLException();

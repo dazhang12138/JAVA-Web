@@ -9,6 +9,7 @@ import org.apache.struts2.ServletActionContext;
 import com.da.Photography.biz.DownBiz;
 import com.da.Photography.entity.PaDown;
 import com.da.Photography.entity.PaUser;
+import com.da.Photography.util.HibernateSessionFactory;
 
 public class DownAction {
 	
@@ -18,8 +19,6 @@ public class DownAction {
 	public String getAllDowns(){
 		String result = "";
 		HttpServletRequest request = ServletActionContext.getRequest();
-		String type = request.getParameter("type");
-		String path = request.getParameter("path");
 		PaUser user = (PaUser) request.getSession().getAttribute("user");
 	  	if(user == null){
 			request.setAttribute("result", "请登录管理员账户");
@@ -35,6 +34,7 @@ public class DownAction {
 				result = "path";
 			}
 		}
+	  	HibernateSessionFactory.closeSession();
 	  	return result;
 	}
 

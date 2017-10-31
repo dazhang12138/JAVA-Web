@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +15,7 @@ import com.da.Photography.entity.PaApplyadmin;
 import com.da.Photography.entity.PaDown;
 import com.da.Photography.entity.PaUser;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 	/**
 	 * 添加新用户
@@ -36,9 +35,9 @@ public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 		Query q = session.createQuery(hql);
 		q.setString(0, uname);
 		q.setString(1, pwd);
-		Iterator it = q.list().iterator();
-		if(it.hasNext()){
-			user = (PaUser) it.next();
+		List<PaUser> list = q.list();
+		if(list.size()>0){
+			user = list.get(0);
 		}
 		return user;
 	}
@@ -68,13 +67,13 @@ public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 		String sql = "select u_signday from pa_user where u_signdate < to_date(to_char(sysdate,'yyyy_mm_dd'),'yyyy-mm-dd') and u_id=" + u_id;
 		String sql2 = "select u_signday from pa_user where u_signdate = to_date(to_char(sysdate,'yyyy_mm_dd'),'yyyy-mm-dd') and u_id=" + u_id;
 		SQLQuery sq = session.createSQLQuery(sql);
-		Iterator it = sq.list().iterator();
-		if(it.hasNext()) {
-			result = Integer.valueOf(it.next().toString());
+		List<Integer> sqlist = sq.list();
+		if(sqlist.size()>0) {
+			result = sqlist.get(0);
 		}else {
 			SQLQuery sq2 = session.createSQLQuery(sql2);
-			Iterator it2 = sq2.list().iterator();
-			if(it2.hasNext()) {
+			List<Integer> sq2list = sq2.list();
+			if(sq2list.size()>0) {
 				result = -1;
 			}
 		}
@@ -101,7 +100,8 @@ public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 	public List<PaUser> getAllUsers() throws SQLException {
 		String hql = "from PaUser";
 		Query q = session.createQuery(hql);
-		return q.list();
+		List<PaUser> list = q.list();
+		return list;
 	}
 	/**
 	 * 删除用户
@@ -136,10 +136,10 @@ public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 		String hql = "from PaUser where UEmail=?";
 		Query q = session.createQuery(hql);
 		q.setString(0, email);
-		List list = q.list();
+		List<PaUser> list = q.list();
 		PaUser user = null;
 		if(list.size()>0){
-			user = (PaUser) list.get(0);
+			user = list.get(0);
 		}
 		return user;
 	}

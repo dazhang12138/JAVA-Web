@@ -102,6 +102,7 @@ public class UserAction{
 				request.setAttribute("result", "删除用户失败.");
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		return "deleteUser_True";
 	}
 	
@@ -157,6 +158,7 @@ public class UserAction{
 			result = "Login_False";
 			request.setAttribute("result", "请登录管理员账户");
 		}
+		HibernateSessionFactory.closeSession();
 		return result;
 	}
 	
@@ -185,6 +187,7 @@ public class UserAction{
 				request.setAttribute("result", "充值失败，用户不存在.");
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		return "recharge";
 	}
 	
@@ -221,6 +224,7 @@ public class UserAction{
 				e.printStackTrace();
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		return "setuseradmin" ;
 	}
 	/**
@@ -247,6 +251,7 @@ public class UserAction{
 				result = "updateUser";
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		return result;
 	}
 	
@@ -273,6 +278,7 @@ public class UserAction{
 				path = "index.jsp";
 			result = "path";
 		}
+		HibernateSessionFactory.closeSession();
 		return result;
 	}
 	
@@ -305,6 +311,7 @@ public class UserAction{
 				}
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		return "forgot";
 	}
 	

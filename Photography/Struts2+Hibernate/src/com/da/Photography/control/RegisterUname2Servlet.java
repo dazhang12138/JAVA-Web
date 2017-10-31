@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.da.Photography.biz.UserBiz;
+import com.da.Photography.util.HibernateSessionFactory;
 
 /**
  * 判断用户名是否可以注册
@@ -43,6 +44,7 @@ public class RegisterUname2Servlet extends HttpServlet {
 				out.println("可以充值");
 			}
 		}
+		HibernateSessionFactory.closeSession();
 		out.flush();
 		out.close();
 	}

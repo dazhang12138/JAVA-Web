@@ -14,9 +14,9 @@ public interface DownDaoInterface extends BaseDaoInterface {
 	//增加图片存在专辑的创建者的积分
 	public int addUserPrice(String pid) throws SQLException ;
 	//更新记录
-	public int recordDown(int u_id, String pid) throws SQLException;
+	public void recordDown(int u_id, String pid) throws SQLException;
 	//更新记录
-	public int recordDown2(String pid) throws SQLException;
+	public void recordDown2(String pid) throws SQLException;
 	//查找下载记录是否存在
 	public boolean queryDownByUidAndPid(int u_id, String pid) throws SQLException;
 	//查询记录
