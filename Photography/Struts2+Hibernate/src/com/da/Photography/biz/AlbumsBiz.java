@@ -16,9 +16,9 @@ import com.da.Photography.util.Log;
 public class AlbumsBiz {
 	/**
 	 * 获取全部专辑信息
-	 * @param u_id 用户编号
-	 * @param stat 1为用户查看0为管理员查看
-	 * @return
+ 	 * @param u_id 用户编号
+	 * @param stat 查询状态，为1时限制查询只查询一个用户的专辑信息。其他时候查询全部的专辑信息
+	 * @return 返回专辑的集合
 	 */
 	public List<PaAlbums> getAlbums(long u_id, String stat) {
 		List<PaAlbums> albums = new ArrayList<>();
@@ -35,10 +35,9 @@ public class AlbumsBiz {
 		return albums;
 	}
 	/**
-	 * 创建专辑
-	 * @param u_id 创建用户编号
-	 * @param albums 专辑信息
-	 * @return 是否成功创建专辑
+	 * 创建新的专辑
+	 * @param albums 新专辑的信息
+	 * @return 返回是否成功创建专辑
 	 */
 	public boolean addAlbums(PaAlbums albums) {
 		boolean flag = false;
@@ -57,9 +56,9 @@ public class AlbumsBiz {
 		return flag;
 	}
 	/**
-	 * 获取封面图片
+	 * 查询获取专辑的封面图片通过专辑编号
 	 * @param id 专辑编号
-	 * @return 封面图片
+	 * @return 返回Blob格式的封面图片
 	 */
 	public Blob getAlbumPicByid(String id) {
 		AlbumsDaoInterface aDao = new AlbumsHibDao();
@@ -76,9 +75,9 @@ public class AlbumsBiz {
 		return pic;
 	}
 	/**
-	 * 获取图片图片
+	 * 查询获取图片表的图片通过图片编号
 	 * @param id 图片编号
-	 * @return 图片
+	 * @return 返回Blob格式的图片
 	 */
 	public Blob getPicturePicByid(String id) {
 		AlbumsDaoInterface aDao = new AlbumsHibDao();
@@ -95,14 +94,14 @@ public class AlbumsBiz {
 		return pic;
 	}
 	/**
-	 * 获取图片集合
-	 * @param aid
-	 * @return
+	 * 查询一个专辑的里面的全部图片的图片
+	 * @param aid 专辑编号
+	 * @return 返回图片的Blob格式集合
 	 */
-	public List<byte[]> getAllAPicPicByaid(String aid) {
+	public List<Blob> getAllAPicPicByaid(String aid) {
 		AlbumsDaoInterface aDao = new AlbumsHibDao();
 		aDao.beginTran();
-		List<byte[]> pics = new ArrayList<>();
+		List<Blob> pics = new ArrayList<>();
 		try {
 			pics = aDao.getAllAPicPicByaid(aid);
 			aDao.commitTran();
@@ -114,11 +113,11 @@ public class AlbumsBiz {
 		return pics;
 	}
 	/**
-	 * 修改图片
+	 * 修改更新图片（专辑封面或者专辑内图片的图片）
 	 * @param pic 图片
-	 * @param id 修改id
-	 * @param type 1时为修改专辑封面图片 0时为修改图片图片
-	 * @return 返回是否成功修改
+	 * @param id 编号，如果type为1的时候为专辑编号，否则为图片编号
+	 * @param type 修改类型，为1的时候修改专辑封面图片，否则修改专辑内的图片；
+	 * @return 返回是否更新图片成功
 	 */
 	public boolean updatePic(byte[] pic, String id, String type) {
 		boolean flag = false;
@@ -152,9 +151,9 @@ public class AlbumsBiz {
 		return flag;
 	}
 	/**
-	 * 查询专辑详情通过专辑编号
+	 * 通过专辑编号查询专辑的详细信息
 	 * @param id 专辑编号
-	 * @return 返回专辑详情，null时为失败查询
+	 * @return 返回专辑信息
 	 */
 	public PaAlbums queryAlbumsById(String id) {
 		PaAlbums album = null;
@@ -171,11 +170,11 @@ public class AlbumsBiz {
 		return album;
 	}
 	/**
-	 * 修改专辑信息
+	 * 更新修改专辑的信息
 	 * @param id 专辑编号
-	 * @param name 专辑姓名
+	 * @param name 专辑名称
 	 * @param profile 专辑简介
-	 * @return
+	 * @return 返回是否修改专辑信息成功
 	 */
 	public boolean updateAlbums(String id, String name, String profile) {
 		boolean flag = false;
@@ -195,9 +194,9 @@ public class AlbumsBiz {
 		return flag;
 	}
 	/**
-	 * 删除专辑，同时删除专辑内全部图片
-	 * @param id
-	 * @return
+	 * 通过专辑编号删除一个专辑（为级联删除，同时删除专辑内的所有图片记录以及对下载的所有记录。）
+	 * @param id 专辑编号
+	 * @return 返回是否成功删除专辑
 	 */
 	public boolean deleteAlbums(String id) {
 		boolean flag = false;
@@ -216,9 +215,9 @@ public class AlbumsBiz {
 		return flag;
 	}
 	/**
-	 * 获取专辑内图片
-	 * @param id
-	 * @return
+	 * 通过专辑编号查询专辑内的所有图片信息
+	 * @param id 专辑编号
+	 * @return 返回一个专辑的实体类。主要用里面的图片集合以及专辑名称
 	 */
 	public PaAlbums queryAPictureByAid(String id) {
 		PaAlbums album = null;
@@ -238,9 +237,9 @@ public class AlbumsBiz {
 		return album;
 	}
 	/**
-	 * 专辑中添加图片
-	 * @param p 图片详情
-	 * @return
+	 * 添加新的图片
+	 * @param p 图片信息
+	 * @return 返回是否成功添加图片信心
 	 */
 	public boolean addPicture(PaPicture p) {
 		boolean flag = false;
@@ -259,9 +258,9 @@ public class AlbumsBiz {
 		return flag;
 	}
 	/**
-	 * 查询图片详情信息
+	 * 通过图片编号查询图片信息。
 	 * @param id 图片编号
-	 * @return
+	 * @return 返回图片信息
 	 */
 	public PaPicture queryPictureByAid(String id) {
 		PaPicture picture = null;
@@ -279,8 +278,8 @@ public class AlbumsBiz {
 	}
 	/**
 	 * 修改图片信息
-	 * @param picture
-	 * @return 
+	 * @param picture 新的图片信息
+	 * @return 返回是否成功更新图片信息
 	 */
 	public boolean updatePicture(PaPicture picture) {
 		boolean flag = false;
@@ -299,9 +298,9 @@ public class AlbumsBiz {
 		return flag;
 	}
 	/**
-	 * 删除图片
-	 * @param id
-	 * @return
+	 * 通过图片编号删除一张图片记录
+	 * @param id 图片编号
+	 * @return 返回是否成功删除一张图片
 	 */
 	public boolean deletePicture(String id) {
 		boolean flag = false;
@@ -320,8 +319,9 @@ public class AlbumsBiz {
 		return flag;
 	}
 	/**
-	 * 查询条数
-	 * @param type
+	 * 查询记录数
+	 * 分别查询图片表、用户表、专辑表的所有记录条数
+	 * 其中图片的记录条数为图片表的记录数加上专辑标的记录数
 	 * @return
 	 */
 	public int[] queryCount() {

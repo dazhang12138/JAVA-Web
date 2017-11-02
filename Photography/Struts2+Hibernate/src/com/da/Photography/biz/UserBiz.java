@@ -18,7 +18,7 @@ import com.da.Photography.util.Log;
 public class UserBiz {
 	
 	/**
-	 * 注册
+	 * 添加一个用户信息
 	 * @param user 注册用户信息
 	 * @return 注册结果 true 成功  false 失败
 	 */
