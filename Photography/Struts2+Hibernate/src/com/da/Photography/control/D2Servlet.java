@@ -1,5 +1,6 @@
 package com.da.Photography.control;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import com.da.Photography.biz.AlbumsBiz;
 import com.da.Photography.util.HibernateSessionFactory;
@@ -40,7 +42,13 @@ public class D2Servlet extends HttpServlet {
 		response.setHeader("Content-disposition", "attachment; filename=" + pid + ".jpg");
 		ServletOutputStream out = response.getOutputStream();
 		try {
-			out.write(pics.getBytes(0, (int) pics.length()));
+			BufferedInputStream is = new BufferedInputStream(pics.getBinaryStream());
+			byte[] bs = new byte[(int)pics.length()];
+			int len = bs.length, offset = 0, read = 0;
+			while(offset < len && (read = is.read(bs,offset,len - offset)) >= 0){
+				offset += read;
+			}
+			out.write(bs);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

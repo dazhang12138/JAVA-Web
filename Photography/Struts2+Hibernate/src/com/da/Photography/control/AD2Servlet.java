@@ -1,5 +1,6 @@
 package com.da.Photography.control;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Blob;
@@ -39,26 +40,32 @@ public class AD2Servlet extends HttpServlet {
 		String aid = request.getParameter("aid");
 		AlbumsBiz aBiz = new AlbumsBiz();
 		//获取数据
-		List<byte[]> pics = aBiz.getAllAPicPicByaid(aid);
+		List<Blob> pics = aBiz.getAllAPicPicByaid(aid);
 		Blob apic = aBiz.getAlbumPicByid(aid);
-		try {
-			pics.add(apic.getBytes(0, (int)apic.length()));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		pics.add(apic);
 		//字节数组流
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		//压缩流
 		ZipOutputStream zos = new ZipOutputStream(baos);
 		int i = 1;
-		for (byte[] bs : pics) {
-			ZipEntry entry = new ZipEntry(i+".jpg");
-			entry.setSize(bs.length);
-			zos.putNextEntry(entry);
-			zos.write(bs);
-			zos.closeEntry();
-			i++;
+		try {
+			for (Blob blob : pics) {
+				ZipEntry entry = new ZipEntry(i+".jpg");
+				entry.setSize(blob.length());
+				zos.putNextEntry(entry);
+				BufferedInputStream is = new BufferedInputStream(blob.getBinaryStream());
+				byte[] bs = new byte[(int) blob.length()];
+				int len = bs.length,offset = 0,read = 0;
+				while(offset < len && (read = is.read(bs,offset,len-offset))>=0){
+					offset += read;
+				}
+				zos.write(bs);
+				zos.closeEntry();
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		zos.close();
 		response.setContentType("application/octet-stream");
