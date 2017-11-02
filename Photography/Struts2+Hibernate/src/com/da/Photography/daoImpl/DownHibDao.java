@@ -125,11 +125,19 @@ public class DownHibDao extends BaseHibDao implements DownDaoInterface {
 		List<PaDown> list = q.list();
 		return list;
 	}
-
+	/**
+	 * 查询用户信息通过用户编号
+	 */
 	@Override
 	public PaUser queryUserByuid(int uid) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "from PaUser where UId = " + uid;
+		Query q = session.createQuery(hql);
+		PaUser user = null;
+		List<PaUser> list = q.list();
+		if(list.size()>0){
+			user = list.get(0);
+		}
+		return user;
 	}
 	/**
 	 * 查询最大编号

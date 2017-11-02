@@ -66,11 +66,17 @@ public class AlbumsHibDao extends BaseHibDao implements AlbumsDaoInterface {
 		int result = q.executeUpdate();
 		return result;
 	}
-
+	/**
+	 * 修改图片的图片
+	 */
 	@Override
 	public int updatePic(byte[] pic, String id) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		String hql = "update PaPicture set PPic = ? where PId = ?";
+		Query q = session.createQuery(hql);
+		q.setBinary(0, pic);
+		q.setString(1, id);
+		int result = q.executeUpdate();
+		return result;
 	}
 	/**
 	 * 查询专辑信息通过编号
@@ -87,11 +93,18 @@ public class AlbumsHibDao extends BaseHibDao implements AlbumsDaoInterface {
 		}
 		return albums;
 	}
-
+	/**
+	 * 修改专辑信息
+	 */
 	@Override
 	public int updateAlbums(String id, String name, String profile) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		String hql = "update PaAlbums set AName=?,AProfile=? where AId=?";
+		Query q = session.createQuery(hql);
+		q.setString(0, name);
+		q.setString(1, profile);
+		q.setString(2, id);
+		int result = q.executeUpdate();
+		return result;
 	}
 	/**
 	 * 删除专辑
@@ -185,13 +198,19 @@ public class AlbumsHibDao extends BaseHibDao implements AlbumsDaoInterface {
 		}
 		return result;
 	}
-
+	/**
+	 * 获取专辑内所有图片的图片
+	 */
 	@Override
-	public List<byte[]> getAllAPicPicByaid(String aid) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Blob> getAllAPicPicByaid(String aid) throws SQLException {
+		String sql = "Select t.P_PIC From PA_PICTURE t Where t.A_ID = " + aid;
+		SQLQuery sq = session.createSQLQuery(sql);
+		List<Blob> list = sq.list();
+		return list;
 	}
-
+	/**
+	 * 查询图片的最大编号
+	 */
 	@Override
 	public long maxPicId() {
 		String sql = "select nvl(max(p_id),0) from Pa_Picture";
@@ -199,7 +218,9 @@ public class AlbumsHibDao extends BaseHibDao implements AlbumsDaoInterface {
 		long result = Long.valueOf(sq.list().get(0).toString());
 		return result;
 	}
-
+	/**
+	 * 查询专辑的最大编号
+	 */
 	@Override
 	public long maxAlbId() {
 		String sql = "select nvl(max(a_id),0) from Pa_Albums";

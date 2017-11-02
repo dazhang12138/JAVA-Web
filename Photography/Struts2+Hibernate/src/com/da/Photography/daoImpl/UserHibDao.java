@@ -222,21 +222,28 @@ public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 		session.flush();
 	}
 	/**
-	 * 更新用户积分
+	 * 更新用户角色
 	 */
 	@Override
 	public int updateRoleUserById(String uid) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		String hql = "update PaUser set URole=0 where UId=" + uid;
+		Query q = session.createQuery(hql);
+		int result = q.executeUpdate();
+		return result;
 	}
+	/**
+	 * 删除用户申请
+	 */
 	@Override
 	public int deleteApplyByUId(String uid) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		String hql = "delete PaApplyadmin where UId=" + uid;
+		Query q = session.createQuery(hql);
+		int result = q.executeUpdate();
+		return result;
 	}
 	
 	/**
-	 * 查询最大id
+	 * 查询用户最大id
 	 */
 	@Override
 	public long maxUid() {
@@ -245,6 +252,9 @@ public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 		long result = Long.valueOf(sq.list().get(0).toString());
 		return result;
 	}
+	/**
+	 * 查询专辑的最大id
+	 */
 	@Override
 	public long maxAdminid() {
 		String sql = "select nvl(max(ad_id),0) from PA_APPLYADMIN";
@@ -252,6 +262,9 @@ public class UserHibDao extends BaseHibDao implements UserDaoInterface {
 		long result = Long.valueOf(sq.list().get(0).toString());
 		return result;
 	}
+	/**
+	 * 查询下载的最大编号
+	 */
 	@Override
 	public long maxDownid() {
 		String sql = "select nvl(max(d_id),0) from Pa_Down";

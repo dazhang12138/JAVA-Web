@@ -40,7 +40,7 @@ public interface AlbumsDaoInterface extends BaseDaoInterface{
 	//查询条数
 	public int queryCount(int type) throws SQLException ;
 	//查询专辑内所有图片的图片
-	public List<byte[]> getAllAPicPicByaid(String aid) throws SQLException;
+	public List<Blob> getAllAPicPicByaid(String aid) throws SQLException;
 	
 	public long maxPicId();
 	public long maxAlbId();
