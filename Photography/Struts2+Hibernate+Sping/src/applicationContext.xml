@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<!-- 配置actio -->
+	<bean id="albumsActionBean" class="com.da.Photography.control.AlbumsAction" scope="prototype">
+		<property name="aBiz" ref="albumsBiz"></property>
+		<property name="dBiz" ref="downBiz"></property>
+	</bean>
+	<bean id="downActionBean" class="com.da.Photography.control.DownAction" scope="prototype">
+		<property name="dBiz" ref="downBiz"></property>
+	</bean>
+	<bean id="uploadActionBean" class="com.da.Photography.control.UploadAction" scope="prototype">
+		<property name="aBiz" ref="albumsBiz"></property>
+	</bean>
+	<bean id="userActionBean" class="com.da.Photography.control.UserAction" scope="prototype">
+		<property name="uBiz" ref="userBiz"></property>
+		<property name="dDao" ref="downDao"></property>
+	</bean>
+	
+	<!-- 配置Dao -->
+	<bean id="albumsDao" class="com.da.Photography.daoImpl.AlbumsHibDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="downDao" class="com.da.Photography.daoImpl.DownHibDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="userDao" class="com.da.Photography.daoImpl.UserHibDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- 配置Biz -->
+	<bean id="albumsBiz" class="com.da.Photography.bizImpl.AlbumsBiz">
+		<property name="aDao" ref="albumsDao"></property>
+	</bean>
+	<bean id="downBiz" class="com.da.Photography.bizImpl.DownBiz">
+		<property name="dDao" ref="downDao"></property>
+	</bean>
+	<bean id="userBiz" class="com.da.Photography.bizImpl.UserBiz">
+		<property name="uDao" ref="userDao"></property>
+	</bean>
+	
+	
+	
+	<!-- 配置事务 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation"
+			value="classpath:hibernate.cfg.xml">
+		</property>
+    </bean>   
+    
+     <bean id="+··"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>	
+			<tx:method name="*" propagation="REQUIRED" rollback-for="Throwable"  isolation="DEFAULT" read-only="false"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="serviceMethod" expression="execution(* com.da.Photography.bizImpl.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />
+	</aop:config>	
+
+
+</beans>
