@@ -1,6 +1,5 @@
 package com.da.Photography.daoImpl;
 
-import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -193,9 +192,9 @@ public class AlbumsHibDao extends BaseHibDao implements AlbumsDaoInterface {
 			sql = "select count(p_id) c from PA_PICTURE";
 		}
 		SQLQuery sq = session.createSQLQuery(sql);
-		List<BigDecimal> list = sq.list();
+		List<Integer> list = sq.list();
 		if(list.size()>0) {
-			result = Integer.valueOf(list.get(0).toString());
+			result = list.get(0);
 		}
 		return result;
 	}
