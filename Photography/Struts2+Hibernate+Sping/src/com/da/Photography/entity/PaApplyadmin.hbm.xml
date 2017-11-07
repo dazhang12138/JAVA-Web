@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-10-24 11:02:27 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.da.Photography.entity.PaApplyadmin" table="PA_APPLYADMIN" schema="PHOTOGRAPHY">
+        <id name="adId" type="long">
+            <column name="AD_ID" precision="11" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="paUser" class="com.da.Photography.entity.PaUser" fetch="select">
+            <column name="U_ID" precision="11" scale="0" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

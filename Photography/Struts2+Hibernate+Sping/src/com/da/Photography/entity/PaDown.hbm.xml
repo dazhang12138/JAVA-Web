@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-10-24 11:02:27 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.da.Photography.entity.PaDown" table="PA_DOWN" schema="PHOTOGRAPHY">
+        <id name="DId" type="long">
+            <column name="D_ID" precision="11" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="paUser" class="com.da.Photography.entity.PaUser" fetch="select">
+            <column name="U_ID" precision="11" scale="0" />
+        </many-to-one>
+        <property name="DDate" type="date">
+            <column name="D_DATE" length="7" />
+        </property>
+        <property name="DType" type="java.lang.Short">
+            <column name="D_TYPE" precision="4" scale="0">
+                <comment>
+                1-&#199;&#169;&#181;&#189;&#163;&#172;2-&#207;&#194;&#212;&#216;&#191;&#219;&#179;&#253;&#187;&#253;&#183;&#214;,3-&#212;&#246;&#188;&#211;&#187;&#253;&#183;&#214;;4-&#187;&#253;&#183;&#214;&#182;&#210;&#187;&#187;</comment>
+            </column>
+        </property>
+        <property name="DUpdate" type="string">
+            <column name="D_UPDATE" length="10" />
+        </property>
+        <property name="PId" type="java.lang.Long">
+            <column name="P_ID" precision="11" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>
