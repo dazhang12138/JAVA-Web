@@ -13,13 +13,21 @@ import com.da.Photography.entity.PaUser;
 import com.da.Photography.util.Log;
 
 public class DownBiz implements DownBizInterface{
+	
 	private DownDaoInterface dDao;
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.DownBizInterface#down(int, java.lang.String)
+	
+	/**
+	 * 检测用户积分是否够下载、积分扣除、专辑创建者增加积分、记录下载记录 积分足够下载则进行下载；积分不足时异常退出。
+	 * 积分足够时判断是否有下载记录；有记录则直接下载，否则扣分下载.
+	 * 
+	 * @param u_id 用户编号
+	 * @param pid 图片编号
+	 * @return 返回结果 1 = 积分不足 2 = 积分扣除失败 3 = 积分增加失败 0 = 成功
 	 */
-	@Override
 	public int down(int u_id, String pid) {
 		int result = 2;
+		DownDaoInterface dDao = new DownHibDao();
+		dDao.beginTran();
 		try {
 			boolean orOne = dDao.queryDownByUidAndPid(u_id, pid);// 判断是否有下载记录
 			if (orOne) {
@@ -47,19 +55,25 @@ public class DownBiz implements DownBizInterface{
 					// throw new SQLException();
 				}
 			}
+			dDao.commitTran();
 		} catch (SQLException e) {
+			dDao.rollbackTran();
 			Log.LOGGER.debug(u_id + " 下载  " + pid + " 出错, 错误标志 " + result + " : " + e.getMessage());
 			e.printStackTrace();
 		}
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.DownBizInterface#down2(int, java.util.List)
+	/**
+	 * 用户下载专辑，已经检测过积分足够 需要检测图片是否下载过，下载过的图片不扣除积分，否则扣除积分
+	 * @param u_id 用户编号
+	 * @param pics 图片集合
+	 * @return 返回是否成功下载所有图片
 	 */
-	@Override
 	public boolean down2(int u_id, List<PaPicture> pics) {
 		boolean flag = false;
+		DownDaoInterface dDao = new DownHibDao();
+		dDao.beginTran();
 		try {
 			for (PaPicture pic : pics) {
 				boolean orOne = dDao.queryDownByUidAndPid(u_id, String.valueOf(pic.getPId()));// 判断是否有下载记录
@@ -81,7 +95,9 @@ public class DownBiz implements DownBizInterface{
 					flag = true;
 				}
 			}
+			dDao.commitTran();
 		} catch (Exception e) {
+			dDao.rollbackTran();
 			flag = false;
 			e.printStackTrace();
 			Log.LOGGER.debug("下载专辑错误" + e.getMessage());
@@ -89,12 +105,15 @@ public class DownBiz implements DownBizInterface{
 		return flag;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.DownBizInterface#queryAllDown(java.lang.String, long)
+	/**
+	 * 查询所有记录，通过type值判断查询条件 
+	 * @param type 1 = 查询用户特有的 2 = 查询全部
+	 * @param u_id 用户编号
+	 * @return 返回下载记录的集合
 	 */
-	@Override
 	public List<PaDown> queryAllDown(String type, long u_id) {
 		List<PaDown> downs = new ArrayList<>();
+		dDao.getConn();
 		try {
 			downs = dDao.queryAllDown(type, u_id);
 		} catch (SQLException e) {
@@ -104,16 +123,21 @@ public class DownBiz implements DownBizInterface{
 		return downs;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.DownBizInterface#queryUserByuid(int)
+	/**
+	 * 查询用户通过用户编号
+	 * 
+	 * @param uid 用户编号
+	 * @return 返回查询的用户信息
 	 */
-	@Override
 	public PaUser queryUserByuid(int uid) {
 		PaUser user = null;
 		DownDaoInterface dDao = new DownHibDao();
+		dDao.beginTran();
 		try {
 			user = dDao.queryUserByuid(uid);
+			dDao.commitTran();
 		} catch (SQLException e) {
+			dDao.rollbackTran();
 			Log.LOGGER.debug("查询用户通过编号失败 : " + e.getMessage());
 			e.printStackTrace();
 		}

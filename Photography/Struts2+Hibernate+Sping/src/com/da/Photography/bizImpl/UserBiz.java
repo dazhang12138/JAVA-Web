@@ -10,20 +10,24 @@ import com.da.Photography.biz.UserBizInterface;
 import com.da.Photography.dao.DownDaoInterface;
 import com.da.Photography.dao.UserDaoInterface;
 import com.da.Photography.daoImpl.DownHibDao;
+import com.da.Photography.daoImpl.UserHibDao;
 import com.da.Photography.entity.PaApplyadmin;
 import com.da.Photography.entity.PaDown;
 import com.da.Photography.entity.PaUser;
 import com.da.Photography.util.Log;
 
-public class UserBiz implements UserBizInterface {
+public class UserBiz implements UserBizInterface{
+	
 	private UserDaoInterface uDao;
 	
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#register(com.da.Photography.entity.PaUser)
+	/**
+	 * 添加一个用户信息
+	 * @param user 注册用户信息
+	 * @return 注册结果 true 成功  false 失败
 	 */
-	@Override
 	public boolean register(PaUser user) {
 		boolean flag = true;
+		uDao.getConn();
 		try {
 			user.setUId(uDao.maxUid()+1);
 			user.setURole("1");
@@ -38,12 +42,15 @@ public class UserBiz implements UserBizInterface {
 		}
 		return flag;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#login(java.lang.String, java.lang.String)
+	/**
+	 * 登录
+	 * @param uname 用户名
+	 * @param pwd 密码
+	 * @return 返回登录用户信息  user为null时登录失败
 	 */
-	@Override
 	public PaUser login(String uname, String pwd) {
 		PaUser user = null;
+		uDao.getConn();
 		try {
 			user = uDao.queryUserByUnameAndPwd(uname,pwd);
 		} catch (SQLException e) {
@@ -53,12 +60,14 @@ public class UserBiz implements UserBizInterface {
 		return user;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#detecUserName(java.lang.String)
+	/**
+	 * 检测用户名是否存在
+	 * @param uname 用户名
+	 * @return 返回是否存在的结果
 	 */
-	@Override
 	public boolean detecUserName(String uname) {
 		boolean flag = true;
+		uDao.getConn();
 		try {
 			flag = uDao.queryUserUnameByUname(uname);
 		} catch (SQLException e) {
@@ -67,13 +76,17 @@ public class UserBiz implements UserBizInterface {
 		}
 		return flag;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#signIn(long, long)
+	/**
+	 * 签到
+	 * @param u_id
+	 * @param u_price
+	 * @return
 	 */
-	@Override
 	public long signIn(long u_id, long u_price) {
 		int result = 0;
 		long price = u_price;
+		UserDaoInterface uDao = new UserHibDao();
+		uDao.beginTran();
 		try {
 			result = uDao.queryUserSignDay(u_id) + 1; //查询连续签到天数，为0时表示今日以签到,不为0时表示可以签到
 			if(result != 0) {
@@ -118,19 +131,23 @@ public class UserBiz implements UserBizInterface {
 					uDao.recordDown(d); //更新用户签到信息签到记录
 				}
 			}
+			uDao.commitTran();
 		} catch (SQLException e) {
+			uDao.rollbackTran();
 			price = u_price;
 			Log.LOGGER.debug("签到失败 : "  +e.getMessage());
 			e.printStackTrace();
 		}
 		return price-u_price;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#getAllUsers()
+	/**
+	 * 查询所有用户信息
+	 * @param stat 状态
+	 * @return
 	 */
-	@Override
 	public List<PaUser> getAllUsers() {
 		List<PaUser> users = new ArrayList<>();
+		uDao.getConn();
 		try {
 			users = uDao.getAllUsers();
 		} catch (SQLException e) {
@@ -139,12 +156,14 @@ public class UserBiz implements UserBizInterface {
 		}
 		return users;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#deleteUser(java.lang.String)
+	/**
+	 * 删除用户信息,级联删除
+	 * @param uid 用户编号
+	 * @return
 	 */
-	@Override
 	public boolean deleteUser(String uid) {
 		boolean flag = false;
+		uDao.getConn();
 		try {
 			int result = uDao.deleteUser(uid);
 			if(result != 0){
@@ -156,12 +175,18 @@ public class UserBiz implements UserBizInterface {
 		}
 		return flag;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#updateUser(com.da.Photography.entity.PaUser)
+	/**
+	 * 修改用户信息
+	 * @param uid 用户编号
+	 * @param name 用户姓名
+	 * @param pwd 密码
+	 * @param phone 电话
+	 * @param email 邮箱
+	 * @return 返回修改结果
 	 */
-	@Override
 	public boolean updateUser(PaUser pu) {
 		boolean flag = false;
+		uDao.getConn();
 		try {
 			int result = uDao.updateUser(pu);
 			if(result != 0){
@@ -173,12 +198,14 @@ public class UserBiz implements UserBizInterface {
 		}
 		return flag;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#detecUserEmail(java.lang.String)
+	/**
+	 * 验证注册邮箱不能重复、通过邮箱找回密码
+	 * @param email
+	 * @return
 	 */
-	@Override
 	public PaUser detecUserEmail(String email) {
 		PaUser user = null;
+		uDao.getConn();
 		try {
 			user = uDao.queryUserUnameByEmail(email);
 		} catch (SQLException e) {
@@ -187,28 +214,34 @@ public class UserBiz implements UserBizInterface {
 		}
 		return user;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#applyForAdmin(long)
+	/**
+	 * 申请权限
+	 * @param u_id
+	 * @return
 	 */
-	@Override
 	public boolean applyForAdmin(long u_id) {
 		boolean flag = true;
+		UserDaoInterface uDao = new UserHibDao();
+		uDao.beginTran();
 		try {
 			PaApplyadmin pa = new PaApplyadmin(uDao.maxAdminid()+1,new PaUser(u_id));
 			uDao.applyForAdmin(pa);
 			flag = true;
+			uDao.commitTran();
 		} catch (SQLException e) {
+			uDao.rollbackTran();
 			Log.LOGGER.debug("申请权限失败 : "  +e.getMessage());
 			e.printStackTrace();
 		}
 		return flag;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#queryAllApply()
+	/**
+	 * 查询所有的管理员申请
+	 * @return
 	 */
-	@Override
 	public List<PaApplyadmin> queryAllApply() {
 		List<PaApplyadmin> applys = new ArrayList<>();
+		uDao.getConn();
 		try {
 			applys = uDao.queryAllApply();
 		} catch (SQLException e) {
@@ -217,12 +250,15 @@ public class UserBiz implements UserBizInterface {
 		}
 		return applys;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#rechargeUser(java.lang.String, java.lang.String)
+	/**
+	 * 用户充值
+	 * @param uname
+	 * @param num
+	 * @return
 	 */
-	@Override
 	public boolean rechargeUser(String uname, String num) {
 		boolean flag = true;
+		uDao.getConn();
 		try {
 			double money = Integer.valueOf(num);
 			if(money <= 10) {
@@ -245,12 +281,16 @@ public class UserBiz implements UserBizInterface {
 		}
 		return flag;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#updatePriceUserByid(long, long, long)
+	/**
+	 * 用户积分兑换
+	 * @param u_id
+	 * @param price
+	 * @param money 
+	 * @return
 	 */
-	@Override
 	public boolean updatePriceUserByid(long u_id, long price, long money) {
 		boolean flag = true;
+		uDao.getConn();
 		try {
 			int r = uDao.minBalance(u_id,money);
 			int result = uDao.updatePriceUserByid(u_id,price);
@@ -264,12 +304,14 @@ public class UserBiz implements UserBizInterface {
 		}
 		return flag;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#updateRoleUserById(java.lang.String)
+	/**
+	 * 更新用户角色为管理员
+	 * @param uid
+	 * @return
 	 */
-	@Override
 	public boolean updateRoleUserById(String uid) {
 		boolean flag = true;
+		uDao.getConn();
 		try {
 			int r = uDao.updateRoleUserById(uid);
 			if(r != 0)
@@ -280,12 +322,14 @@ public class UserBiz implements UserBizInterface {
 		}
 		return flag;
 	}
-	/* (non-Javadoc)
-	 * @see com.da.Photography.bizImpl.UserBizInterface#deleteApplyByUId(java.lang.String)
+	/**
+	 * 删除申请表用户
+	 * @param uid
+	 * @return
 	 */
-	@Override
 	public boolean deleteApplyByUId(String uid) {
 		boolean flag = true;
+		uDao.getConn();
 		try {
 			int r = uDao.deleteApplyByUId(uid);
 			if(r != 0)
@@ -302,5 +346,6 @@ public class UserBiz implements UserBizInterface {
 	public void setuDao(UserDaoInterface uDao) {
 		this.uDao = uDao;
 	}
+	
 	
 }
