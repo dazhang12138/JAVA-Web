@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.da.Photography.biz.AlbumsBizInterface;
 import com.da.Photography.bizImpl.AlbumsBiz;
-import com.da.Photography.util.HibernateSessionFactory;
 import com.da.Photography.util.Log;
 
 /**
@@ -65,7 +64,6 @@ public class getPicServlet extends HttpServlet {
 				out.write(pic);
 			}
 		}
-		HibernateSessionFactory.closeSession();
 		out.flush();
 		out.close();
 	}

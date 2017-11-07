@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.da.Photography.biz.UserBizInterface;
 import com.da.Photography.bizImpl.UserBiz;
 import com.da.Photography.entity.PaUser;
-import com.da.Photography.util.HibernateSessionFactory;
 
 /**
  * 申请管理员
@@ -45,7 +44,6 @@ public class ApplyForServlet extends HttpServlet {
 				out.print("尝试失败！请稍后再试!");
 			}
 		}
-		HibernateSessionFactory.closeSession();
 		out.flush();
 		out.close();
 	}

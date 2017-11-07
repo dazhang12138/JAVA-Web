@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.da.Photography.biz.UserBizInterface;
 import com.da.Photography.bizImpl.UserBiz;
 import com.da.Photography.entity.PaUser;
-import com.da.Photography.util.HibernateSessionFactory;
 
 /**
  * 判断邮箱是否可以注册
@@ -46,7 +45,6 @@ public class RegisterEmailServlet extends HttpServlet {
 				out.println("此邮箱已注册");
 			}
 		}
-		HibernateSessionFactory.closeSession();
 		out.flush();
 		out.close();
 	}

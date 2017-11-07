@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.da.Photography.biz.UserBizInterface;
 import com.da.Photography.bizImpl.UserBiz;
 import com.da.Photography.entity.PaUser;
-import com.da.Photography.util.HibernateSessionFactory;
 
 /**
  * 签到操作
@@ -41,7 +40,6 @@ public class SignInServlet extends HttpServlet {
 			response.setCharacterEncoding("utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("您的积分:" + (user.getUPrice()) + "  +" + price);
-			HibernateSessionFactory.closeSession();
 			out.flush();
 			out.close();
 		}

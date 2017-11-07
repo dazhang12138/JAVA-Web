@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.da.Photography.biz.DownBizInterface;
 import com.da.Photography.bizImpl.DownBiz;
 import com.da.Photography.entity.PaUser;
-import com.da.Photography.util.HibernateSessionFactory;
 
 /**
  * 下载辅助
@@ -63,7 +62,6 @@ public class D1Servlet extends HttpServlet {
 				}
 			}
 		}
-		HibernateSessionFactory.closeSession();
 		out.flush();
 		out.close();
 	}

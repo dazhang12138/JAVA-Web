@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.da.Photography.biz.AlbumsBizInterface;
 import com.da.Photography.bizImpl.AlbumsBiz;
-import com.da.Photography.util.HibernateSessionFactory;
 
 /**
  * 下载图片
@@ -72,7 +71,6 @@ public class AD2Servlet extends HttpServlet {
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-disposition", "attachment; filename=Album" + aid + ".zip");
 		ServletOutputStream out = response.getOutputStream();
-		HibernateSessionFactory.closeSession();
 		out.write(baos.toByteArray());
 		out.flush();
 		out.close();

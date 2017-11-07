@@ -17,7 +17,6 @@ import com.da.Photography.dao.AlbumsDaoInterface;
 import com.da.Photography.daoImpl.AlbumsHibDao;
 import com.da.Photography.entity.PaPicture;
 import com.da.Photography.entity.PaUser;
-import com.da.Photography.util.HibernateSessionFactory;
 import com.da.Photography.util.Log;
 
 /**
@@ -85,7 +84,6 @@ public class AD1Servlet extends HttpServlet {
 				}
 			}
 		}
-		HibernateSessionFactory.closeSession();
 		out.flush();
 		out.close();
 	}
