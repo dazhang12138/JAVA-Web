@@ -46,7 +46,7 @@ public class BaseHibDao extends HibernateDaoSupport implements BaseDaoInterface 
 	public void getConn() {
 		session = this.getSessionFactory().getCurrentSession();
 	}
-	
+	@Override
 	public void getConn(String str) {
 		session = HibernateSessionFactory.getSession();
 	}

@@ -126,7 +126,7 @@ public class UserBiz implements UserBizInterface{
 					price = u_price;
 				}else {
 					DownDaoInterface dDao = new DownHibDao();
-					dDao.getConn();
+					dDao.getConn("");
 					PaDown d = new PaDown(dDao.maxId()+1, new PaUser(u_id), new Date(),(short) 1, "+"+(price-u_price), null);
 					uDao.recordDown(d); //更新用户签到信息签到记录
 				}

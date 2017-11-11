@@ -5,4 +5,5 @@ public interface BaseDaoInterface {
 	public void commitTran();
 	public void rollbackTran();
 	public void getConn();
+	public void getConn(String str);
 }
