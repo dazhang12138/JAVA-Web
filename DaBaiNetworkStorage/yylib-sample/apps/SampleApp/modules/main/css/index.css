@@ -1,0 +1,46 @@
+/*logo*/
+#logo{
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+/*栅格布局*/
+.layout-demo .yyui-col {
+    /*border: 1px solid #2baee9;*/
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px;
+}
+.layout-demo .yyui-col .height-100{
+    height:100px;
+}
+.layout-demo .yyui-col .height-50{
+    height:50px;
+}
+.layout-demo .yyui-col .height-120{
+    height:120px;
+}
+.layout-demo .yyui-col .height-80{
+    height:80px;
+}
+
+/*导航栏*/
+#leftPage{
+    float: left;
+}
+
+/*下拉菜单，选择排序方式*/
+.yyui-dropdown{
+    margin-top: 4px;
+    margin-right: 10px;
+    float: right;
+}
+
+/*容量存储*/
+#capacity{
+    position:fixed;
+    bottom:0;
+    float: left;
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
