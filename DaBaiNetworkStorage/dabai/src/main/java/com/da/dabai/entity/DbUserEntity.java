@@ -43,7 +43,38 @@ public class DbUserEntity {
 	 * 用户创建时间
 	 */
 	private Date userStartTime;
-		
+	
+	/**
+	 * 用户邮箱
+	 */
+	private String userEmail;
+	
+	/**
+	 * 上传限制
+	 */
+	private BigInteger uploadLimit;
+	
+	/**
+	 * 转存限制
+	 */
+	private int archivedLimit;
+	
+	/**
+	 * 上传数量限制
+	 */
+	private int bulkUploadLimit;
+	
+	/**
+	 * 回收站限制
+	 */
+	private int garbageLimit;
+	
+	/**
+	 * 账户权限
+	 */
+	private int limits;
+	
+	
 	/**
 	 * 无惨构造函数
 	 */
@@ -52,6 +83,56 @@ public class DbUserEntity {
 	}
 	
 	
+	public BigInteger getUploadLimit() {
+		return uploadLimit;
+	}
+
+
+	public void setUploadLimit(BigInteger uploadLimit) {
+		this.uploadLimit = uploadLimit;
+	}
+
+
+	public int getArchivedLimit() {
+		return archivedLimit;
+	}
+
+
+	public void setArchivedLimit(int archivedLimit) {
+		this.archivedLimit = archivedLimit;
+	}
+
+
+	public int getBulkUploadLimit() {
+		return bulkUploadLimit;
+	}
+
+
+	public void setBulkUploadLimit(int bulkUploadLimit) {
+		this.bulkUploadLimit = bulkUploadLimit;
+	}
+
+
+	public int getGarbageLimit() {
+		return garbageLimit;
+	}
+
+
+	public void setGarbageLimit(int garbageLimit) {
+		this.garbageLimit = garbageLimit;
+	}
+
+
+	public int getLimits() {
+		return limits;
+	}
+
+
+	public void setLimits(int limits) {
+		this.limits = limits;
+	}
+
+
 	public String getUserId() {
 		return userId;
 	}
@@ -99,6 +180,14 @@ public class DbUserEntity {
 	}
 	public void setUserStartTime(Date userStartTime) {
 		this.userStartTime = userStartTime;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 	
 	
