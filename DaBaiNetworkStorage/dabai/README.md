@@ -23,11 +23,13 @@
 | userStartTime | 账户注册时间 | Date | |
 | fileSize | 网络硬盘使用大小 | String | 单位为B |
 | maxFileSize | 网络硬盘容量 | String | 单位为B |
+| uploadLimit | 单文件上传大小限制 | String | 单位为B |
+| archivedLimit | 转存数量限制 | Int32 | 单次转存数量不能超过这个限制，转存为存储别人的分享文件 |
+| bulkUploadLimit | 批量上传限制 | Int32 | 单次上传数量不能超过限制 |
+| garbageLimit | 回收站存储限制 | Int32 | 回收站存储时间限制，单位为天 |
+| limits | 账户限制 | Int32 | 账户权限（1：普通用户、2：VIP用户） |
 | files | 文件夹集合 | 存储格式详见FILES表 | |
-|  | | | |
-|  | | | |
-|  | | | |
-后续加入会员权限、单文件上传大小限制、每次上传文件数限制
+
 
 **FILES表**
 
