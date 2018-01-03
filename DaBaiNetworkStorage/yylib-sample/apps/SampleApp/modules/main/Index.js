@@ -1,8 +1,19 @@
 var React = require('react');
+var _ = require('lodash');
+var {YYCreatePage} =  require('yylib-business');
+var ajax = require('yylib-utils/ajax');
+var ReduxUtils = require('yylib-utils/ReduxUtils');
+var React = require('react');
 var { YYCol,YYRow,YYClass,YYPage,YYMenu,YYMenuItem,YYIcon,YYMenuSub
-    ,YYPanel,YYInput,YYDivide,YYForm,YYFormItem,YYToolbar ,YYButton
-    ,YYUpload,YYInputButton,YYReferInput,YYDropdown,YYTable,YYProgress} = require('yylib-ui');
+    ,YYPanel,YYDivide,YYToolbar ,YYButton,YYModal,YYUpload,YYMessage
+    ,YYInputButton,YYDropdown,YYTable,YYProgress} = require('yylib-ui');
 require('./css/index.css');
+var URL = require('./Url');
+
+/*账户信息*/
+var UserData;
+/*账户存储信息*/
+var UserFiles;
 
 /*下拉菜单（文件排序）*/
 const menu = (
@@ -94,10 +105,25 @@ function onChange(pagination, filters, sorter) {
     // 点击分页、筛选、排序时触发
     console.log('各类参数是', pagination, filters, sorter);
 }
-
-
+/*个人信息的菜单栏*/
+const Usermenu = (
+    <YYMenu>
+        <YYMenuItem>
+            <a target="_blank" href="http://www.alipay.com/">个人资料</a>
+        </YYMenuItem>
+        <YYMenuItem>
+            <a target="_blank" href="http://www.taobao.com/">开通VIP</a>
+        </YYMenuItem>
+        <YYMenuItem>
+            <a target="_blank" href="http://www.taobao.com/">系统通知</a>
+        </YYMenuItem>
+        <YYMenuItem>
+            <a target="_blank" href="http://www.tmall.com/">退出</a>
+        </YYMenuItem>
+    </YYMenu>
+);
 /*页面初始化*/
-var LayoutDemo1 = YYClass.create({
+var Index = YYClass.create({
     /*导航栏*/
     getInitialState() {
         return {
@@ -121,6 +147,33 @@ var LayoutDemo1 = YYClass.create({
         }else if(arguments[0] == 'collapse'){
             console.log('面板展开');
         }
+    },
+    /*上传*/
+    showModal:function() {
+        this.setState({
+            visible: true,
+        });
+    }
+    ,handleOk() {
+        console.log('点击了确定');
+        this.setState({
+            visible: false,
+        });
+    }
+    ,handleCancel(e) {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    }, onChange: function (info) {
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+            YYMessage.success(`${info.file.name} 上传成功。`);
+        } else if (info.file.status === 'error') {
+            YYMessage.error(`${info.file.name} 上传失败。`);
+        }
     }
     ,render: function() {
         return (
@@ -132,7 +185,7 @@ var LayoutDemo1 = YYClass.create({
                         </a>
                     </YYCol>
 
-                    <YYCol span={15}>
+                    <YYCol span={17}>
                         <YYPage >
                             <YYMenu onClick={this.handleClick}
                                     selectedKeys={[this.state.current]}
@@ -152,15 +205,18 @@ var LayoutDemo1 = YYClass.create({
                         </YYPage>
                     </YYCol>
 
-                    <YYCol span={4}>
+                    <YYCol span={3}>
+                        <YYPage style={{marginTop:23,float:"left",marginLeft:40}}>
+                            <YYDropdown overlay={Usermenu}>
+                                <span className="ant-dropdown-link" style={{fontSize:20}} href="#">
+                                  欢迎您 :  {UserData.name} <YYIcon type="down" />
+                                </span>
+                            </YYDropdown>
+                        </YYPage>
+
                     </YYCol>
 
                 </YYRow>
-                <YYPage>
-                    <div id="capacity">
-                        <YYProgress type="circle" percent={30} width={80} />
-                    </div>
-                </YYPage>
                 <YYPage id="leftPage" >
                     <YYMenu theme={this.state.theme}
                             onClick={this.handleClick}
@@ -183,6 +239,10 @@ var LayoutDemo1 = YYClass.create({
                             <YYMenuItem key="9"><YYIcon type="delete"/>回收站</YYMenuItem>
                         </YYMenuSub>
                     </YYMenu>
+                    <div id="capacity">
+                        <span style={{fontSize:20}}>{UserData.fileSize}GB/{UserData.maxFileSize}GB</span>
+                        <YYProgress type="circle" percent={parseFloat(UserData.fileSize)/parseFloat(UserData.maxFileSize)}  />
+                    </div>
                 </YYPage>
 
 
@@ -198,7 +258,21 @@ var LayoutDemo1 = YYClass.create({
                         bodyClass=''>
                         <YYPage style={{background:'#ffffff',padding:10}}>
                             <YYToolbar>
-                                <YYButton type="primary" icon="upload">上传</YYButton>
+                                <YYButton type="primary" onClick={this.showModal} icon="upload">上传</YYButton>
+                                <YYModal title="上传文件" visible={this.state.visible}
+                                         onOk={this.handleOk} onCancel={this.handleCancel}>
+                                    <YYUpload
+                                        name="file"
+                                        action="http://localhost:8080/dabai/Files/UploadFile"
+                                        data={{userName: UserData.userName,userPwd:UserData.userPwd}}
+                                        multiple = {true}
+                                        // headers={{authorization: 'authorization-text'}}
+                                        onChange={this.onChange}>
+                                        <YYButton type="ghost">
+                                            <YYIcon type="upload" />点击上传
+                                        </YYButton>
+                                    </YYUpload>
+                                </YYModal>
                                 <YYButton type="error" icon="folder" ghost>新建文件夹</YYButton>
                                 <YYButton icon="download" ghost>下载</YYButton>
                                 <YYDivide/>
@@ -214,12 +288,48 @@ var LayoutDemo1 = YYClass.create({
                         </YYPage>
                     </YYPanel>
                 </YYPage>
-
-
             </YYPage>
         )
     },_onSearchClick:function(text){
         console.log('搜索按钮被点击,搜索关键词:'+text);
     }
 });
-module.exports = LayoutDemo1;
+
+var MyParser = {};
+MyParser.Index = Index;
+
+//页面初始化
+var EventHanlder = {
+    "P004625":{
+        onViewWillMount:function(options){
+            console.log('page onViewWillMount',options);
+            UserData = this.getRouteParams();
+            console.log('UserData',UserData);
+            var data = {
+              userId : UserData._id
+            };
+            ajax.postJSON('http://127.0.0.1:8080/dabai/Files/getUserFiles',data,function (result) {
+                UserFiles = result;
+            });
+
+        }
+        ,onViewDidMount:function(options){
+            console.log('page onViewDidMount',options);
+        }
+        ,onViewWillUpdate:function(options){
+            console.log('page onViewWillUpdate',options);
+        }
+        ,onViewDidUpdate:function(options){
+            console.log('page onViewDidUpdate',options);
+        }
+    }
+}
+var SimplePage = YYClass.create({
+    render:function(){
+        return <YYCreatePage {...this.props} appCode="A000776" pageCode="P004625" uiEvent={EventHanlder}
+                             uiParser={MyParser}/>
+    }
+});
+module.exports = SimplePage;
+
+
