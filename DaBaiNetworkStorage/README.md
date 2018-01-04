@@ -178,3 +178,7 @@
 	- **记事本**
 	- 照片电影
 	- 企业网盘
+
+## 更新日志
+
+[https://github.com/dazhang12138/JAVA-Web/blob/master/DaBaiNetworkStorage/DBLog.md](https://github.com/dazhang12138/JAVA-Web/blob/master/DaBaiNetworkStorage/DBLog.md "日志")
