@@ -3,7 +3,7 @@
  */
 
 var PATH = "http://localhost:8080/";
-var CODE = "dabai";
+var CODE = "icop-db";
 
 var MainUrl = {
     LOGIN: PATH + CODE +  "/User/Login",
