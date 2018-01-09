@@ -1,6 +1,7 @@
 package com.yyjz.icop.dao;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 public interface FilesDao {
 	
@@ -9,5 +10,9 @@ public interface FilesDao {
 	 * @param fileDoc 数据
 	 * @throws Exception 异常
 	 */
-	void saveFiles(Document fileDoc) throws Exception;
+	void saveFiles(Document fileDoc);
+	
+	void queryUserFilesById(ObjectId userId);
+
+	void saveFile(Document fileDoc);
 }

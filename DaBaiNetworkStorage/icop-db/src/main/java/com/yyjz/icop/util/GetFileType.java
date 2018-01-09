@@ -27,44 +27,7 @@ public class GetFileType {
 	 */
 	public static Set<String> documents = new HashSet<>();
 	
-	/**
-	 * 通过文件名称后后缀对比返回此文件所属类型
-	 * @param fileNameSuffix 文件名后缀
-	 * @return 返回文件类型
-	 */
-	public static FileType getTypeBySuffix(String fileNameSuffix){
-		fileNameSuffix = fileNameSuffix.toLowerCase();
-		FileType type = FileType.OTHERS;
-		if(picture.contains(fileNameSuffix)){
-			type = FileType.PICTURE;
-		}else if(video.contains(fileNameSuffix)){
-			type = FileType.VIDEO;
-		}else if(music.contains(fileNameSuffix)){
-			type = FileType.MUSIC;
-		}else if(documents.contains(fileNameSuffix)){
-			type = FileType.DOCUMENTS;
-		}else{
-			type = FileType.OTHERS;
-		}
-		return type;
-	}
-	
-	/**
-	 * 通过文件名称返回此文件所属的类型
-	 * @param fileName 文件名称
-	 * @return 返回文件类型
-	 */
-	public static FileType getType(String fileName){
-		FileType type = FileType.OTHERS;
-		String[] split = fileName.split("\\.");
-		if(split.length > 0){
-			String fileNameSuffix = split[split.length-1];
-			type = getTypeBySuffix(fileNameSuffix);
-		}
-		return type;
-	}
-	
-	public GetFileType() {
+	static {
 		/**
 		 * 常用图片格式文件匹配后缀名
 		 */
@@ -141,6 +104,43 @@ public class GetFileType {
 		documents.add("pptx");
 		documents.add("pdf");
 		documents.add("txt");
+	}
+	
+	/**
+	 * 通过文件名称后后缀对比返回此文件所属类型
+	 * @param fileNameSuffix 文件名后缀
+	 * @return 返回文件类型
+	 */
+	public static FileType getTypeBySuffix(String fileNameSuffix){
+		fileNameSuffix = fileNameSuffix.toLowerCase();
+		FileType type = FileType.OTHERS;
+		if(picture.contains(fileNameSuffix)){
+			type = FileType.PICTURE;
+		}else if(video.contains(fileNameSuffix)){
+			type = FileType.VIDEO;
+		}else if(music.contains(fileNameSuffix)){
+			type = FileType.MUSIC;
+		}else if(documents.contains(fileNameSuffix)){
+			type = FileType.DOCUMENTS;
+		}else{
+			type = FileType.OTHERS;
+		}
+		return type;
+	}
+	
+	/**
+	 * 通过文件名称返回此文件所属的类型
+	 * @param fileName 文件名称
+	 * @return 返回文件类型
+	 */
+	public static String getType(String fileName){
+		FileType type = FileType.OTHERS;
+		String[] split = fileName.split("\\.");
+		if(split.length > 0){
+			String fileNameSuffix = split[split.length-1];
+			type = getTypeBySuffix(fileNameSuffix);
+		}
+		return type.toString();
 	}
 	
 }

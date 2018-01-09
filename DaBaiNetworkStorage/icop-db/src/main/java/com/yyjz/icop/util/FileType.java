@@ -19,4 +19,26 @@ public enum FileType {
 	,DOCUMENTS
 	/*其他类型*/
 	,OTHERS;
+	
+	public String toString(){
+		String str = "OTHERS";
+		switch (this) {
+			case PICTURE:
+				str = "PICTURE";
+				break;
+			case VIDEO:
+				str = "VIDEO";
+				break;
+			case MUSIC:
+				str = "MUSIC";
+				break;
+			case SEED:
+				str = "SEED";
+				break;
+			case DOCUMENTS:
+				str = "DOCUMENTS";
+				break;
+		}
+		return str;
+	}
 }

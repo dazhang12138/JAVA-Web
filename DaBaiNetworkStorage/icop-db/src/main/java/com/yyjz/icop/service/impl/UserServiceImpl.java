@@ -11,7 +11,7 @@ import com.yyjz.icop.dao.UserDao;
 import com.yyjz.icop.dao.impl.FilesDaoImpl;
 import com.yyjz.icop.dao.impl.UserDaoImpl;
 import com.yyjz.icop.service.UserService;
-import com.yyjz.icop.util.CreateFiles;
+import com.yyjz.icop.util.FileUtils;
 import com.yyjz.icop.vo.UserVo;
 
 public class UserServiceImpl implements UserService {
@@ -25,11 +25,7 @@ public class UserServiceImpl implements UserService {
 		Document document = new Document();
 		document.append("userName", user.getUserName());
 		document.append("userPwd", user.getUserPwd());
-		try {
-			doc = userDao.queryUser(document);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		doc = userDao.queryUser(document);
 		return doc;
 	}
 
@@ -59,12 +55,13 @@ public class UserServiceImpl implements UserService {
 		fileDoc.append("foldersStartTime", new Date());
 		fileDoc.append("foldersEndTime", new Date());
 		try {
-			if(! CreateFiles.createFolder("D:/DB_Files/" + userDoc.get("name"))){
+			if(! FileUtils.createFolder("D:/DB_Files/" + userDoc.get("name"))){
 				throw new Exception();
 			}
 			filesDao.saveFiles(fileDoc);
 			//将文件信息保存到用户信息里
 			Document d = new Document("filesId",fileDoc.get("_id"));
+			d.append(" ", user.getName());
 			d.append("files", Arrays.asList(new String[1]));
 			d.append("file", Arrays.asList(new String[1]));
 			userDoc.append("files", d);
@@ -79,13 +76,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean verifyUserByUserNameAndName(Document document) {
 		boolean flag = false;
-		try {
-			Document queryUser = userDao.queryUser(document);
-			if(queryUser != null){
-				flag = true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		Document queryUser = userDao.queryUser(document);
+		if(queryUser != null){
+			flag = true;
 		}
 		return flag;
 	}
