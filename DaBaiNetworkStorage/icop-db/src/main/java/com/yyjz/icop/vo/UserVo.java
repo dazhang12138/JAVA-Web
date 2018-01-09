@@ -6,9 +6,13 @@ package com.yyjz.icop.vo;
  *
  */
 public class UserVo {
+	//用户登录名
 	private String userName;
+	//与用户登密码
 	private String userPwd;
+	//用户名
 	private String name;
+	//用户邮箱
 	private String userEmail;
 	public String getUserName() {
 		return userName;

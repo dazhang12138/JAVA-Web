@@ -2,26 +2,29 @@ package com.yyjz.icop.service;
 
 import org.bson.Document;
 
+import com.yyjz.icop.vo.UserVo;
+
 public interface UserService {
+
 	/**
-	 * 条件查询用户
-	 * @param document
+	 * 用户登录
+	 * @param user
 	 * @return
-	 * @throws Exception
 	 */
-	Document queryUser(Document document) throws Exception;
-	
+	Document loginUser(UserVo user);
+
 	/**
-	 * 保存用户信息
-	 * @param document
-	 * @throws Exception
+	 * 用户注册
+	 * @param user
+	 * @return
 	 */
-	void saveUser(Document document) throws Exception;
-	
+	boolean registerUser(UserVo user);
+
 	/**
-	 * 保存文件夹信息
-	 * @param fileDoc
-	 * @throws Exception
+	 * 校验用户信息
+	 * @param document 校验信息
+	 * @return
 	 */
-	void saveFiles(Document fileDoc) throws Exception;
+	boolean verifyUserByUserNameAndName(Document document);
+	
 }
