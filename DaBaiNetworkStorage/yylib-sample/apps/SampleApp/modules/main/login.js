@@ -22,20 +22,25 @@ var Login = YYClass.create({
     /*登录button提交表单*/
     loginSubmit: function (e) {
         e.preventDefault();
-        var from = this.props.form.getFieldsValue();
-        var data = {
-            userName : from.userNameL,
-            userPwd : from.passwordL
-        };
-        /*Ajax后台验证登录*/
-        ajax.postJSON(URL.LOGIN,data,function (user) {
-            if(user == null){
-                alert('登录失败');
-            }else{
-                THIS.routeTo('DB/dbank',null,user);
-            }
+        var from = this.props.form.validateFields(function(errors, values){
+            if (!!errors) {
+                console.log('Errors in form!!!');
+                return;
+            };
+            var data = {
+                userName : values.userNameL,
+                userPwd : values.passwordL
+            };
+            /*Ajax后台验证登录*/
+            ajax.postJSON(URL.LOGIN,data,function (user) {
+                var result = user.result;
+                if(result == 'error'){
+                    alert('登录失败');
+                }else{
+                    THIS.routeTo('DB/dbank',null,user);
+                }
+            });
         });
-
     },
     /*注册表单昵称框校验*/
     nameExists: function (rule, value, callback) {
