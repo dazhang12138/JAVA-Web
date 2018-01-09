@@ -14,6 +14,8 @@ var URL = require('./Url');
 var UserData;
 /*账户存储信息*/
 var UserFiles;
+/*账户显示文件夹地址*/
+var UserFilesPath;
 
 /*下拉菜单（文件排序）*/
 const menu = (
@@ -174,13 +176,17 @@ var Index = YYClass.create({
         } else if (info.file.status === 'error') {
             YYMessage.error(`${info.file.name} 上传失败。`);
         }
+    },
+    //新建文件夹点击事件
+    newFiles:function () {
+        console.log('新建文件夹');
     }
     ,render: function() {
         return (
             <YYPage className="layout-demo">
                 <YYRow>
                     <YYCol span={4}>
-                        <a href="http://localhost:8081/apps/SampleApp/#/main">
+                        <a href={URL.MAINPATH}>
                             <img id="logo" src="./images/db_logo.png"/>
                         </a>
                     </YYCol>
@@ -263,8 +269,8 @@ var Index = YYClass.create({
                                          onOk={this.handleOk} onCancel={this.handleCancel}>
                                     <YYUpload
                                         name="file"
-                                        action="http://localhost:8080/dabai/Files/UploadFile"
-                                        data={{userName: UserData.userName,userPwd:UserData.userPwd}}
+                                        action={URL.UPLOADFILE}
+                                        data={{userName:UserData.name,path:UserFilesPath}}
                                         multiple = {true}
                                         // headers={{authorization: 'authorization-text'}}
                                         onChange={this.onChange}>
@@ -272,8 +278,8 @@ var Index = YYClass.create({
                                             <YYIcon type="upload" />点击上传
                                         </YYButton>
                                     </YYUpload>
-                                </YYModal>
-                                <YYButton type="error" icon="folder" ghost>新建文件夹</YYButton>
+                                </YYModal>0
+                                <YYButton type="error" icon="folder" ghost onClick={this.newFiles}>新建文件夹</YYButton>
                                 <YYButton icon="download" ghost>下载</YYButton>
                                 <YYDivide/>
                                 <YYInputButton className="pull-right" style={{width:300}} buttonIcon="search" buttonClick={this._onSearchClick}/>
@@ -305,10 +311,12 @@ var EventHanlder = {
             console.log('page onViewWillMount',options);
             UserData = this.getRouteParams();
             console.log('UserData',UserData);
+            UserFilesPath = UserData.name;
             var data = {
-              userId : UserData._id
+              userId : UserData._id,
+              filePath : UserFilesPath,
             };
-            ajax.postJSON('http://127.0.0.1:8080/dabai/Files/getUserFiles',data,function (result) {
+            ajax.postJSON(URL.GETUSERFILES,data,function (result) {
                 UserFiles = result;
             });
 

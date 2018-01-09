@@ -3,7 +3,7 @@ var _ = require('lodash');
 var {YYCreatePage} =  require('yylib-business');
 var ReduxUtils = require('yylib-utils/ReduxUtils');
 var React = require('react');
-var { YYClass,YYPage,YYCard,YYForm,YYInput,YYCheckbox,YYButton,YYFormItem,YYTabs,YYTab} = require('yylib-ui');
+var { YYClass,YYPage,YYCard,YYForm,YYInput,YYMessage,YYButton,YYFormItem,YYTabs,YYTab} = require('yylib-ui');
 require('./css/login.css');
 var ajax = require('yylib-utils/ajax');
 var URL = require('./Url');
@@ -14,6 +14,7 @@ const formItemLayout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 12 },
 };
+
 function noop() {
     return false;
 }
@@ -22,9 +23,10 @@ var Login = YYClass.create({
     /*登录button提交表单*/
     loginSubmit: function (e) {
         e.preventDefault();
-        var from = this.props.form.validateFields(function(errors, values){
-            if (!!errors) {
+        this.props.form.validateFields(function(errors, values){
+            if (values.userNameL == null || values.passwordL == null) {
                 console.log('Errors in form!!!');
+                YYMessage.error('用户名或密码不正确！请重新输入或找回密码!');
                 return;
             };
             var data = {
@@ -83,9 +85,10 @@ var Login = YYClass.create({
     /*注册button提交表单*/
     registerSubmit:function(e){
         e.preventDefault();
-        var from = this.props.form.validateFields(function (errors, values) {
+        this.props.form.validateFields(function (errors, values) {
             if (!!errors) {
                 console.log('Errors in form!!!');
+                YYMessage.error('请正确填写注册信息!');
                 return;
             }
             console.log('Submit!!!');
@@ -100,9 +103,9 @@ var Login = YYClass.create({
             /*ajax后台保存数据*/
             ajax.postJSON(URL.REGISTER,data,function (result) {
                 if(result){
-                    alert('注册成功');
+                    YYMessage.success('注册成功！');
                 }else{
-                    alert('注册失败');
+                    YYMessage.error('注册失败!');
                 }
             });
         });
