@@ -9,11 +9,10 @@ var { YYCol,YYRow,YYClass,YYPage,YYMenu,YYMenuItem,YYIcon,YYMenuSub
     ,YYInputButton,YYDropdown,YYTable,YYProgress} = require('yylib-ui');
 require('./css/index.css');
 var URL = require('./Url');
+var THIS;
 
 /*账户信息*/
 var UserData;
-/*账户存储信息*/
-var UserFiles;
 /*账户显示文件夹地址*/
 var UserFilesPath;
 
@@ -31,7 +30,6 @@ const menu = (
         </YYMenuItem>
     </YYMenu>
 );
-
 
 /*工具栏*/
 var YYSearchCondition = require('yylib-business/search/YYSearchCondition');
@@ -64,44 +62,24 @@ var onSearch = function (type, condition) {
 /*表格数据及筛选和排序*/
 var columns = [{
     title: '文件名',
-    dataIndex: 'name',
+    dataIndex: 'fileName',
     // 指定确定筛选的条件函数
     // 这里是名字中第一个字是 value
     onFilter: (value, record) => record.name.indexOf(value) === 0,
     sorter: (a, b) => a.name.length - b.name.length,
 }, {
     title: '大小',
-    dataIndex: 'age',
+    dataIndex: 'size',
     sorter: (a, b) => a.age - b.age,
 }, {
     title: '修改日期',
-    dataIndex: 'address',
+    dataIndex: 'date',
     filterMultiple: false,
     onFilter: (value, record) => record.address.indexOf(value) === 0,
     sorter: (a, b) => a.address.length - b.address.length,
 }];
 
-var data = [{
-    key: '1',
-    name: '胡斌',
-    age: 32,
-    address: '南湖区湖底公园1号',
-}, {
-    key: '2',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园12号',
-}, {
-    key: '3',
-    name: '李大嘴',
-    age: 32,
-    address: '南湖区湖底公园123号',
-}, {
-    key: '4',
-    name: '李秀莲大嘴哥',
-    age: 32,
-    address: '西湖区湖底公园123号',
-}];
+var filesListdata = [];
 
 function onChange(pagination, filters, sorter) {
     // 点击分页、筛选、排序时触发
@@ -180,8 +158,56 @@ var Index = YYClass.create({
     //新建文件夹点击事件
     newFiles:function () {
         console.log('新建文件夹');
-    }
-    ,render: function() {
+    },
+    //异步获取数据
+    getInitialState() {
+        return {
+            data: [],
+            loading: false,
+        };
+    },
+    fetch(params = {}) {
+        console.log('请求参数：', params);
+        var _this = this;
+        this.setState({ loading: true });
+        UserFilesPath = UserData.name;
+        var data = {
+            userId : UserData._id,
+            filePath : UserFilesPath,
+        };
+        ajax.postJSON(URL.GETUSERFILES,data,function (result) {
+            var files = result.files;
+            var file = result.file;
+            for(var i = 0;i<files.length;i++){
+                var f = files[i];
+                var d = {
+                    key:f._id,
+                    fileName: f.foldersName,
+                    date:f.foldersEndTime,
+                };
+                filesListdata.push(d);
+            }
+            for(var i = 0;i<file.length;i++){
+                var f = file[i];
+                var d = {
+                    key:f._id,
+                    fileName: f.fileName,
+                    size:f.fileSize,
+                    date:f.fileEndTime,
+                };
+                filesListdata.push(d);
+            }
+            // Read total count from server
+            _this.setState({
+                loading: false,
+                data: filesListdata,
+            });
+        });
+    },
+    componentDidMount() {
+        this.fetch();
+    },
+    render: function() {
         return (
             <YYPage className="layout-demo">
                 <YYRow>
@@ -278,7 +304,7 @@ var Index = YYClass.create({
                                             <YYIcon type="upload" />点击上传
                                         </YYButton>
                                     </YYUpload>
-                                </YYModal>0
+                                </YYModal>
                                 <YYButton type="error" icon="folder" ghost onClick={this.newFiles}>新建文件夹</YYButton>
                                 <YYButton icon="download" ghost>下载</YYButton>
                                 <YYDivide/>
@@ -290,7 +316,13 @@ var Index = YYClass.create({
                             </YYToolbar>
                         </YYPage>
                         <YYPage >
-                            <YYTable columns={columns} dataSource={data} onChange={onChange}  pagination={false} />
+                            <YYTable
+                                columns={columns}
+                                rowKey={record => record.registered}
+                                dataSource={this.state.data}
+                                pagination={false}
+                                loading={this.state.loading}
+                                onChange={onChange}/>
                         </YYPage>
                     </YYPanel>
                 </YYPage>
@@ -309,17 +341,8 @@ var EventHanlder = {
     "P004625":{
         onViewWillMount:function(options){
             console.log('page onViewWillMount',options);
+            THIS = this;
             UserData = this.getRouteParams();
-            console.log('UserData',UserData);
-            UserFilesPath = UserData.name;
-            var data = {
-              userId : UserData._id,
-              filePath : UserFilesPath,
-            };
-            ajax.postJSON(URL.GETUSERFILES,data,function (result) {
-                UserFiles = result;
-            });
-
         }
         ,onViewDidMount:function(options){
             console.log('page onViewDidMount',options);

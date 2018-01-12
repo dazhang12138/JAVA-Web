@@ -26,7 +26,7 @@ var Login = YYClass.create({
         this.props.form.validateFields(function(errors, values){
             if (values.userNameL == null || values.passwordL == null) {
                 console.log('Errors in form!!!');
-                YYMessage.error('用户名或密码不正确！请重新输入或找回密码!');
+                YYMessage.error('请填写登录信息!');
                 return;
             };
             var data = {
@@ -37,7 +37,7 @@ var Login = YYClass.create({
             ajax.postJSON(URL.LOGIN,data,function (user) {
                 var result = user.result;
                 if(result == 'error'){
-                    alert('登录失败');
+                    YYMessage.error('用户名或密码不正确！请重新输入或找回密码!');
                 }else{
                     THIS.routeTo('DB/dbank',null,user);
                 }
