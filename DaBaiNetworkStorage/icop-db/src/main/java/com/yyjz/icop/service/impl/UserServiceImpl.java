@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 			filesDao.saveFiles(fileDoc);
 			//将文件信息保存到用户信息里
 			Document d = new Document("filesId",fileDoc.get("_id"));
-			d.append(" ", user.getName());
+			d.append("filesName", user.getName());
 			d.append("files", Arrays.asList(new String[1]));
 			d.append("file", Arrays.asList(new String[1]));
 			userDoc.append("files", d);

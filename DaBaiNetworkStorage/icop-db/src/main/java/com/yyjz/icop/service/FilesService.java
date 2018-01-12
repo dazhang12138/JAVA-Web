@@ -1,5 +1,8 @@
 package com.yyjz.icop.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.bson.Document;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,9 +15,15 @@ public interface FilesService {
 	 * @param files
 	 * @return
 	 */
-	Document getUserFiles(FilesVo files);
+	Map<String, List<Document>> getUserFiles(FilesVo files);
 
-	Document saveFile(MultipartFile file, String path, String userName);
+	/**
+	 * 上传文件
+	 * @param file
+	 * @param path
+	 * @param userName
+	 */
+	void saveFile(MultipartFile file, String path, String userName);
 	
 	
 }
