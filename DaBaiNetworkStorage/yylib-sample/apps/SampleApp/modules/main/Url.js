@@ -13,7 +13,7 @@ var MainUrl = {
     REGISTER: PATH + CODE + "/User/Register", //注册
     GETUSERFILES: PATH + CODE + "/Files/getFiles",//获取用户文件列表
     UPLOADFILE: PATH + CODE + "/Files/UploadFile", //上传文件
-    NEWFOLDER: PATH + CODE + "Files/newFolder",//新建文件夹
+    NEWFOLDER: PATH + CODE + "/Files/newFolder",//新建文件夹
 
 
     MAINPATH: SHOWPATH + SHOWCODE + "/DB", //首页地址

@@ -39,7 +39,12 @@ function newsFolderVerify(filesName) {
 /*保存新建文件夹*/
 function saveNewFolder(queryParam) {
     ajax.postJSON(URL.NEWFOLDER,queryParam,function (result) {
-
+        if(result){
+            queryUserFileDateList(queryParam);
+            YYMessage.success("创建文件夹成功");
+        }else{
+            YYMessage.error("创建文件夹失败");
+        }
     })
 }
 
@@ -197,12 +202,12 @@ var NEWFOLDER = YYClass.create({
                 console.log('Errors in form!!!');
                 return;
             }
-            console.log('Submit!!!');
             var queryParam = {
-
+                userId:UserData._id,
+                filePath:UserFilesPath,
+                folderName:values.folderName,
             };
             saveNewFolder(queryParam);
-            console.log(values);
         });
     },
     userExists: function (rule, value, callback) {
