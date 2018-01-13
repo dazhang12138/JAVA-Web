@@ -258,17 +258,17 @@ MyParser.Login = Login;
 var EventHanlder = {
     "P004723":{
         onViewWillMount:function(options){
-            console.log('page onViewWillMount',options);
+            // console.log('page onViewWillMount',options);
         }
         ,onViewDidMount:function(options){
-            console.log('page onViewDidMount',options);
+            // console.log('page onViewDidMount',options);
             THIS = this;
         }
         ,onViewWillUpdate:function(options){
-            console.log('page onViewWillUpdate',options);
+            // console.log('page onViewWillUpdate',options);
         }
         ,onViewDidUpdate:function(options){
-            console.log('page onViewDidUpdate',options);
+            // console.log('page onViewDidUpdate',options);
         }
     }
 }

@@ -48,13 +48,23 @@ function saveNewFolder(queryParam) {
     })
 }
 
+/*表格双击事件*/
+var onRowDoubleClick = function (record,index) {
+    console.log('行数据',record,index);
+    if(record.type == 0){
+        UserFilesPath = UserFilesPath + '/' + record.fileName;
+        queryParam.filePath = UserFilesPath;
+        queryUserFileDateList(queryParam);
+    }
+};
+
 /*页面初始化*/
 /*logo*/
 var LOGO = YYClass.create({
     render: function() {
         return (
             <YYCol span={4}>
-                <a href={URL.MAINPATH}>
+                <a href={URL.LOGINPATH}>
                     <img style={{marginLeft:20,marginTop:20}} id="logo" src="./images/db_logo.png"/>
                 </a>
             </YYCol>
@@ -265,6 +275,22 @@ NEWFOLDER = YYForm.create()(NEWFOLDER);
 
 //页面初始化
 var EventHanlder = {
+    "breakOne":{
+        "onClick":function () {
+            var end = UserFilesPath.lastIndexOf('/');
+            if(end > -1){
+                UserFilesPath = UserFilesPath.substring(0,end);
+                queryParam.filePath = UserFilesPath;
+                queryUserFileDateList(queryParam);
+            }
+        }
+    },
+    "breakAll":{
+        "onClick":function () {
+            queryParam.filePath = UserData.name;
+            queryUserFileDateList(queryParam);
+        }
+    },
     "download":{
         "onClick":function () {
             console.log('下载');
@@ -291,7 +317,7 @@ var EventHanlder = {
     },
     "P005023":{
         onViewWillMount:function(options){
-            console.log('page onViewWillMount',options);
+            // console.log('page onViewWillMount',options);
             THIS = this;
             /*获取登录数据*/
             UserData = this.getRouteParams();
@@ -304,15 +330,27 @@ var EventHanlder = {
                 filePath:UserFilesPath,
             }
             queryUserFileDateList(queryParam);
+            /*设置双击事件*/
+            var listTable = THIS.findUI('listTable');
+            listTable.onRowDoubleClick = onRowDoubleClick;
+            /*设置面包屑*/
+            var foldersPath = THIS.findUI('foldersPath');
+            var itemsdata = [
+                {
+                    title:UserFilesPath,
+                    href:"/DB/mainPage",
+                }
+            ]
+            foldersPath.itemsData = itemsdata;
         }
         ,onViewDidMount:function(options){
-            console.log('page onViewDidMount',options);
+            // console.log('page onViewDidMount',options);
         }
         ,onViewWillUpdate:function(options){
-            console.log('page onViewWillUpdate',options);
+            // console.log('page onViewWillUpdate',options);
         }
         ,onViewDidUpdate:function(options){
-            console.log('page onViewDidUpdate',options);
+            // console.log('page onViewDidUpdate',options);
         }
     }
 }

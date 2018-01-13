@@ -16,6 +16,7 @@ var MainUrl = {
     NEWFOLDER: PATH + CODE + "/Files/newFolder",//新建文件夹
 
 
-    MAINPATH: SHOWPATH + SHOWCODE + "/DB", //首页地址
+    LOGINPATH: SHOWPATH + SHOWCODE + "/DB", //Login地址
+    MAINPATH:SHOWPATH + SHOWCODE + "/DB/mainPage",//首页地址
 }
 module.exports = MainUrl;
