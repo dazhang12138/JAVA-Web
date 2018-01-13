@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yyjz.icop.vo.FilesVo;
@@ -24,5 +25,13 @@ public interface FilesService {
 	 * @param userName
 	 */
 	void saveFile(MultipartFile file, String path, String userName);
+
+	/**
+	 * 保存文件夹
+	 * @param userId
+	 * @param filePath
+	 * @param foldderName
+	 */
+	void saveFolder(ObjectId userId, String filePath, String foldderName);
 	
 }

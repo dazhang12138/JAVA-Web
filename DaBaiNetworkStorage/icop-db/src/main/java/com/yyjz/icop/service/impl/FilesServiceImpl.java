@@ -1,6 +1,7 @@
 package com.yyjz.icop.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -54,17 +55,36 @@ public class FilesServiceImpl implements FilesService {
 			fileDoc.append("fileEndTime", d);
 			fileDoc.append("MD5", FileUtils.getFileMD5(path,fileName));
 			filesDao.saveFile(fileDoc);
-			updateUserFiles(queryUser,fileDoc.get("_id"),path,fileName);
+			updateUserFile(queryUser,fileDoc.get("_id"),path,fileName);
 			Document filter = new Document("_id",queryUser.get("_id"));
 			int userFileSize = Integer.valueOf((String) queryUser.get("fileSize"));
 			userFileSize += fileSize;
 			queryUser.append("fileSize", String.valueOf(userFileSize));
 			Document update = new Document("$set",queryUser);
-//			userDao.updateAllFilterUser(document, queryUser);
 			userDao.updateAllFilterUser(filter, update);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	@Override
+	public void saveFolder(ObjectId userId, String filePath, String foldderName) {
+		//保存文件夹信息
+		Document folderDoc = new Document();
+		folderDoc.append("_id", new ObjectId());
+		folderDoc.append("userId", userId);
+		folderDoc.append("foldersName", foldderName);
+		folderDoc.append("foldersStartTime", new Date());
+		folderDoc.append("foldersEndTime", new Date());
+		filesDao.saveFiles(folderDoc);
+		//查询用户信息
+		Document queryUser = userDao.queryUser(new Document("_id",userId));
+		//更新用户文件夹信息
+		updateUserFiles(queryUser,folderDoc.getObjectId("_id"),filePath,foldderName);
+		Document filter = new Document("_id",userId);
+		Document update = new Document("$set",queryUser);
+		userDao.updateAllFilterUser(filter, update);
 	}
 
 	/**
@@ -75,12 +95,12 @@ public class FilesServiceImpl implements FilesService {
 	 * @param fileName
 	 * @return
 	 */
-	private Document updateUserFiles(Document files,Object fileid, String path, String fileName) {
+	private void updateUserFile(Document files,Object fileid, String path, String fileName) {
 		String[] split = path.split("/");
 		int i = 0;
 		Document files_new = files;
 		while(i < split.length){
-			if(i == 0){
+			if(split.length == 1){
 				files_new = (Document) files_new.get("files");
 				if(files_new.get("filesName").equals(split[i])){
 					Document doc = new Document();
@@ -92,16 +112,63 @@ public class FilesServiceImpl implements FilesService {
 				List<Document> list = (ArrayList) files_new.get("files");
 				for (Document d : list) {
 					if(d.get("filesName").equals(split[i])){
-						Document doc = new Document();
-						doc.append("fileId", fileid);
-						doc.append("fileName", fileName);
-						((ArrayList) d.get("file")).add(doc);
+						if(i == split.length-1){
+							Document doc = new Document();
+							doc.append("fileId", fileid);
+							doc.append("fileName", fileName);
+							((ArrayList) d.get("file")).add(doc);
+						}else{
+							files_new = (Document) d.get("files");
+						}
 					}
 				}
 			}
 			i++;
 		}
-		return files;
+	}
+	
+	/**
+	 * 根据位置路径以及文件夹名称更新用户文档的文件夹存储
+	 * @param files
+	 * @param filesid
+	 * @param path
+	 * @param folderName
+	 * @return
+	 */
+	private void updateUserFiles(Document files, ObjectId filesid, String path, String folderName){
+		String[] split = path.split("/");
+		int i = 0;
+		Document files_new = files;
+		while(i < split.length){
+			if(split.length == 1){
+				files_new = (Document) files_new.get("files");
+				if(files_new.get("filesName").equals(split[i])){
+					Document doc = new Document();
+					doc.append("filesId", filesid);
+					doc.append("filesName", folderName);
+					doc.append("files",  Arrays.asList(new String[1]));
+					doc.append("file",  Arrays.asList(new String[1]));
+					((ArrayList) files_new.get("files")).add(doc);
+				}
+			}else{
+				List<Document> list = (ArrayList) files_new.get("files");
+				for (Document d : list) {
+					if(d.get("filesName").equals(split[i])){
+						if(d.get("filesName").equals(split[i])){
+							Document doc = new Document();
+							doc.append("filesId", filesid);
+							doc.append("filesName", folderName);
+							doc.append("files",  Arrays.asList(new String[1]));
+							doc.append("file",  Arrays.asList(new String[1]));
+							((ArrayList) d.get("files")).add(doc);
+						}else{
+							files_new = (Document) d.get("files");
+						}
+					}
+				}
+			}
+			i++;
+		}
 	}
 	
 	/**
@@ -151,5 +218,5 @@ public class FilesServiceImpl implements FilesService {
 		}
 		return list;
 	}
-	
+
 }
