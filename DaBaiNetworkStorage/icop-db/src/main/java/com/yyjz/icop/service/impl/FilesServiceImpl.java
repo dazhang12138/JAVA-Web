@@ -182,7 +182,7 @@ public class FilesServiceImpl implements FilesService {
 		for (int i = 1; i < split.length; i++) {
 			List<Document> files = (ArrayList) userFiles.get("files");
 			for (Document doc : files) {
-				if(doc.get("").equals(split[i])){
+				if(doc != null && doc.get("filesName").equals(split[i])){
 					userFiles = doc;
 				}
 			}
