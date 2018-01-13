@@ -28,6 +28,12 @@ public class FilesController {
 	
 	FilesService filesService = new FilesServiceImpl();
 	
+	@RequestMapping(value="newFolder")
+	@ResponseBody
+	public void newFolder(){
+		
+	}
+	
 	@RequestMapping(value="getFiles")
 	@ResponseBody
 	public List<Map<String, Object>> getFiles(@RequestBody FilesVo files){
@@ -40,6 +46,7 @@ public class FilesController {
 			m.put("fileName", document.get("fileName"));
 			m.put("fileSize", document.get("fileSize"));
 			m.put("fileEndTime", DateUtils.DateOfString(document.getDate("fileEndTime")));
+			m.put("type", "1");
 			list.add(m);
 		}
 		List<Document> filesList = map.get("files");
@@ -48,6 +55,7 @@ public class FilesController {
 			m.put("_id", document.get("_id").toString());
 			m.put("fileName", document.get("foldersName"));
 			m.put("fileEndTime", document.get("foldersEndTime"));
+			m.put("type", "0");
 			list.add(m);
 		}
 		return list;

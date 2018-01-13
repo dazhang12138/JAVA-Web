@@ -25,5 +25,4 @@ public interface FilesService {
 	 */
 	void saveFile(MultipartFile file, String path, String userName);
 	
-	
 }
