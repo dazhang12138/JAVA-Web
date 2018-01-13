@@ -1,0 +1,8 @@
+/*查询框靠左显示*/
+.yyui-toolbar .yyui-search{
+    float: left;
+}
+/*查询框大小*/
+.yyui-input .ant-input{
+    width: 350px;
+}

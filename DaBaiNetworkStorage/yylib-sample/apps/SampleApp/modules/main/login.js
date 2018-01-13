@@ -39,7 +39,7 @@ var Login = YYClass.create({
                 if(result == 'error'){
                     YYMessage.error('用户名或密码不正确！请重新输入或找回密码!');
                 }else{
-                    THIS.routeTo('DB/dbank',null,user);
+                    THIS.routeTo("DB/mainPage",null,user);
                 }
             });
         });
