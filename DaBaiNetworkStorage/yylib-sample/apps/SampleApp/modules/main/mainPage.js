@@ -23,6 +23,20 @@ function queryUserFileDateList(queryParam) {
     })
 }
 
+/*设置面包屑*/
+function setitemsdata() {
+    var foldersPath = THIS.findUI('foldersPath');
+    var split = UserFilesPath.split('/');
+    var itemsdata = [];
+    for (var i = 0;i < split.length; i++){
+        var items = {
+            title:split[i],
+        }
+        itemsdata.push(items);
+    }
+    foldersPath.itemsData = itemsdata;
+}
+
 /*新建文件夹检测唯一值名称*/
 function newsFolderVerify(filesName) {
     var result = false;
@@ -55,6 +69,8 @@ var onRowDoubleClick = function (record,index) {
         UserFilesPath = UserFilesPath + '/' + record.fileName;
         queryParam.filePath = UserFilesPath;
         queryUserFileDateList(queryParam);
+        /*设置面包屑*/
+        setitemsdata();
     }
 };
 
@@ -275,6 +291,11 @@ NEWFOLDER = YYForm.create()(NEWFOLDER);
 
 //页面初始化
 var EventHanlder = {
+    "alter":{
+        "onClick":function () {
+            console.log('修改摁键');
+        }
+    },
     "breakOne":{
         "onClick":function () {
             var end = UserFilesPath.lastIndexOf('/');
@@ -282,13 +303,18 @@ var EventHanlder = {
                 UserFilesPath = UserFilesPath.substring(0,end);
                 queryParam.filePath = UserFilesPath;
                 queryUserFileDateList(queryParam);
+                /*设置面包屑*/
+                setitemsdata();
             }
         }
     },
     "breakAll":{
         "onClick":function () {
-            queryParam.filePath = UserData.name;
+            UserFilesPath = UserData.name;
+            queryParam.filePath = UserFilesPath;
             queryUserFileDateList(queryParam);
+            /*设置面包屑*/
+            setitemsdata();
         }
     },
     "download":{
@@ -334,14 +360,7 @@ var EventHanlder = {
             var listTable = THIS.findUI('listTable');
             listTable.onRowDoubleClick = onRowDoubleClick;
             /*设置面包屑*/
-            var foldersPath = THIS.findUI('foldersPath');
-            var itemsdata = [
-                {
-                    title:UserFilesPath,
-                    href:"/DB/mainPage",
-                }
-            ]
-            foldersPath.itemsData = itemsdata;
+            setitemsdata();
         }
         ,onViewDidMount:function(options){
             // console.log('page onViewDidMount',options);
