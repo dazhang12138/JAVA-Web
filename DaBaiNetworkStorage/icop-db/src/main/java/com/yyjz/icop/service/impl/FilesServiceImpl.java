@@ -97,11 +97,11 @@ public class FilesServiceImpl implements FilesService {
 	 */
 	private void updateUserFile(Document files,Object fileid, String path, String fileName) {
 		String[] split = path.split("/");
-		int i = 0;
+		int i = 1;
 		Document files_new = files;
+		files_new = (Document) files_new.get("files");
 		while(i < split.length){
 			if(split.length == 1){
-				files_new = (Document) files_new.get("files");
 				if(files_new.get("filesName").equals(split[i])){
 					Document doc = new Document();
 					doc.append("fileId", fileid);
@@ -111,15 +111,16 @@ public class FilesServiceImpl implements FilesService {
 			}else{
 				List<Document> list = (ArrayList) files_new.get("files");
 				for (Document d : list) {
-					if(d.get("filesName").equals(split[i])){
+					if(d != null && d.get("filesName").equals(split[i])){
 						if(i == split.length-1){
 							Document doc = new Document();
 							doc.append("fileId", fileid);
 							doc.append("fileName", fileName);
 							((ArrayList) d.get("file")).add(doc);
 						}else{
-							files_new = (Document) d.get("files");
+							files_new = d;
 						}
+						break;
 					}
 				}
 			}
@@ -137,11 +138,11 @@ public class FilesServiceImpl implements FilesService {
 	 */
 	private void updateUserFiles(Document files, ObjectId filesid, String path, String folderName){
 		String[] split = path.split("/");
-		int i = 0;
+		int i = 1;
 		Document files_new = files;
+		files_new = (Document) files_new.get("files");
 		while(i < split.length){
 			if(split.length == 1){
-				files_new = (Document) files_new.get("files");
 				if(files_new.get("filesName").equals(split[i])){
 					Document doc = new Document();
 					doc.append("filesId", filesid);
@@ -153,8 +154,8 @@ public class FilesServiceImpl implements FilesService {
 			}else{
 				List<Document> list = (ArrayList) files_new.get("files");
 				for (Document d : list) {
-					if(d.get("filesName").equals(split[i])){
-						if(d.get("filesName").equals(split[i])){
+					if(d != null && d.get("filesName").equals(split[i])){
+						if(i == split.length-1){
 							Document doc = new Document();
 							doc.append("filesId", filesid);
 							doc.append("filesName", folderName);
@@ -162,8 +163,9 @@ public class FilesServiceImpl implements FilesService {
 							doc.append("file",  Arrays.asList(new String[1]));
 							((ArrayList) d.get("files")).add(doc);
 						}else{
-							files_new = (Document) d.get("files");
+							files_new = d;
 						}
+						break;
 					}
 				}
 			}
