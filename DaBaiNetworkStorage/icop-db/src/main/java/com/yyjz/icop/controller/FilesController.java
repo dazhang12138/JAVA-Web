@@ -17,6 +17,7 @@ import com.yyjz.icop.service.FilesService;
 import com.yyjz.icop.service.impl.FilesServiceImpl;
 import com.yyjz.icop.util.DateUtils;
 import com.yyjz.icop.util.FileUtils;
+import com.yyjz.icop.vo.DelFilesVo;
 import com.yyjz.icop.vo.FilesVo;
 
 @Controller
@@ -24,6 +25,14 @@ import com.yyjz.icop.vo.FilesVo;
 public class FilesController {
 	
 	FilesService filesService = new FilesServiceImpl();
+	
+	@RequestMapping(value="deleteFiles")
+	@ResponseBody
+	public boolean deleteFiles(@RequestBody DelFilesVo delFiles){
+		filesService.deleteFolder(delFiles.getDeletefolder(),delFiles.getFolderPath(),delFiles.getUserId());
+		filesService.deleteFile(delFiles.getDeletefile(),delFiles.getFolderPath(),delFiles.getUserId());
+		return true;
+	}
 	
 	@RequestMapping(value="newFolder")
 	@ResponseBody

@@ -1,7 +1,6 @@
 package com.yyjz.icop.dao;
 
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 public interface FilesDao {
 	
@@ -23,4 +22,14 @@ public interface FilesDao {
 	 * @return
 	 */
 	Document queryFiles(Document doc, boolean b);
+	/**
+	 * 删除文件夹
+	 * @param document
+	 */
+	void deleteFiles(Document document);
+	/**
+	 * 删除文件
+	 * @param document
+	 */
+	void deleteFile(Document document);
 }

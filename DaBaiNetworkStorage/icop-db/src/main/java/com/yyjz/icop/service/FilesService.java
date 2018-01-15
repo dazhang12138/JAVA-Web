@@ -2,6 +2,7 @@ package com.yyjz.icop.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -33,5 +34,23 @@ public interface FilesService {
 	 * @param foldderName
 	 */
 	void saveFolder(ObjectId userId, String filePath, String foldderName);
+
+	/**
+	 * 删除文件夹
+	 * @param deletefolder
+	 * @param objectId 
+	 * @param string 
+	 * @return
+	 */
+	void deleteFolder(Set<Map<String, Object>> deletefolder, String path, ObjectId objectId);
+
+	/**
+	 * 删除文件
+	 * @param deletefile
+	 * @param objectId 
+	 * @param string 
+	 * @return
+	 */
+	void deleteFile(Set<Map<String, Object>> deletefile, String path, ObjectId objectId);
 	
 }

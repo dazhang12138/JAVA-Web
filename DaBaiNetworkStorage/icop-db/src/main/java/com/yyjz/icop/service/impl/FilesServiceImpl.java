@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -86,6 +87,95 @@ public class FilesServiceImpl implements FilesService {
 		Document update = new Document("$set",queryUser);
 		userDao.updateAllFilterUser(filter, update);
 	}
+	
+	@Override
+	public void deleteFolder(Set<Map<String, Object>> deletefolder,String path, ObjectId objectId) {
+		for (Map<String, Object> map : deletefolder) {
+			//物理删除
+			FileUtils.deleteFiles(FileUtils.getPath(path, (String)map.get("folderName")));
+			//删除文件夹库
+			ObjectId oid = new ObjectId((String)map.get("_id"));
+			filesDao.deleteFiles(new Document("_id",oid));
+			//更新用户库
+			Document queryUser = userDao.queryUser(new Document("_id",objectId));
+			deleteUserFiles(queryUser, path, (String)map.get("folderName"));
+			Document filter = new Document("_id",objectId);
+			Document update = new Document("$set",queryUser);
+			userDao.updateAllFilterUser(filter, update);
+		}
+	}
+
+	@Override
+	public void deleteFile(Set<Map<String, Object>> deletefile,String path, ObjectId objectId) {
+		for (Map<String, Object> map : deletefile) {
+			//物理删除
+			FileUtils.deleteFiles(FileUtils.getPath(path, (String)map.get("fileName")));
+			//删除文件夹库
+			ObjectId oid = new ObjectId((String)map.get("_id"));
+			filesDao.deleteFile(new Document("_id",oid));
+			//更新用户库
+			Document queryUser = userDao.queryUser(new Document("_id",objectId));
+			deleteUserFile(queryUser, path, (String)map.get("fileName"));
+			Document filter = new Document("_id",objectId);
+			Document update = new Document("$set",queryUser);
+			userDao.updateAllFilterUser(filter, update);
+		}
+	}
+	
+	/**
+	 * 根据位置路径以及文件名称更新用户文档的文件夹存储
+	 * @param files
+	 * @param path
+	 * @param folderName
+	 */
+	private void deleteUserFiles(Document files, String path, String folderName) {
+		path = path + "/" + folderName;
+		String[] split = path.split("/");
+		int i = 1;
+		Document files_new = files;
+		files_new = (Document) files_new.get("files");
+		while (i < split.length) {
+			List<Document> list = (ArrayList) files_new.get("files");
+			for (Document d : list) {
+				if (d != null && d.get("filesName").equals(split[i])) {
+					if (i == split.length - 1) {
+						list.remove(d);
+					} else {
+						files_new = d;
+					}
+					break;
+				}
+			}
+			i++;
+		}
+	}
+	/**
+	 * 根据位置路径以及文件名称更新用户文档的文件存储
+	 * @param files
+	 * @param path
+	 * @param folderName
+	 */
+	private void deleteUserFile(Document files, String path, String fileName) {
+		path = path + "/" + fileName;
+		String[] split = path.split("/");
+		int i = 1;
+		Document files_new = files;
+		files_new = (Document) files_new.get("files");
+		while (i < split.length) {
+			List<Document> list = (ArrayList) files_new.get("file");
+			for (Document d : list) {
+				if (d != null && d.get("fileName").equals(split[i])) {
+					if (i == split.length - 1) {
+						list.remove(d);
+					} else {
+						files_new = d;
+					}
+					break;
+				}
+			}
+			i++;
+		}
+	}
 
 	/**
 	 * 根据位置路径以及文件名称更新用户文档的文件存储
@@ -97,7 +187,7 @@ public class FilesServiceImpl implements FilesService {
 	 */
 	private void updateUserFile(Document files,Object fileid, String path, String fileName) {
 		String[] split = path.split("/");
-		int i = 1;
+		int i = 0;
 		Document files_new = files;
 		files_new = (Document) files_new.get("files");
 		while(i < split.length){
@@ -138,7 +228,7 @@ public class FilesServiceImpl implements FilesService {
 	 */
 	private void updateUserFiles(Document files, ObjectId filesid, String path, String folderName){
 		String[] split = path.split("/");
-		int i = 1;
+		int i = 0;
 		Document files_new = files;
 		files_new = (Document) files_new.get("files");
 		while(i < split.length){
@@ -220,5 +310,4 @@ public class FilesServiceImpl implements FilesService {
 		}
 		return list;
 	}
-
 }

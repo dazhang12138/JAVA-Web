@@ -39,6 +39,85 @@ public class FileUtils {
 		return flag;
 	}
 	/**
+	 * 删除文件或文件夹
+	 * @param path
+	 * @return
+	 */
+	public static boolean deleteFiles(String path) {
+		File file = new File(path);
+		if (!file.exists()) {
+			return false;
+		} else {
+			if (file.isFile())
+				return deleteFile(path);
+			else
+				return deleteDirectory(path);
+		}
+	}
+	/**
+	 * 删除文件
+	 * @param fileName
+	 * @return
+	 */
+	private static boolean deleteFile(String fileName) {
+		File file = new File(fileName);
+		// 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
+		if (file.exists() && file.isFile()) {
+			if (file.delete()) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	/**
+	 * 删除文件夹
+	 * @param dir
+	 * @return
+	 */
+	private static boolean deleteDirectory(String dir) {
+		// 如果dir不以文件分隔符结尾，自动添加文件分隔符
+		if (!dir.endsWith(File.separator))
+			dir = dir + File.separator;
+		File dirFile = new File(dir);
+		// 如果dir对应的文件不存在，或者不是一个目录，则退出
+		if ((!dirFile.exists()) || (!dirFile.isDirectory())) {
+			return false;
+		}
+		boolean flag = true;
+		// 删除文件夹中的所有文件包括子目录
+		File[] files = dirFile.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			// 删除子文件
+			if (files[i].isFile()) {
+				flag = FileUtils.deleteFile(files[i].getAbsolutePath());
+				if (!flag)
+					break;
+			}
+			// 删除子目录
+			else if (files[i].isDirectory()) {
+				flag = FileUtils.deleteDirectory(files[i].getAbsolutePath());
+				if (!flag)
+					break;
+			}
+		}
+		if (!flag) {
+			return false;
+		}
+		// 删除当前目录
+		if (dirFile.delete()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	 
+	 
+	 
+	
+	/**
 	 * 创建文件夹
 	 * @param folderPath
 	 * @return

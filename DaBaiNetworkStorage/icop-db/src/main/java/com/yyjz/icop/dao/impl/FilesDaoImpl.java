@@ -1,7 +1,6 @@
 package com.yyjz.icop.dao.impl;
 
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -39,5 +38,17 @@ public class FilesDaoImpl implements FilesDao {
 			d = document2;
 		}
 		return d;
+	}
+
+	@Override
+	public void deleteFiles(Document document) {
+		MongoCollection<Document> docs = mdb.getCollection("dbFiles");
+		docs.deleteOne(document);
+	}
+
+	@Override
+	public void deleteFile(Document document) {
+		MongoCollection<Document> docs = mdb.getCollection("dbFile");
+		docs.deleteOne(document);
 	}
 }
