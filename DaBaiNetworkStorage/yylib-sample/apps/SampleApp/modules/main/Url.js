@@ -14,6 +14,7 @@ var MainUrl = {
     GETUSERFILES: PATH + CODE + "/Files/getFiles",//获取用户文件列表
     UPLOADFILE: PATH + CODE + "/Files/UploadFile", //上传文件
     NEWFOLDER: PATH + CODE + "/Files/newFolder",//新建文件夹
+    DELETEFILES: PATH + CODE + "/Files/deleteFiles",//删除所选文件夹
 
 
     LOGINPATH: SHOWPATH + SHOWCODE + "/DB", //Login地址

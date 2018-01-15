@@ -64,7 +64,7 @@ function saveNewFolder(queryParam) {
 
 /*表格双击事件*/
 var onRowDoubleClick = function (record,index) {
-    console.log('行数据',record,index);
+    // console.log('行数据',record,index);
     if(record.type == 0){
         UserFilesPath = UserFilesPath + '/' + record.fileName;
         queryParam.filePath = UserFilesPath;
@@ -73,6 +73,18 @@ var onRowDoubleClick = function (record,index) {
         setitemsdata();
     }
 };
+
+/*删除*/
+function deleteFiles(deletef) {
+    ajax.postJSON(URL.DELETEFILES,deletef,function (result) {
+        if(result) {
+            YYMessage.success('文件删除成功');
+            queryUserFileDateList(queryParam);
+        }else{
+            YYMessage.error('文件删除失败');
+        }
+    })
+}
 
 /*页面初始化*/
 /*logo*/
@@ -324,7 +336,37 @@ var EventHanlder = {
     },
     "delete":{
         "onClick":function () {
-            console.log('删除');
+            var listTable = THIS.findUI('listTable');
+            var selectedRowData = listTable.api.getSelectedRowData()
+            if(selectedRowData.length > 0){
+                var deletefolder = [];
+                var deletefile = [];
+                for (var i = 0;i<selectedRowData.length;i++){
+                    var row = selectedRowData[i];
+                    if(row.type == 0){
+                        var d = {
+                            _id:row._id,
+                            folderName:row.fileName,
+                        }
+                        deletefolder.push(d);
+                    }else{
+                        var d = {
+                            _id:row._id,
+                            fileName:row.fileName,
+                        }
+                        deletefile.push(d);
+                    }
+                }
+                var deletef = {
+                    deletefolder:deletefolder,
+                    deletefile:deletefile,
+                    folderPath:UserFilesPath,
+                    userId:UserData._id,
+                };
+                deleteFiles(deletef);
+            }else{
+                YYMessage.error('请勾选需要删除的文件');
+            }
         }
     },
     "addFolder":{
