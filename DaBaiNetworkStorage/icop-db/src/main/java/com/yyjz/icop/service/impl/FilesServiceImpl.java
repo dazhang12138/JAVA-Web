@@ -91,34 +91,40 @@ public class FilesServiceImpl implements FilesService {
 	@Override
 	public void deleteFolder(Set<Map<String, Object>> deletefolder,String path, ObjectId objectId) {
 		for (Map<String, Object> map : deletefolder) {
-			//物理删除
-			FileUtils.deleteFiles(FileUtils.getPath(path, (String)map.get("folderName")));
-			//删除文件夹库
-			ObjectId oid = new ObjectId((String)map.get("_id"));
-			filesDao.deleteFiles(new Document("_id",oid));
 			//更新用户库
 			Document queryUser = userDao.queryUser(new Document("_id",objectId));
-			deleteUserFiles(queryUser, path, (String)map.get("folderName"));
+			Long deleteUserFiles = deleteUserFiles(queryUser, path, (String)map.get("folderName"));
+			Long userFileSize = Long.valueOf(queryUser.getString("fileSize"));
+			queryUser.append("fileSize", String.valueOf(deleteUserFiles-userFileSize));
 			Document filter = new Document("_id",objectId);
 			Document update = new Document("$set",queryUser);
 			userDao.updateAllFilterUser(filter, update);
+			//删除文件夹库
+			ObjectId oid = new ObjectId((String)map.get("_id"));
+			filesDao.deleteFiles(new Document("_id",oid));
+			//物理删除
+			FileUtils.deleteFiles(FileUtils.getPath(path, (String)map.get("folderName")));
 		}
 	}
 
 	@Override
 	public void deleteFile(Set<Map<String, Object>> deletefile,String path, ObjectId objectId) {
 		for (Map<String, Object> map : deletefile) {
-			//物理删除
-			FileUtils.deleteFiles(FileUtils.getPath(path, (String)map.get("fileName")));
-			//删除文件夹库
 			ObjectId oid = new ObjectId((String)map.get("_id"));
-			filesDao.deleteFile(new Document("_id",oid));
 			//更新用户库
 			Document queryUser = userDao.queryUser(new Document("_id",objectId));
+			Document queryFile = filesDao.queryFiles(new Document("_id",oid), false);
+			String fileSize = queryFile.getString("fileSize");
+			String userFileSize = queryUser.getString("fileSize");
+			queryUser.append("fileSize", String.valueOf(Long.valueOf(userFileSize)-Long.valueOf(fileSize)));
 			deleteUserFile(queryUser, path, (String)map.get("fileName"));
 			Document filter = new Document("_id",objectId);
 			Document update = new Document("$set",queryUser);
 			userDao.updateAllFilterUser(filter, update);
+			//删除文件夹库
+			filesDao.deleteFile(new Document("_id",oid));
+			//物理删除
+			FileUtils.deleteFiles(FileUtils.getPath(path, (String)map.get("fileName")));
 		}
 	}
 	
@@ -128,7 +134,8 @@ public class FilesServiceImpl implements FilesService {
 	 * @param path
 	 * @param folderName
 	 */
-	private void deleteUserFiles(Document files, String path, String folderName) {
+	private Long deleteUserFiles(Document files, String path, String folderName) {
+		Long size = new Long(0);
 		path = path + "/" + folderName;
 		String[] split = path.split("/");
 		int i = 1;
@@ -139,6 +146,8 @@ public class FilesServiceImpl implements FilesService {
 			for (Document d : list) {
 				if (d != null && d.get("filesName").equals(split[i])) {
 					if (i == split.length - 1) {
+						Long cascadeFolder = cascadeFolder(d,new Long(0));
+						size += cascadeFolder;
 						list.remove(d);
 					} else {
 						files_new = d;
@@ -148,7 +157,37 @@ public class FilesServiceImpl implements FilesService {
 			}
 			i++;
 		}
+		return size;
 	}
+	
+	/**
+	 * 级联删除文件夹文档下的所有文件夹和文件在库中的存储
+	 * @param d
+	 */
+	private Long cascadeFolder(Document d,Long size) {
+		//级联删除文件夹
+		List<Document> object = (ArrayList) d.get("files");
+		for (Document document : object) {
+			if(document!=null){
+				Long cascadeFolder = cascadeFolder(document,new Long(0));
+				size += cascadeFolder;
+				filesDao.deleteFiles(new Document("_id",document.getObjectId("filesId")));
+			}
+		}
+		//删除文件
+		List<Document> objectf = (ArrayList) d.get("file");
+		for (Document document : objectf) {
+			if(document!=null){
+				Document document2 = new Document("_id",document.getObjectId("fileId"));
+				Document queryFiles = filesDao.queryFiles(document2, false);
+				String string = queryFiles.getString("fileSize");
+				size += Long.valueOf(string);
+				filesDao.deleteFile(document2);
+			}
+		}
+		return size;
+	}
+
 	/**
 	 * 根据位置路径以及文件名称更新用户文档的文件存储
 	 * @param files
