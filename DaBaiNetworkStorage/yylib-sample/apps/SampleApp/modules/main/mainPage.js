@@ -247,6 +247,7 @@ var NEWFOLDER = YYClass.create({
             };
             saveNewFolder(queryParam);
         });
+        this.props.form.resetFields();
     },
     userExists: function (rule, value, callback) {
         if (!value) {
