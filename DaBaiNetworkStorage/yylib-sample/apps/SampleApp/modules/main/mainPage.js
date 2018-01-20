@@ -2,6 +2,8 @@ var React = require('react');
 var _ = require('lodash');
 var {YYClass,YYCol,YYPage,YYMenu,YYMenuItem,YYDropdown,YYIcon,YYModal,YYUpload,YYButton,YYMessage,YYForm,YYFormItem,YYInput} = require('yylib-ui');
 var {YYCreatePage} =  require('yylib-business');
+var YYChart = require('yylib-ui/chart/YYChart');
+var ReactDOM = require('react-dom');
 var ajax = require('yylib-utils/ajax');
 var ReduxUtils = require('yylib-utils/ReduxUtils');
 var URL = require('./Url');
@@ -138,19 +140,28 @@ var MENU = YYClass.create({
 });
 
 /*个人信息的菜单栏*/
+function outLogin() {
+    UserData = null;
+    UserFilesPath = null;
+    queryParam = null;
+    THIS.routeTo('/DB');
+}
+function userMessage() {
+    THIS.routeTo('/DB/userMessage',null,UserData);
+}
 const Usermenu = (
     <YYMenu>
         <YYMenuItem>
-            <a target="_blank" href="http://www.alipay.com/">个人资料</a>
+            <a onClick={userMessage}>个人资料</a>
         </YYMenuItem>
         <YYMenuItem>
-            <a target="_blank" href="http://www.taobao.com/">开通VIP</a>
+            <a href="http://www.taobao.com/">开通VIP</a>
         </YYMenuItem>
         <YYMenuItem>
-            <a target="_blank" href="http://www.taobao.com/">系统通知</a>
+            <a href="http://www.taobao.com/">系统通知</a>
         </YYMenuItem>
         <YYMenuItem>
-            <a target="_blank" href="http://www.tmall.com/">退出</a>
+            <a onClick={outLogin}>退出登录</a>
         </YYMenuItem>
     </YYMenu>
 );
@@ -302,11 +313,93 @@ var NEWFOLDER = YYClass.create({
 });
 NEWFOLDER = YYForm.create()(NEWFOLDER);
 
+/*修改文件页面*/
+var ALTERFILES = YYClass.create({
+    handleCancel(e) {
+        console.log(e);
+        var alterFiles = THIS.findUI('alterFiles');
+        alterFiles.visible = false;
+        THIS.refresh();
+    },
+    handleOk() {
+        console.log('点击了确定');
+        var alterFiles = THIS.findUI('alterFiles');
+        alterFiles.visible = false;
+        THIS.refresh();
+    },
+    render:function () {
+        return <YYModal title="修改文件" visible={this.props.visible}
+            onOk={this.handleOk}  onCancel={this.handleCancel} >
+            </YYModal>
+    }
+});
+
+const options = {
+    tooltip : {
+        formatter: "{a} <br/>{b} : {c}%"
+    },
+    series:[
+        {
+            name: '已存储',
+            type: 'gauge',
+            detail: {formatter: '{value}%',fontSize:5},
+            data: [{value: 50, name: '使用大小'}]
+        }
+    ]
+};
+
+var series1 = {
+    name: '已存储',
+    type: 'gauge',
+    detail: {formatter: '{value}%',fontSize:10},
+    data: [{value: 50, name: '使用大小'}],
+    axisLine:{lineStyle:{width:10}},
+    pointer:{width:4}
+}
+
+var Mychart = YYClass.create({
+    ready:function (chart) {
+        chart.on('click', function (params) {
+            console.log('监测待办排行',params);
+
+        });
+    },
+   render:function () {
+       return (
+           <div>
+               <YYChart {...options} onReady={this.ready} width={230} height={200}>
+                   <YYChart.Bar {...series1}/>
+               </YYChart>
+           </div>
+       )
+   }
+});
+
+var ChartDemo1 = YYClass.create({
+    componentDidMount: function () {
+        ReactDOM.render(<Mychart />, document.getElementById('chartdemo1'));
+    },
+    render: function () {
+        return <div id="chartdemo1"></div>
+    }
+})
+
 //页面初始化
 var EventHanlder = {
     "alter":{
         "onClick":function () {
-            console.log('修改摁键');
+            var listTable = THIS.findUI('listTable');
+            var selectedRowData = listTable.api.getSelectedRowData();
+            if(selectedRowData.length > 1){
+                YYMessage.info("修改操作只能勾选一个文件!");
+            }else if(selectedRowData.length > 0){
+                var alterFiles = THIS.findUI('alterFiles');
+                alterFiles.visible = true;
+                THIS.refresh();
+                // YYMessage.success("修改");
+            }else{
+                YYMessage.info("请勾选需要修改的文件");
+            }
         }
     },
     "breakOne":{
@@ -393,7 +486,6 @@ var EventHanlder = {
             UserFilesPath = UserData.name;
             /*默认选中的树节点*/
             var leftMenu = THIS.findUI('leftMenu');
-            leftMenu.selectedKeys = ['1515737467367_5842'];
             queryParam = {
                 userId: UserData._id,
                 filePath:UserFilesPath,
@@ -423,6 +515,8 @@ MyParser.menu = MENU;
 MyParser.information = INFORMATION;
 MyParser.uploadPopupWindow = UPLOADPOPUPWINDOW;
 MyParser.NewFolder = NEWFOLDER;
+MyParser.alterFiles = ALTERFILES;
+MyParser.ChartDemo1 = ChartDemo1;
 
 var SimplePage = YYClass.create({
     render:function(){
