@@ -20,5 +20,7 @@ module.exports = {
     URL_HOME,
     URL_HOME_PORTAL,
     REF_SERVER_URL,
-    MODULE_URL
+    MODULE_URL,
+    ADDR,
+    ROOT_PATH
 };

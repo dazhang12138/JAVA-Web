@@ -2,19 +2,21 @@
  * Created by ICOP on 2017-10-24.
  */
 
-var PATH = "http://localhost:8080/";
+var RestUrl = require('../../actions/RestUrl');
+
+var ADDR = RestUrl.ADDR;
+var ROOT_PATH = RestUrl.ROOT_PATH;
 var SHOWPATH = "http://localhost:8081/";
 var SHOWCODE = "apps/SampleApp/#";
-var CODE = "icop-db";
 
 var MainUrl = {
-    LOGIN: PATH + CODE +  "/User/Login",      //登录
-    VERIFY: PATH + CODE + "/User/UserVerify", //校验
-    REGISTER: PATH + CODE + "/User/Register", //注册
-    GETUSERFILES: PATH + CODE + "/Files/getFiles",//获取用户文件列表
-    UPLOADFILE: PATH + CODE + "/Files/UploadFile", //上传文件
-    NEWFOLDER: PATH + CODE + "/Files/newFolder",//新建文件夹
-    DELETEFILES: PATH + CODE + "/Files/deleteFiles",//删除所选文件夹
+    LOGIN: ADDR + ROOT_PATH +  "/User/Login",      //登录
+    VERIFY: ADDR + ROOT_PATH + "/User/UserVerify", //校验
+    REGISTER: ADDR + ROOT_PATH + "/User/Register", //注册
+    GETUSERFILES: ADDR + ROOT_PATH + "/Files/getFiles",//获取用户文件列表
+    UPLOADFILE: ADDR + ROOT_PATH + "/Files/UploadFile", //上传文件
+    NEWFOLDER: ADDR + ROOT_PATH + "/Files/newFolder",//新建文件夹
+    DELETEFILES: ADDR + ROOT_PATH + "/Files/deleteFiles",//删除所选文件夹
 
 
     LOGINPATH: SHOWPATH + SHOWCODE + "/DB", //Login地址
