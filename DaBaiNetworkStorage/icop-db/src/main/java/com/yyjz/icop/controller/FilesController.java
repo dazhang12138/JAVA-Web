@@ -20,12 +20,22 @@ import com.yyjz.icop.util.FileUtils;
 import com.yyjz.icop.vo.DelFilesVo;
 import com.yyjz.icop.vo.FilesVo;
 
+/**
+ * 处理文件相关的Controller类
+ * @author Mr.Da
+ */
 @Controller
 @RequestMapping("Files")
 public class FilesController {
-	
+	/**
+	 * 文件处理Service
+	 */
 	FilesService filesService = new FilesServiceImpl();
-	
+	/**
+	 * 删除文件功能
+	 * @param delFiles 删除文件Vo，包含需要删除的文件集合、文件夹集合、用户编号及删除路径
+	 * @return 返回true
+	 */
 	@RequestMapping(value="deleteFiles")
 	@ResponseBody
 	public boolean deleteFiles(@RequestBody DelFilesVo delFiles){
@@ -34,6 +44,11 @@ public class FilesController {
 		return true;
 	}
 	
+	/**
+	 * 创建新文件夹
+	 * @param files 文件Vo，包含用户编号、文件夹路径及文件夹名称
+	 * @return 返回是否成功创建新建文件夹，返回true与false。
+	 */
 	@RequestMapping(value="newFolder")
 	@ResponseBody
 	public boolean newFolder(@RequestBody FilesVo files){
@@ -50,6 +65,11 @@ public class FilesController {
 		return result;
 	}
 	
+	/**
+	 * 获取文件列表
+	 * @param files 文件Vo，包含用户编号、文件夹路径及文件夹名称
+	 * @return 返回文件夹路径下的存储文件与文件夹集合
+	 */
 	@RequestMapping(value="getFiles")
 	@ResponseBody
 	public List<Map<String, Object>> getFiles(@RequestBody FilesVo files){
@@ -77,6 +97,13 @@ public class FilesController {
 		return list;
 	}
 	
+	/**
+	 * 上传文件
+	 * @param file 文件
+	 * @param path 存储地址
+	 * @param userName 用户名
+	 * @return 返回是否成功上传,true与false
+	 */
 	@RequestMapping(value="UploadFile")
 	@ResponseBody
 	public boolean uploadFile(@RequestParam("file") MultipartFile file,String path, String userName){
