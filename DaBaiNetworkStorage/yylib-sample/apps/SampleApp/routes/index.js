@@ -15,9 +15,11 @@ var SampleTable = lazy(require('bundle?lazy&name=example1!../modules/sample/Samp
 var SampleForm = lazy(require('bundle?lazy&name=example1!../modules/sample/SampleForm'));
 
 //main
-var Index = lazy(require('bundle?lazy&name=example1!../modules/main/Index'));
 var mainPage = lazy(require('bundle?lazy&name=example1!../modules/main/mainPage'));
 var Login = lazy(require('bundle?lazy&name=example1!../modules/main/login'));
+
+//message
+var userMessage = lazy(require('bundle?lazy&name=example1!../modules/message/userMessage'));
 
 
 module.exports = (
@@ -31,8 +33,8 @@ module.exports = (
         </Route>
         <Route path="DB" component={LazyPageRoutes}>
             <IndexRoute component={Login}/>
-            <Route path="dbank" component={Index}/>
             <Route path="mainPage" component={mainPage}/>
+            <Route path='userMessage' component={userMessage}/>
         </Route>
     </Route>
 );
