@@ -1,6 +1,10 @@
 package com.yyjz.icop.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -50,5 +54,16 @@ public class FilesDaoImpl implements FilesDao {
 	public void deleteFile(Document document) {
 		MongoCollection<Document> docs = mdb.getCollection("dbFile");
 		docs.deleteOne(document);
+	}
+
+	@Override
+	public List<Document> queryAllUserFile(Document queryDat) {
+		List<Document> list = new ArrayList<Document>();
+		MongoCollection<Document> docs = mdb.getCollection("dbFile");
+		FindIterable<Document> find = docs.find(queryDat);
+		for (Document document : find) {
+			list.add(document);
+		}
+		return list;
 	}
 }

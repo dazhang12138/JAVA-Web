@@ -51,6 +51,13 @@ public interface FilesService {
 	 * @param string 
 	 * @return
 	 */
-	void deleteFile(Set<Map<String, Object>> deletefile, String path, ObjectId objectId);
+	Document deleteFile(Set<Map<String, Object>> deletefile, String path, ObjectId objectId);
+
+	/**
+	 * 获取用户的所有文件的不同类型的大小
+	 * @param userId
+	 * @return
+	 */
+	Map<String, Long> getUserFileAllTypeSize(ObjectId userId);
 	
 }

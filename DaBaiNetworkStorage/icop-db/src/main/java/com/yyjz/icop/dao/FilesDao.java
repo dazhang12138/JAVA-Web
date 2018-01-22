@@ -1,6 +1,9 @@
 package com.yyjz.icop.dao;
 
+import java.util.List;
+
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 public interface FilesDao {
 	
@@ -32,4 +35,10 @@ public interface FilesDao {
 	 * @param document
 	 */
 	void deleteFile(Document document);
+	/**
+	 * 通过用户编号过滤出用户的所有文件
+	 * @param queryData
+	 * @return
+	 */
+	List<Document> queryAllUserFile(Document queryData);
 }

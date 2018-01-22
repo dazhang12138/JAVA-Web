@@ -17,6 +17,7 @@ import com.yyjz.icop.dao.UserDao;
 import com.yyjz.icop.dao.impl.FilesDaoImpl;
 import com.yyjz.icop.dao.impl.UserDaoImpl;
 import com.yyjz.icop.service.FilesService;
+import com.yyjz.icop.util.FileType;
 import com.yyjz.icop.util.FileUtils;
 import com.yyjz.icop.util.GetFileType;
 import com.yyjz.icop.vo.FilesVo;
@@ -108,11 +109,11 @@ public class FilesServiceImpl implements FilesService {
 	}
 
 	@Override
-	public void deleteFile(Set<Map<String, Object>> deletefile,String path, ObjectId objectId) {
+	public Document deleteFile(Set<Map<String, Object>> deletefile,String path, ObjectId objectId) {
+		Document queryUser = userDao.queryUser(new Document("_id",objectId));
 		for (Map<String, Object> map : deletefile) {
 			ObjectId oid = new ObjectId((String)map.get("_id"));
 			//更新用户库
-			Document queryUser = userDao.queryUser(new Document("_id",objectId));
 			Document queryFile = filesDao.queryFiles(new Document("_id",oid), false);
 			String fileSize = queryFile.getString("fileSize");
 			String userFileSize = queryUser.getString("fileSize");
@@ -126,6 +127,55 @@ public class FilesServiceImpl implements FilesService {
 			//物理删除
 			FileUtils.deleteFiles(FileUtils.getPath(path, (String)map.get("fileName")));
 		}
+		return queryUser;
+	}
+	
+	@Override
+	public Map<String, Long> getUserFileAllTypeSize(ObjectId userId) {
+		Map<String, Long> map = new HashMap<>();
+		Document queryData = new Document("userId",userId);
+		List<Document> allFile = filesDao.queryAllUserFile(queryData);
+		Long picture = new Long(0);
+		Long video = new Long(0);
+		Long music = new Long(0);
+		Long seed = new Long(0);
+		Long documents = new Long(0);
+		Long others = new Long(0);
+		Long unAll = new Long(0);
+		for (Document document : allFile) {
+			Long size = Long.valueOf(document.getString("fileSize"));
+			switch (FileType.valueOf(document.getString("fileType"))) {
+			case PICTURE:
+				picture += size;
+				break;
+			case VIDEO:
+				video += size;
+				break;
+			case MUSIC:
+				music += size;
+				break;
+			case SEED:
+				seed += size;
+				break;
+			case DOCUMENTS:
+				documents += size;
+				break;
+			case OTHERS:
+				others += size;
+				break;
+			}
+		}
+		queryData = new Document("_id",userId);
+		Document queryUser = userDao.queryUser(queryData);
+		unAll = Long.valueOf(queryUser.getString("maxFileSize")) - Long.valueOf(queryUser.getString("fileSize"));
+		map.put("picture", picture);
+		map.put("video", video);
+		map.put("music", music);
+		map.put("seed", seed);
+		map.put("documents", documents);
+		map.put("others", others);
+		map.put("unAll", unAll);
+		return map;
 	}
 	
 	/**
