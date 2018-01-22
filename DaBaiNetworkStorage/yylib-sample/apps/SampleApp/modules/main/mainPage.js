@@ -8,6 +8,7 @@ var ajax = require('yylib-utils/ajax');
 var ReduxUtils = require('yylib-utils/ReduxUtils');
 var URL = require('./Url');
 require('./css/mainPage.css');
+var FilesInages = require('./filesInages');
 var THIS;
 /*账户信息*/
 var UserData;
@@ -15,6 +16,10 @@ var UserData;
 var UserFilesPath;
 /*查询用户文件列表数据*/
 var queryParam;
+/*图表*/
+var usageChart;
+/*文件类型图标*/
+var filesImagesSrc;
 
 /*查询文件列表*/
 function queryUserFileDateList(queryParam) {
@@ -76,18 +81,35 @@ var onRowDoubleClick = function (record,index) {
     }
 };
 
+/*表格行点击事件*/
+var onRowClick = function (record,index) {
+    var listTable = THIS.findUI('listTable');
+    // listTable.api.clearSelectRowKeys();
+}
 /*删除*/
 function deleteFiles(deletef) {
     ajax.postJSON(URL.DELETEFILES,deletef,function (result) {
-        if(result) {
-            YYMessage.success('文件删除成功');
-            queryUserFileDateList(queryParam);
-        }else{
+        var flag = result.result;
+        if(flag == 'error') {
             YYMessage.error('文件删除失败');
+        }else{
+            YYMessage.success('文件删除成功');
+            UserData = result.data;
+            alterChart();
+            queryUserFileDateList(queryParam);
         }
     })
 }
 
+/*修改图表*/
+function alterChart() {
+    //使用银行家舍入法：四舍六入五考虑，五后非零就进一，五后为零看奇偶，五前为偶应舍去，五前为奇要进一。
+    var data = (UserData.fileSize/UserData.maxFileSize).toFixed(5);
+    var seriesData = options.series[0].data[0];
+    seriesData.value = data*100;
+    // console.log(options,usageChart);
+    usageChart.setOption(options);
+}
 /*页面初始化*/
 /*logo*/
 var LOGO = YYClass.create({
@@ -171,7 +193,7 @@ var INFORMATION = YYClass.create({
    render:function () {
        return(
            <YYCol span={3}>
-               <YYPage style={{marginTop:23,float:"left",marginLeft:40}}>
+               <YYPage style={{marginTop:44,float:"left",marginLeft:40}}>
                    <YYDropdown overlay={Usermenu}>
                                 <span className="ant-dropdown-link" style={{fontSize:20}} href="#">
                                   欢迎您 :  {UserData.name} <YYIcon type="down" />
@@ -185,6 +207,11 @@ var INFORMATION = YYClass.create({
 
 /*上传弹窗*/
 var UPLOADPOPUPWINDOW = YYClass.create({
+    beforeUpload: function (file) {
+        //文件上传之前的钩子
+        UserData.fileSize = UserData.fileSize + file.size;
+        alterChart();
+    },
     onChange: function (info) {
         if (info.file.status !== 'uploading') {
             console.log(info.file, info.fileList);
@@ -197,13 +224,11 @@ var UPLOADPOPUPWINDOW = YYClass.create({
         }
     },
     handleCancel(e) {
-        console.log(e);
         var uploadPopupWindow = THIS.findUI('uploadPopupWindow');
         uploadPopupWindow.visible = false;
         THIS.refresh();
     },
     handleOk() {
-        console.log('点击了确定');
         var uploadPopupWindow = THIS.findUI('uploadPopupWindow');
         uploadPopupWindow.visible = false;
         THIS.refresh();
@@ -217,6 +242,7 @@ var UPLOADPOPUPWINDOW = YYClass.create({
                    data={{userName:UserData.name,path:UserFilesPath}}
                    multiple = {true}
                    // headers={{authorization: 'authorization-text'}}
+                   beforeUpload={this.beforeUpload}
                    onChange={this.onChange}>
                    <YYButton type="ghost">
                        <YYIcon type="upload" />点击上传
@@ -233,13 +259,11 @@ const formItemLayout = {
 };
 var NEWFOLDER = YYClass.create({
     handleCancel(e) {
-        console.log(e);
         var NewFolder = THIS.findUI('NewFolder');
         NewFolder.visible = false;
         THIS.refresh();
     },
     handleOk() {
-        console.log('点击了确定');
         var NewFolder = THIS.findUI('NewFolder');
         NewFolder.visible = false;
         THIS.refresh();
@@ -316,13 +340,11 @@ NEWFOLDER = YYForm.create()(NEWFOLDER);
 /*修改文件页面*/
 var ALTERFILES = YYClass.create({
     handleCancel(e) {
-        console.log(e);
         var alterFiles = THIS.findUI('alterFiles');
         alterFiles.visible = false;
         THIS.refresh();
     },
     handleOk() {
-        console.log('点击了确定');
         var alterFiles = THIS.findUI('alterFiles');
         alterFiles.visible = false;
         THIS.refresh();
@@ -334,35 +356,87 @@ var ALTERFILES = YYClass.create({
     }
 });
 
+/*空间使用情况图表数据*/
 const options = {
     tooltip : {
-        formatter: "{a} <br/>{b} : {c}%"
+        formatter: "{a} <br/>{b} : {c}%",
+        position:['18%',10]
     },
     series:[
         {
             name: '已存储',
             type: 'gauge',
-            detail: {formatter: '{value}%',fontSize:5},
-            data: [{value: 50, name: '使用大小'}]
+            detail: {
+                formatter: '{value}%',
+                fontSize:15
+            },
+            data: [{
+                value: 50,
+                name: '空间使用情况'
+            }],
+            axisLine:{
+                lineStyle:{
+                    width:10
+                }
+            },
+            pointer:{
+                width:4
+            },
+            axisLabel:{
+                distance:-35
+            },
+            splitLine:{
+                length:15
+            },
+            title:{
+                offsetCenter:[0,'100%'],
+                fontSize:15
+            }
         }
     ]
 };
-
+/*图表数据*/
 var series1 = {
     name: '已存储',
     type: 'gauge',
-    detail: {formatter: '{value}%',fontSize:10},
-    data: [{value: 50, name: '使用大小'}],
-    axisLine:{lineStyle:{width:10}},
-    pointer:{width:4}
-}
-
+    detail: {
+        formatter: '{value}%',
+        fontSize:15
+    },
+    data: [{
+            value: 50,
+            name: '空间使用情况'
+    }],
+    axisLine:{
+        lineStyle:{
+            width:10
+        }
+    },
+    pointer:{
+        width:4
+    },
+    axisLabel:{
+        distance:-35
+    },
+    splitLine:{
+        length:15
+    },
+    title:{
+        offsetCenter:[0,'100%'],
+        fontSize:15
+    }
+};
+/*图表实例*/
 var Mychart = YYClass.create({
     ready:function (chart) {
         chart.on('click', function (params) {
-            console.log('监测待办排行',params);
-
+            // console.log('监测待办排行',params);
+            var data = {
+                true:true,
+            }
+            THIS.routeTo('/DB/userMessage',data,UserData);
         });
+        usageChart = chart;
     },
    render:function () {
        return (
@@ -374,13 +448,13 @@ var Mychart = YYClass.create({
        )
    }
 });
-
+/*图表*/
 var ChartDemo1 = YYClass.create({
     componentDidMount: function () {
         ReactDOM.render(<Mychart />, document.getElementById('chartdemo1'));
     },
     render: function () {
-        return <div id="chartdemo1"></div>
+        return <div id="chartdemo1" style={{position:'fixed',bottom:0,left:0,right:0,width:100}}></div>
     }
 })
 
@@ -480,25 +554,39 @@ var EventHanlder = {
     "P005023":{
         onViewWillMount:function(options){
             // console.log('page onViewWillMount',options);
+            filesImagesSrc = new FilesInages();
             THIS = this;
             /*获取登录数据*/
             UserData = this.getRouteParams();
             UserFilesPath = UserData.name;
             /*默认选中的树节点*/
             var leftMenu = THIS.findUI('leftMenu');
+            leftMenu.selectedKeys = ['1515737467367_5842'];
             queryParam = {
                 userId: UserData._id,
                 filePath:UserFilesPath,
             }
             queryUserFileDateList(queryParam);
-            /*设置双击事件*/
+            /*设置表格事件*/
             var listTable = THIS.findUI('listTable');
             listTable.onRowDoubleClick = onRowDoubleClick;
+            listTable.rowClickCheckable = true;
+            listTable.onRowClick = onRowClick;
+            listTable.children[2].render = function (text, record, index) { //预警等级 图片
+                var imageSrc=filesImagesSrc.getFileTypeImage(record.type,record.fileType);
+                var color = 'blue';
+                if(record.type == 0){
+                    color = 'red';
+                }
+                return <YYIcon type={imageSrc} style={{color:color}}/>
+            }
             /*设置面包屑*/
             setitemsdata();
+            THIS.refresh();
         }
         ,onViewDidMount:function(options){
             // console.log('page onViewDidMount',options);
+            alterChart();
         }
         ,onViewWillUpdate:function(options){
             // console.log('page onViewWillUpdate',options);
