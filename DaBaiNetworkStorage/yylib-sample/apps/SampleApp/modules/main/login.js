@@ -3,7 +3,7 @@ var _ = require('lodash');
 var {YYCreatePage} =  require('yylib-business');
 var ReduxUtils = require('yylib-utils/ReduxUtils');
 var React = require('react');
-var { YYClass,YYPage,YYCard,YYForm,YYInput,YYCheckbox,YYButton,YYFormItem,YYTabs,YYTab} = require('yylib-ui');
+var { YYClass,YYPage,YYCard,YYForm,YYInput,YYMessage,YYButton,YYFormItem,YYTabs,YYTab} = require('yylib-ui');
 require('./css/login.css');
 var ajax = require('yylib-utils/ajax');
 var URL = require('./Url');
@@ -14,6 +14,7 @@ const formItemLayout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 12 },
 };
+
 function noop() {
     return false;
 }
@@ -22,20 +23,26 @@ var Login = YYClass.create({
     /*登录button提交表单*/
     loginSubmit: function (e) {
         e.preventDefault();
-        var from = this.props.form.getFieldsValue();
-        var data = {
-            userName : from.userNameL,
-            userPwd : from.passwordL
-        };
-        /*Ajax后台验证登录*/
-        ajax.postJSON(URL.LOGIN,data,function (user) {
-            if(user == null){
-                alert('登录失败');
-            }else{
-                THIS.routeTo('DB/dbank',null,user);
-            }
+        this.props.form.validateFields(function(errors, values){
+            if (values.userNameL == null || values.passwordL == null) {
+                console.log('Errors in form!!!');
+                YYMessage.error('请填写登录信息!');
+                return;
+            };
+            var data = {
+                userName : values.userNameL,
+                userPwd : values.passwordL
+            };
+            /*Ajax后台验证登录*/
+            ajax.postJSON(URL.LOGIN,data,function (user) {
+                var result = user.result;
+                if(result == 'error'){
+                    YYMessage.error('用户名或密码不正确！请重新输入或找回密码!');
+                }else{
+                    THIS.routeTo("DB/mainPage",null,user);
+                }
+            });
         });
-
     },
     /*注册表单昵称框校验*/
     nameExists: function (rule, value, callback) {
@@ -78,9 +85,10 @@ var Login = YYClass.create({
     /*注册button提交表单*/
     registerSubmit:function(e){
         e.preventDefault();
-        var from = this.props.form.validateFields(function (errors, values) {
+        this.props.form.validateFields(function (errors, values) {
             if (!!errors) {
                 console.log('Errors in form!!!');
+                YYMessage.error('请正确填写注册信息!');
                 return;
             }
             console.log('Submit!!!');
@@ -95,9 +103,9 @@ var Login = YYClass.create({
             /*ajax后台保存数据*/
             ajax.postJSON(URL.REGISTER,data,function (result) {
                 if(result){
-                    alert('注册成功');
+                    YYMessage.success('注册成功！');
                 }else{
-                    alert('注册失败');
+                    YYMessage.error('注册失败!');
                 }
             });
         });
@@ -250,17 +258,17 @@ MyParser.Login = Login;
 var EventHanlder = {
     "P004723":{
         onViewWillMount:function(options){
-            console.log('page onViewWillMount',options);
+            // console.log('page onViewWillMount',options);
         }
         ,onViewDidMount:function(options){
-            console.log('page onViewDidMount',options);
+            // console.log('page onViewDidMount',options);
             THIS = this;
         }
         ,onViewWillUpdate:function(options){
-            console.log('page onViewWillUpdate',options);
+            // console.log('page onViewWillUpdate',options);
         }
         ,onViewDidUpdate:function(options){
-            console.log('page onViewDidUpdate',options);
+            // console.log('page onViewDidUpdate',options);
         }
     }
 }

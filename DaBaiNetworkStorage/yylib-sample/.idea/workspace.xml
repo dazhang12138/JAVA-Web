@@ -16,25 +16,102 @@
     <favorites_list name="yylib-sample" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="mainPage.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/mainPage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2331">
+              <caret line="579" column="17" lean-forward="true" selection-start-line="579" selection-start-column="17" selection-end-line="579" selection-end-column="17" />
+              <folding>
+                <element signature="n#!!block;n#queryUserFileDateList#0" expanded="false" />
+                <element signature="n#!!block;n#setitemsdata#0" expanded="false" />
+                <element signature="n#!!block;n#newsFolderVerify#0" expanded="false" />
+                <element signature="n#!!block;n#saveNewFolder#0" expanded="false" />
+                <element signature="n#!!block;n#deleteFiles#0" expanded="false" />
+                <element signature="e#3441#4557#0" expanded="false" />
+                <element signature="e#5235#5742#0" expanded="false" />
+                <element signature="e#7518#10406#0" expanded="false" />
+                <element signature="e#10493#10958#0" expanded="false" />
+                <element signature="e#10993#11789#0" expanded="false" />
+                <element signature="e#11814#12262#0" expanded="false" />
+                <element signature="e#13189#13763#0" expanded="false" />
+                <element signature="e#13780#14149#0" expanded="false" />
+                <element signature="e#14166#14404#0" expanded="false" />
+                <element signature="e#14421#14501#0" expanded="false" />
+                <element signature="e#14516#15768#0" expanded="false" />
+                <element signature="e#15786#15955#0" expanded="false" />
+                <element signature="e#15974#16167#0" expanded="false" />
+                <marker date="1516496674192" expanded="false" signature="5794:5952" ph="{&quot;onbeforeUpload&quot;: onChange...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>data</find>
+      <find>YYSearchCondition</find>
+      <find>searchFields</find>
+      <find>onSearch</find>
+      <find>UserData</find>
+      <find>0</find>
+      <find>current</find>
+      <find>showModal</find>
+      <find>visible</find>
+      <find>editList</find>
+      <find>UserFilesPath</find>
+      <find>onOk</find>
+      <find>handleReset</find>
+      <find>getFieldProps</find>
+      <find>rePasswd</find>
+      <find>checkPass</find>
+      <find>children</find>
+      <find>MAINPATH</find>
+      <find>queryParam</find>
+      <find>index</find>
+      <find>chart4</find>
+      <find>上传</find>
+      <find>console</find>
+      <find>删除</find>
+      <find>登录</find>
+      <find>UserDate</find>
+      <find>C</find>
+      <find>style</find>
+      <find>行点击</find>
+      <find>chartdemo1</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>listTable</replace>
+    </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/index.js" />
-        <option value="$PROJECT_DIR$/apps/SampleApp/routes/index.js" />
         <option value="$USER_HOME$/Documents/WeChat Files/zd836160973/Files/main.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/pages/MenuPage.js" />
         <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/Index.js" />
         <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/css/index.css" />
-        <option value="$PROJECT_DIR$/apps/SampleApp/pages/MenuPage.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/login.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/css/mainPage.css" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/actions/RestUrl.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/routes/index.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/index.html" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/modules/message/Url.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/Url.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/modules/message/userMessage.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/filesInages.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/mainPage.js" />
       </list>
     </option>
   </component>
@@ -50,8 +127,7 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="662" />
-    <option name="y" value="78" />
+    <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -70,7 +146,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -89,11 +165,48 @@
               <item name="apps" type="462c0819:PsiDirectoryNode" />
               <item name="SampleApp" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="yylib-sample" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yylib-sample" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+              <item name="SampleApp" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="yylib-sample" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yylib-sample" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+              <item name="SampleApp" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="yylib-sample" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yylib-sample" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+              <item name="SampleApp" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="message" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="yylib-sample" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yylib-sample" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+              <item name="SampleApp" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="yylib-sample" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yylib-sample" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+              <item name="SampleApp" type="462c0819:PsiDirectoryNode" />
+              <item name="store" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -102,9 +215,15 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="SearchEverywhereHistoryKey" value="YYTable&#9;FILE&#9;file://D:/GitHub/JAVA-Web/DaBaiNetworkStorage/yylib-sample/node_modules/yylib-react/dist/yylib2/table/YYTable.js&#10;YYTableCol&#9;FILE&#9;file://D:/GitHub/JAVA-Web/DaBaiNetworkStorage/yylib-sample/node_modules/yylib-react/dist/yylib2/table/YYTableCol.js&#10;TableWidget&#9;FILE&#9;file://D:/GitHub/JAVA-Web/DaBaiNetworkStorage/yylib-sample/node_modules/yylib-react/dist/business/widgets/TableWidget.js&#10;YYModal&#9;FILE&#9;file://D:/GitHub/JAVA-Web/DaBaiNetworkStorage/yylib-sample/node_modules/yylib-react/dist/yylib2/modal/YYModal.js" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GitHub\JAVA-Web\DaBaiNetworkStorage\yylib-sample\apps\SampleApp\modules\message" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GitHub\JAVA-Web\DaBaiNetworkStorage\yylib-sample\apps\SampleApp" />
+      <recent name="D:\GitHub\JAVA-Web\DaBaiNetworkStorage\yylib-sample\apps\SampleApp\modules" />
       <recent name="D:\WebStormWord\DaBaiNetworkStorage\yylib-sample\apps\SampleApp\images" />
     </key>
   </component>
@@ -139,6 +258,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="1c1d4d80-e969-42e9-9c41-5c26340739ae" name="Default" comment="" />
@@ -149,24 +271,50 @@
       <workItem from="1512020264359" duration="4243000" />
       <workItem from="1512025601225" duration="9712000" />
       <workItem from="1512089097332" duration="1323000" />
+      <workItem from="1515140331537" duration="12000" />
+      <workItem from="1515143332613" duration="1179000" />
+      <workItem from="1515145508391" duration="604000" />
+      <workItem from="1515199702554" duration="900000" />
+      <workItem from="1515372557772" duration="105000" />
+      <workItem from="1515390395488" duration="3161000" />
+      <workItem from="1515462886011" duration="15882000" />
+      <workItem from="1515487365380" duration="2333000" />
+      <workItem from="1515498922580" duration="725000" />
+      <workItem from="1515546056316" duration="8151000" />
+      <workItem from="1515735469186" duration="13791000" />
+      <workItem from="1515838982511" duration="9798000" />
+      <workItem from="1515856426655" duration="6651000" />
+      <workItem from="1515886751902" duration="4351000" />
+      <workItem from="1515925291253" duration="126000" />
+      <workItem from="1515937500961" duration="2169000" />
+      <workItem from="1515976699740" duration="3402000" />
+      <workItem from="1515999931971" duration="2654000" />
+      <workItem from="1516070525546" duration="6733000" />
+      <workItem from="1516330475834" duration="7423000" />
+      <workItem from="1516344370599" duration="5571000" />
+      <workItem from="1516435058794" duration="12170000" />
+      <workItem from="1516453046214" duration="6287000" />
+      <workItem from="1516491587083" duration="6157000" />
+      <workItem from="1516582331278" duration="29000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15278000" />
+    <option name="totallyTimeSpent" value="135642000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16913319" sideWeight="0.7602428" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.157173" sideWeight="0.57239056" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16913319" sideWeight="0.23975721" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23461092" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2345679" sideWeight="0.5021097" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2379349" sideWeight="0.4978903" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.157173" sideWeight="0.4276094" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.22995462" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.22995462" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -185,36 +333,44 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Index.js">
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Index.js" />
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1357">
-          <caret line="59" column="16" lean-forward="false" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
+        <state relative-caret-position="1176">
+          <caret line="56" column="33" lean-forward="true" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../yylib-sample/apps/SampleApp/modules/table/main.css">
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Url.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
-          <caret line="32" column="22" lean-forward="true" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
-          <folding />
+        <state relative-caret-position="357">
+          <caret line="17" column="40" lean-forward="false" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../yylib-sample/apps/SampleApp/modules/table/main.js">
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Index.js" />
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Url.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11270">
-          <caret line="490" column="39" lean-forward="true" selection-start-line="490" selection-start-column="39" selection-end-line="490" selection-end-column="39" />
-          <folding />
+        <state relative-caret-position="357">
+          <caret line="17" column="40" lean-forward="false" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Index.js">
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Index.js" />
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Url.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/login.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -222,53 +378,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/css/index.css">
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="34" column="24" lean-forward="false" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Index.js" />
+    <entry file="file://$PROJECT_DIR$/../../yylib-sample/apps/SampleApp/modules/table/main.css" />
+    <entry file="file://$PROJECT_DIR$/../../yylib-sample/apps/SampleApp/modules/table/main.js" />
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Index.js" />
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/css/index.css" />
     <entry file="file://$PROJECT_DIR$/apps/SampleApp/images/db_logo.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Documents/WeChat Files/zd836160973/Files/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="196" column="6" lean-forward="false" selection-start-line="196" selection-start-column="6" selection-end-line="196" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/css/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="28" column="16" lean-forward="true" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../yylib-sample/apps/SampleApp/modules/table/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
-          <caret line="32" column="22" lean-forward="false" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../yylib-sample/apps/SampleApp/modules/table/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="496" column="22" lean-forward="true" selection-start-line="496" selection-start-column="22" selection-end-line="496" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Documents/WeChat Files/zd836160973/Files/main.js" />
+    <entry file="file://$PROJECT_DIR$/../../yylib-sample/apps/SampleApp/modules/table/main.css" />
+    <entry file="file://$PROJECT_DIR$/../../yylib-sample/apps/SampleApp/modules/table/main.js" />
     <entry file="file://$PROJECT_DIR$/apps/SampleApp/routes/PageRoutes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -276,7 +426,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
           <caret line="20" column="21" lean-forward="true" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -284,7 +433,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -292,7 +440,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -300,23 +447,189 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
           <caret line="18" column="3" lean-forward="true" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/css/index.css" />
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/vendor.dll.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="469">
+          <caret line="15" column="5151" lean-forward="false" selection-start-line="15" selection-start-column="5151" selection-end-line="15" selection-end-column="5151" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/用友/中建项目组/资料/ICOP界面设计器培训教学视频进阶版/ICOP界面设计器培训教学视频进阶版/InstructList.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/yylib-react/dist/yylib2/modal/YYModal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="22" column="266" lean-forward="false" selection-start-line="22" selection-start-column="262" selection-end-line="22" selection-end-column="266" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Index.js" />
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/css/mainPage.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/babel-cli/lib/_babel-node.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="112" column="19" lean-forward="false" selection-start-line="112" selection-start-column="16" selection-end-line="112" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/actions/RestUrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="20" column="20" lean-forward="true" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DHTML.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="995" column="0" lean-forward="false" selection-start-line="995" selection-start-column="0" selection-end-line="995" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-dom/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/message/echarts.min.js" />
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/echarts.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="13" column="17" lean-forward="true" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/SampleApp/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="525">
+          <caret line="25" column="36" lean-forward="true" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/ICOP/icop-audit-frontend/apps/icop-audit/modules/suibian/chart/undistributed.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/ICOP/icop-audit-frontend/apps/icop-audit/modules/suibian/chart/WarningAgencyTopChart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="507">
+          <caret line="171" column="14" lean-forward="false" selection-start-line="171" selection-start-column="8" selection-end-line="171" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="37" column="26" lean-forward="false" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Index.js">
+    <entry file="file://$PROJECT_DIR$/node_modules/yylib-react/dist/utils/ajax.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="207" column="26" lean-forward="true" selection-start-line="207" selection-start-column="26" selection-end-line="207" selection-end-column="26" />
+        <state relative-caret-position="714">
+          <caret line="40" column="31" lean-forward="false" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/Url.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="23" column="1" lean-forward="true" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/message/userMessage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="192" column="29" lean-forward="true" selection-start-line="192" selection-start-column="29" selection-end-line="192" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/message/Url.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="25" lean-forward="true" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/yylib-react/dist/business/widgets/TableWidget.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="22" column="39" lean-forward="true" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/yylib-react/dist/yylib2/table/YYTableCol.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="20" column="28" lean-forward="true" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/yylib-react/dist/yylib2/table/YYTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-18">
+          <caret line="626" column="20" lean-forward="true" selection-start-line="626" selection-start-column="20" selection-end-line="626" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/filesInages.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="27" column="29" lean-forward="true" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/mainPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2331">
+          <caret line="579" column="17" lean-forward="true" selection-start-line="579" selection-start-column="17" selection-end-line="579" selection-end-column="17" />
+          <folding>
+            <element signature="n#!!block;n#queryUserFileDateList#0" expanded="false" />
+            <element signature="n#!!block;n#setitemsdata#0" expanded="false" />
+            <element signature="n#!!block;n#newsFolderVerify#0" expanded="false" />
+            <element signature="n#!!block;n#saveNewFolder#0" expanded="false" />
+            <element signature="n#!!block;n#deleteFiles#0" expanded="false" />
+            <element signature="e#3441#4557#0" expanded="false" />
+            <element signature="e#5235#5742#0" expanded="false" />
+            <element signature="e#7518#10406#0" expanded="false" />
+            <element signature="e#10493#10958#0" expanded="false" />
+            <element signature="e#10993#11789#0" expanded="false" />
+            <element signature="e#11814#12262#0" expanded="false" />
+            <element signature="e#13189#13763#0" expanded="false" />
+            <element signature="e#13780#14149#0" expanded="false" />
+            <element signature="e#14166#14404#0" expanded="false" />
+            <element signature="e#14421#14501#0" expanded="false" />
+            <element signature="e#14516#15768#0" expanded="false" />
+            <element signature="e#15786#15955#0" expanded="false" />
+            <element signature="e#15974#16167#0" expanded="false" />
+            <marker date="1516496674192" expanded="false" signature="5794:5952" ph="{&quot;onbeforeUpload&quot;: onChange...}" />
+          </folding>
         </state>
       </provider>
     </entry>
