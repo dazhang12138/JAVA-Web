@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,10 +39,17 @@ public class FilesController {
 	 */
 	@RequestMapping(value="deleteFiles")
 	@ResponseBody
-	public boolean deleteFiles(@RequestBody DelFilesVo delFiles){
-		filesService.deleteFolder(delFiles.getDeletefolder(),delFiles.getFolderPath(),delFiles.getUserId());
-		filesService.deleteFile(delFiles.getDeletefile(),delFiles.getFolderPath(),delFiles.getUserId());
-		return true;
+	public Document deleteFiles(@RequestBody DelFilesVo delFiles){
+		Document result = new Document();
+		try {
+			filesService.deleteFolder(delFiles.getDeletefolder(),delFiles.getFolderPath(),delFiles.getUserId());
+			Document userData = filesService.deleteFile(delFiles.getDeletefile(),delFiles.getFolderPath(),delFiles.getUserId());
+			result.append("data", userData);
+		} catch (Exception e) {
+			result.append("result", "error");
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	/**
@@ -92,6 +100,7 @@ public class FilesController {
 			m.put("fileSize", document.get("fileSize"));
 			m.put("fileEndTime", DateUtils.DateOfString(document.getDate("fileEndTime")));
 			m.put("type", "1");
+			m.put("fileType", document.get("fileType"));
 			list.add(m);
 		}
 		return list;
@@ -119,4 +128,39 @@ public class FilesController {
 		return result;
 	}
 	
+	@RequestMapping(value="getUserFileTypeNumber")
+	@ResponseBody
+	public List<Map<String, Object>> getUserFileTypeNumber(@RequestBody FilesVo files){
+		Map<String, Long> userFileAllTypeSize = filesService.getUserFileAllTypeSize(files.getUserId());
+		List<Map<String, Object>> list = new ArrayList<>();
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", "图片");
+		map.put("size", userFileAllTypeSize.get("picture"));
+		list.add(map);
+		map = new HashMap<>();
+		map.put("name", "视频");
+		map.put("size", userFileAllTypeSize.get("video"));
+		list.add(map);
+		map = new HashMap<>();
+		map.put("name", "音频");
+		map.put("size", userFileAllTypeSize.get("music"));
+		list.add(map);
+		map = new HashMap<>();
+		map.put("name", "文档");
+		map.put("size", userFileAllTypeSize.get("documents"));
+		list.add(map);
+		map = new HashMap<>();
+		map.put("name", "种子");
+		map.put("size", userFileAllTypeSize.get("seed"));
+		list.add(map);
+		map = new HashMap<>();
+		map.put("name", "其他");
+		map.put("size", userFileAllTypeSize.get("others"));
+		list.add(map);
+		map = new HashMap<>();
+		map.put("name", "未使用");
+		map.put("size", userFileAllTypeSize.get("unAll"));
+		list.add(map);
+		return list;
+	}
 }
