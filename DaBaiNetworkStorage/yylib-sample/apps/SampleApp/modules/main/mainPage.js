@@ -431,10 +431,7 @@ var Mychart = YYClass.create({
     ready:function (chart) {
         chart.on('click', function (params) {
             // console.log('监测待办排行',params);
-            var data = {
-                true:true,
-            }
-            THIS.routeTo('/DB/userMessage',data,UserData);
+            THIS.routeTo('/DB/userMessage',null,UserData);
         });
         usageChart = chart;
     },

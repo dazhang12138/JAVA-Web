@@ -1,6 +1,6 @@
 var React = require('react');
 var _ = require('lodash');
-var {YYClass} = require('yylib-ui');
+var {YYClass,YYMessage} = require('yylib-ui');
 var {YYCreatePage} =  require('yylib-business');
 var YYChart = require('yylib-ui/chart/YYChart');
 var ReactDOM = require('react-dom');
@@ -170,10 +170,82 @@ function jsGetAge(strBirthday){
 }
 function saveAge(date) {
     var age = THIS.findUI('age');
-    age.value = jsGetAge(date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate());
+    if(date == null){
+        age.value = '';
+    }else{
+        age.value = jsGetAge(date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate());
+    }
     THIS.refresh();
 }
+/*修改编辑基本信息的状态*/
+function editType() {
+    var sex = THIS.findUI('sex');
+    sex.disabled = !sex.disabled;
+    var openEdit = THIS.findUI('openEdit');
+    if(openEdit.visible == null){
+        openEdit.visible = false;
+    }else{
+        openEdit.visible = !openEdit.visible;
+    }
+    var saveMessage = THIS.findUI('saveMessage');
+    saveMessage.visible = !saveMessage.visible;
+    var closeEdit = THIS.findUI('closeEdit');
+    closeEdit.visible = !closeEdit.visible;
+    var birthday = THIS.findUI('birthday');
+    birthday.disabled = !birthday.disabled;
+    var idNumber = THIS.findUI('idNumber');
+    idNumber.disabled = !idNumber.disabled;
+    var phoneNumber = THIS.findUI('phoneNumber');
+    phoneNumber.disabled = !phoneNumber.disabled;
+    THIS.refresh();
+}
+/*修改编辑登录信息的状态*/
+function editLoginType() {
+    var openEditLogin = THIS.findUI('openEditLogin');
+    if(openEditLogin.visible == null){
+        openEditLogin.visible = false;
+    }else{
+        openEditLogin.visible = !openEditLogin.visible;
+    }
+    var alterMessage = THIS.findUI('alterMessage');
+    alterMessage.visible = !alterMessage.visible;
+    var closeEditLogin = THIS.findUI('closeEditLogin');
+    closeEditLogin.visible = !closeEditLogin.visible;
+    var userpwd = THIS.findUI('userpwd');
+    userpwd.disabled = !userpwd.disabled;
+    var pwd1 = THIS.findUI('pwd1');
+    pwd1.disabled = !pwd1.disabled;
+    var pwd2 = THIS.findUI('pwd2');
+    pwd2.disabled = !pwd2.disabled;
+    THIS.refresh();
+}
+
+
 var EventHanlder = {
+    "openEditLogin":{
+        //启动登录信息编辑
+        onClick:function () {
+            editLoginType();
+        }
+    },
+    "closeEditLogin":{
+        //取消登录信息编辑
+        onClick:function () {
+            editLoginType();
+        }
+    },
+    "closeEdit":{
+        //取消基本信息编辑
+        onClick:function () {
+            editType();
+        }
+    },
+    "openEdit":{
+        //启动基本信息编辑
+        onClick:function () {
+            editType();
+        }  
+    },
     "goBack":{
         onClick:function () {
             THIS.goBack();
@@ -184,7 +256,16 @@ var EventHanlder = {
             var basicInformation = THIS.findUI('basicInformation');
             basicInformation.api.validateFields(function (errors,values) {
                 if(!errors){
-                    console.log('提交保存信息',values);
+                    values.userId = UserDate._id;
+                    ajax.postJSON(URL.UPDATEUSERMESSAGE,values,function (result) {
+                        if(result.result != 'error'){
+                            YYMessage.success("修改信息成功");
+                            UserDate = result;
+                            editType();
+                        }else{
+                            YYMessage.error("修改信息失败");
+                        }
+                    });
                 }
             });
         }
@@ -203,11 +284,6 @@ var EventHanlder = {
         onViewWillMount:function(options){
             console.log('page onViewWillMount',options);
             THIS = this;
-            var routeData = THIS.getRouteQuery();
-            if(routeData != null){
-                var message = THIS.findUI('message');
-                message.defaultActiveKey = '11516333536623_91632';
-            }
             UserDate = THIS.getRouteParams();
             var name = THIS.findUI('name');
             name.value = UserDate.name;
@@ -220,11 +296,33 @@ var EventHanlder = {
             var birthday = THIS.findUI('birthday');
             birthday.onChange = saveAge;
             var userPwd = THIS.findUI('userpwd');
-            userPwd.type = 'password';
-            var pwd1 = THIS.findUI('pwd1');
-            pwd1.type = 'password';
-            var pwd2 = THIS.findUI('pwd2');
-            pwd2.type = 'password';
+            console.log(userPwd);
+            // userPwd.type = 'password';
+            // var pwd1 = THIS.findUI('pwd1');
+            // pwd1.type = 'password';
+            // var pwd2 = THIS.findUI('pwd2');
+            // pwd2.type = 'password';
+            if(UserDate.age != null){
+                var age = THIS.findUI('age');
+                age.value = UserDate.age;
+            }
+            if(UserDate.sex != null){
+                var sex = THIS.findUI('sex');
+                sex.value = UserDate.sex;
+            }
+            if(UserDate.birthday != null){
+                console.log(UserDate.birthday);
+                var birthday = THIS.findUI('birthday');
+                birthday.defaultValue = UserDate.birthday;
+            }
+            if(UserDate.idNumber != null){
+                var idNumber = THIS.findUI('idNumber');
+                idNumber.value = UserDate.idNumber;
+            }
+            if(UserDate.phoneNumber != null){
+                var phoneNumber = THIS.findUI('phoneNumber');
+                phoneNumber.value = UserDate.phoneNumber;
+            }
         }
         ,onViewDidMount:function(options){
             console.log('page onViewDidMount',options);

@@ -17,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="mainPage.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mainPage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/mainPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2331">
-              <caret line="579" column="17" lean-forward="true" selection-start-line="579" selection-start-column="17" selection-end-line="579" selection-end-column="17" />
+            <state relative-caret-position="42">
+              <caret line="2" column="97" lean-forward="false" selection-start-line="2" selection-start-column="88" selection-end-line="2" selection-end-column="97" />
               <folding>
                 <element signature="n#!!block;n#queryUserFileDateList#0" expanded="false" />
                 <element signature="n#!!block;n#setitemsdata#0" expanded="false" />
@@ -34,15 +34,45 @@
                 <element signature="e#10493#10958#0" expanded="false" />
                 <element signature="e#10993#11789#0" expanded="false" />
                 <element signature="e#11814#12262#0" expanded="false" />
-                <element signature="e#13189#13763#0" expanded="false" />
-                <element signature="e#13780#14149#0" expanded="false" />
-                <element signature="e#14166#14404#0" expanded="false" />
-                <element signature="e#14421#14501#0" expanded="false" />
-                <element signature="e#14516#15768#0" expanded="false" />
-                <element signature="e#15786#15955#0" expanded="false" />
-                <element signature="e#15974#16167#0" expanded="false" />
-                <marker date="1516496674192" expanded="false" signature="5794:5952" ph="{&quot;onbeforeUpload&quot;: onChange...}" />
+                <element signature="e#13123#13697#0" expanded="false" />
+                <element signature="e#13714#14083#0" expanded="false" />
+                <element signature="e#14100#14338#0" expanded="false" />
+                <element signature="e#14355#14435#0" expanded="false" />
+                <element signature="e#15720#15889#0" expanded="false" />
+                <element signature="e#15908#16101#0" expanded="false" />
+                <marker date="1516607810546" expanded="false" signature="5794:5952" ph="{&quot;onbeforeUpload&quot;: onChange...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="userMessage.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/message/userMessage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="297" column="38" lean-forward="true" selection-start-line="297" selection-start-column="38" selection-end-line="297" selection-end-column="38" />
+              <folding>
+                <element signature="e#435#1324#0" expanded="false" />
+                <element signature="e#1340#1990#0" expanded="false" />
+                <element signature="e#2031#2454#0" expanded="false" />
+                <element signature="e#2497#2696#0" expanded="false" />
+                <element signature="n#!!block;n#queryFileTypeNumber#0" expanded="false" />
+                <element signature="n#!!block;n#jsGetAge#0" expanded="false" />
+                <element signature="n#!!block;n#saveAge#0" expanded="false" />
+                <element signature="n#!!block;n#editType#0" expanded="false" />
+                <element signature="n#!!block;n#editLoginType#0" expanded="false" />
+                <marker date="1516615034932" expanded="true" signature="9873:9962" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Url.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/message/Url.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="11" column="59" lean-forward="false" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -59,8 +89,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>data</find>
-      <find>YYSearchCondition</find>
       <find>searchFields</find>
       <find>onSearch</find>
       <find>UserData</find>
@@ -89,6 +117,8 @@
       <find>style</find>
       <find>行点击</find>
       <find>chartdemo1</find>
+      <find>age</find>
+      <find>saveAge</find>
     </findStrings>
     <replaceStrings>
       <replace>listTable</replace>
@@ -107,11 +137,11 @@
         <option value="$PROJECT_DIR$/apps/SampleApp/actions/RestUrl.js" />
         <option value="$PROJECT_DIR$/apps/SampleApp/routes/index.js" />
         <option value="$PROJECT_DIR$/apps/SampleApp/index.html" />
-        <option value="$PROJECT_DIR$/apps/SampleApp/modules/message/Url.js" />
         <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/Url.js" />
-        <option value="$PROJECT_DIR$/apps/SampleApp/modules/message/userMessage.js" />
         <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/filesInages.js" />
         <option value="$PROJECT_DIR$/apps/SampleApp/modules/main/mainPage.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/modules/message/Url.js" />
+        <option value="$PROJECT_DIR$/apps/SampleApp/modules/message/userMessage.js" />
       </list>
     </option>
   </component>
@@ -146,6 +176,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -206,7 +237,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -296,26 +326,27 @@
       <workItem from="1516453046214" duration="6287000" />
       <workItem from="1516491587083" duration="6157000" />
       <workItem from="1516582331278" duration="29000" />
+      <workItem from="1516606811026" duration="8236000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="135642000" />
+    <option name="totallyTimeSpent" value="143878000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.157173" sideWeight="0.57239056" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.157173" sideWeight="0.5655376" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2345679" sideWeight="0.5021097" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2379349" sideWeight="0.4978903" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.157173" sideWeight="0.4276094" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.157173" sideWeight="0.43446246" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.22995462" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.22995462" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -333,7 +364,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="10" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -562,20 +593,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/message/userMessage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="192" column="29" lean-forward="true" selection-start-line="192" selection-start-column="29" selection-end-line="192" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/message/Url.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="25" lean-forward="true" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/yylib-react/dist/business/widgets/TableWidget.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
@@ -601,14 +618,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="438">
           <caret line="27" column="29" lean-forward="true" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/message/Url.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="59" lean-forward="false" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/main/mainPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2331">
-          <caret line="579" column="17" lean-forward="true" selection-start-line="579" selection-start-column="17" selection-end-line="579" selection-end-column="17" />
+        <state relative-caret-position="42">
+          <caret line="2" column="97" lean-forward="false" selection-start-line="2" selection-start-column="88" selection-end-line="2" selection-end-column="97" />
           <folding>
             <element signature="n#!!block;n#queryUserFileDateList#0" expanded="false" />
             <element signature="n#!!block;n#setitemsdata#0" expanded="false" />
@@ -621,14 +645,32 @@
             <element signature="e#10493#10958#0" expanded="false" />
             <element signature="e#10993#11789#0" expanded="false" />
             <element signature="e#11814#12262#0" expanded="false" />
-            <element signature="e#13189#13763#0" expanded="false" />
-            <element signature="e#13780#14149#0" expanded="false" />
-            <element signature="e#14166#14404#0" expanded="false" />
-            <element signature="e#14421#14501#0" expanded="false" />
-            <element signature="e#14516#15768#0" expanded="false" />
-            <element signature="e#15786#15955#0" expanded="false" />
-            <element signature="e#15974#16167#0" expanded="false" />
-            <marker date="1516496674192" expanded="false" signature="5794:5952" ph="{&quot;onbeforeUpload&quot;: onChange...}" />
+            <element signature="e#13123#13697#0" expanded="false" />
+            <element signature="e#13714#14083#0" expanded="false" />
+            <element signature="e#14100#14338#0" expanded="false" />
+            <element signature="e#14355#14435#0" expanded="false" />
+            <element signature="e#15720#15889#0" expanded="false" />
+            <element signature="e#15908#16101#0" expanded="false" />
+            <marker date="1516607810546" expanded="false" signature="5794:5952" ph="{&quot;onbeforeUpload&quot;: onChange...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/SampleApp/modules/message/userMessage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="297" column="38" lean-forward="true" selection-start-line="297" selection-start-column="38" selection-end-line="297" selection-end-column="38" />
+          <folding>
+            <element signature="e#435#1324#0" expanded="false" />
+            <element signature="e#1340#1990#0" expanded="false" />
+            <element signature="e#2031#2454#0" expanded="false" />
+            <element signature="e#2497#2696#0" expanded="false" />
+            <element signature="n#!!block;n#queryFileTypeNumber#0" expanded="false" />
+            <element signature="n#!!block;n#jsGetAge#0" expanded="false" />
+            <element signature="n#!!block;n#saveAge#0" expanded="false" />
+            <element signature="n#!!block;n#editType#0" expanded="false" />
+            <element signature="n#!!block;n#editLoginType#0" expanded="false" />
+            <marker date="1516615034932" expanded="true" signature="9873:9962" ph="..." />
           </folding>
         </state>
       </provider>
