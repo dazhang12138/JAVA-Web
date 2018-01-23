@@ -12,6 +12,7 @@ import com.yyjz.icop.dao.impl.FilesDaoImpl;
 import com.yyjz.icop.dao.impl.UserDaoImpl;
 import com.yyjz.icop.service.UserService;
 import com.yyjz.icop.util.FileUtils;
+import com.yyjz.icop.vo.UserUpdateVo;
 import com.yyjz.icop.vo.UserVo;
 
 public class UserServiceImpl implements UserService {
@@ -82,6 +83,18 @@ public class UserServiceImpl implements UserService {
 		}
 		return flag;
 	}
-	
-	
+
+	@Override
+	public Document updateUser(UserUpdateVo user) {
+		Document document = new Document("_id",user.getUserId());
+		Document queryUser = userDao.queryUser(document);
+		queryUser.append("birthday", user.getBirthday());
+		queryUser.append("sex", user.getSex());
+		queryUser.append("idNumber", user.getIdNumber());
+		queryUser.append("phoneNumber", user.getPhoneNumber());
+		queryUser.append("age", user.getAge());
+		Document update = new Document("$set", queryUser);
+		userDao.updateAllFilterUser(document, update);
+		return queryUser;
+	}
 }

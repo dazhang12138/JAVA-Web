@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yyjz.icop.service.UserService;
 import com.yyjz.icop.service.impl.UserServiceImpl;
 import com.yyjz.icop.util.DateUtils;
+import com.yyjz.icop.vo.UserUpdatePwdVo;
+import com.yyjz.icop.vo.UserUpdateVo;
 import com.yyjz.icop.vo.UserVo;
 
 /**
@@ -41,6 +43,10 @@ public class UserController {
 		}else{
 			Date date = doc.getDate("userStartTime");
 			doc.append("userStartTime", DateUtils.DateOfString(date));
+			if(doc.getDate("birthday") != null){
+				Date date2 = doc.getDate("birthday");
+				doc.append("birthday", DateUtils.DateOfStringD(date2));
+			}
 		}
 		return doc;
 	}
@@ -75,6 +81,36 @@ public class UserController {
 		}
 		boolean result = userService.verifyUserByUserNameAndName(document);
 		return result;
+	}
+	/**
+	 * 更新用户基本信息
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "updateUser")
+	@ResponseBody
+	public Document updateUser(@RequestBody UserUpdateVo user){
+		Document updateUser = new Document();
+		try {
+			updateUser = userService.updateUser(user);
+			Date date = updateUser.getDate("userStartTime");
+			updateUser.append("userStartTime", DateUtils.DateOfString(date));
+			if(updateUser.getDate("birthday") != null){
+				Date date2 = updateUser.getDate("birthday");
+				updateUser.append("birthday", DateUtils.DateOfStringD(date2));
+			}
+			updateUser.append("result", "ok");
+		} catch (Exception e) {
+			updateUser.append("result", "error");
+		}
+		return updateUser;
+	}
+	
+	@RequestMapping(value = "alterUserPwd")
+	@ResponseBody
+	public Document alterPwd(@RequestBody UserUpdatePwdVo user){
+		
+		return null;
 	}
 	
 }

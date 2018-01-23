@@ -2,6 +2,7 @@ package com.yyjz.icop.service;
 
 import org.bson.Document;
 
+import com.yyjz.icop.vo.UserUpdateVo;
 import com.yyjz.icop.vo.UserVo;
 
 public interface UserService {
@@ -26,5 +27,12 @@ public interface UserService {
 	 * @return
 	 */
 	boolean verifyUserByUserNameAndName(Document document);
+
+	/**
+	 * 更新用户信息
+	 * @param user
+	 * @return
+	 */
+	Document updateUser(UserUpdateVo user);
 	
 }
