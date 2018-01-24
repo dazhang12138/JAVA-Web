@@ -1,12 +1,13 @@
 var React = require('react');
 var _ = require('lodash');
-var {YYClass,YYMessage} = require('yylib-ui');
+var {YYClass,YYMessage,YYFormItem,YYInput} = require('yylib-ui');
 var {YYCreatePage} =  require('yylib-business');
 var YYChart = require('yylib-ui/chart/YYChart');
 var ReactDOM = require('react-dom');
 var ajax = require('yylib-utils/ajax');
 var ReduxUtils = require('yylib-utils/ReduxUtils');
 var URL = require('./Url');
+require('./userMessageCSS.css');
 var THIS;
 var UserDate;
 //图表变量
@@ -115,6 +116,34 @@ var ChartDemo1 = YYClass.create({
     }
 })
 
+/*表单三个输入框*/
+function noop() {
+    return false;
+}
+const formItemLayout = {
+    labelCol: { span: 7 },
+    wrapperCol: { span: 12 },
+};
+var USERPWD = YYClass.create({
+    render: function() {
+        var { getFieldProps } = this.props.form;
+        const passwdProps = getFieldProps('passwd', {
+            rules: [
+                { required: true, whitespace: true, message: '请填写登录密码' },
+                { validator: this.checkPass },
+            ],
+        });
+        return (<div style={{width:'50%',display:'block'}}>
+            <YYFormItem
+                {...formItemLayout}
+                label="登录密码"
+                hasFeedback>
+                <YYInput {...passwdProps} type="password" autoComplete="off"
+                         onContextMenu={noop} onPaste={noop} onCopy={noop} onCut={noop}/>
+            </YYFormItem>
+        </div>)
+    }
+});
 
 /*查询用户存储空间使用情况的详情*/
 function queryFileTypeNumber() {
@@ -295,13 +324,6 @@ var EventHanlder = {
             userName.value = UserDate.userName;
             var birthday = THIS.findUI('birthday');
             birthday.onChange = saveAge;
-            var userPwd = THIS.findUI('userpwd');
-            console.log(userPwd);
-            // userPwd.type = 'password';
-            // var pwd1 = THIS.findUI('pwd1');
-            // pwd1.type = 'password';
-            // var pwd2 = THIS.findUI('pwd2');
-            // pwd2.type = 'password';
             if(UserDate.age != null){
                 var age = THIS.findUI('age');
                 age.value = UserDate.age;
@@ -338,6 +360,7 @@ var EventHanlder = {
 
 var MyParser = {};
 MyParser.saveChart = ChartDemo1;
+MyParser.userpwd = USERPWD;
 
 var SimplePage = YYClass.create({
     render:function(){
