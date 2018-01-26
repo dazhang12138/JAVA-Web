@@ -16,7 +16,6 @@ var SampleForm = lazy(require('bundle?lazy&name=example1!../modules/sample/Sampl
 
 //main
 var mainPage = lazy(require('bundle?lazy&name=example1!../modules/main/mainPage'));
-var Login = lazy(require('bundle?lazy&name=example1!../modules/main/login'));
 
 //message
 var userMessage = lazy(require('bundle?lazy&name=example1!../modules/message/userMessage'));
@@ -34,8 +33,7 @@ module.exports = (
             <Route path="form" component={SampleForm}/>
         </Route>
         <Route path="DB" component={LazyPageRoutes}>
-            <IndexRoute component={Login}/>
-            <Route path="enterThe" component={enterThe}/>
+            <IndexRoute component={enterThe}/>
             <Route path="mainPage" component={mainPage}/>
             <Route path='userMessage' component={userMessage}/>
         </Route>

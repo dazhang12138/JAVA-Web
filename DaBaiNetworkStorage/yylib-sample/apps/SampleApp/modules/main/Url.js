@@ -10,9 +10,6 @@ var SHOWPATH = "http://localhost:8081/";
 var SHOWCODE = "apps/SampleApp/#";
 
 var MainUrl = {
-    LOGIN: ADDR + ROOT_PATH +  "/User/Login",      //登录
-    VERIFY: ADDR + ROOT_PATH + "/User/UserVerify", //校验
-    REGISTER: ADDR + ROOT_PATH + "/User/Register", //注册
     GETUSERFILES: ADDR + ROOT_PATH + "/Files/getFiles",//获取用户文件列表
     UPLOADFILE: ADDR + ROOT_PATH + "/Files/UploadFile", //上传文件
     NEWFOLDER: ADDR + ROOT_PATH + "/Files/newFolder",//新建文件夹
