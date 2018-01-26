@@ -7,6 +7,7 @@ var ReactDOM = require('react-dom');
 var ajax = require('yylib-utils/ajax');
 var ReduxUtils = require('yylib-utils/ReduxUtils');
 var URL = require('./Url');
+var MessageKeys = require('./MessageKeys');
 require('./userMessageCSS.css');
 var THIS;
 var UserDate;
@@ -116,92 +117,6 @@ var ChartDemo1 = YYClass.create({
     }
 })
 
-/*表单三个输入框*/
-function noop() {
-    return false;
-}
-const formItemLayout = {
-    labelCol: { span: 7 },
-    wrapperCol: { span: 12 },
-};
-
-var USERPWD = YYClass.create({
-    render: function() {
-        var { getFieldProps } = this.props.form;
-        const passwdProps = getFieldProps('userpwd', {
-            rules: [
-                { required: true, whitespace: true, message: '请填写密码' }
-            ],
-        });
-        return (<div style={{width:'50%',display:'block'}}>
-            <YYFormItem
-                {...formItemLayout}
-                label="登录密码"
-                hasFeedback>
-                <YYInput {...passwdProps} type="password" autoComplete="off" disabled={true}
-                         onContextMenu={noop} onPaste={noop} onCopy={noop} onCut={noop}/>
-            </YYFormItem>
-        </div>)
-    }
-});
-var PWD1 = YYClass.create({
-    /*密码验证*/
-    checkPass(rule, value, callback) {
-        const { validateFields } = this.props.form;
-        if (value) {
-            validateFields(['pwd2'], { force: true });
-        }
-        callback();
-    },
-    checkPass2(rule, value, callback) {
-        const { getFieldValue } = this.props.form;
-        if (value && value !== getFieldValue('pwd1')) {
-            callback('两次输入密码不一致！');
-        } else {
-            callback();
-        }
-    },
-    render:function () {
-       var { getFieldProps } = this.props.form;
-       const passwdProps = getFieldProps('pwd1', {
-           rules: [
-               { required: true, whitespace: true, message: '请填写修改密码' },
-               { min:6, message:'密码至少6位'},
-               { validator: this.checkPass },
-           ],
-       });
-       const passwdProps2 = getFieldProps('pwd2', {
-           rules: [{
-               required: true,
-               whitespace: true,
-               message: '请再次输入密码',
-           }, {
-               validator: this.checkPass2,
-           }],
-       });
-       return (<div style={{width:'100%'}}>
-           <div style={{width:'50%',display:'block',float:'left'}}>
-               <YYFormItem
-                   {...formItemLayout}
-                   label="修改密码"
-                   hasFeedback>
-                   <YYInput {...passwdProps} type="password" autoComplete="off" disabled={true}
-                            onContextMenu={noop} onPaste={noop} onCopy={noop} onCut={noop}/>
-               </YYFormItem>
-           </div>
-           <div style={{width:'50%',display:'block',float:'left'}}>
-               <YYFormItem
-                   {...formItemLayout}
-                   label="确认密码"
-                   hasFeedback>
-                   <YYInput {...passwdProps2} type="password" autoComplete="off" disabled={true}
-                   onContextMenu={noop} onPaste={noop} onCopy={noop} onCut={noop}/>
-               </YYFormItem>
-            </div>
-       </div>)
-    }
-});
-
 /*查询用户存储空间使用情况的详情*/
 function queryFileTypeNumber() {
     var data = {
@@ -309,6 +224,9 @@ var EventHanlder = {
     "openEditLogin":{
         //启用登录信息编辑
         onClick:function () {
+            document.getElementById('userpwd').type = 'password';
+            document.getElementById('pwd1').type = 'password';
+            document.getElementById('pwd2').type = 'password';
             editLoginType();
         }
     },
@@ -358,11 +276,42 @@ var EventHanlder = {
         onClick:function () {
             var loginFrom = THIS.findUI('loginFrom');
             loginFrom.api.validateFields(function (errors,values) {
-                if(!errors){
-                    console.log('提交保存信息',values);
+                if(!!errors){
+                    YYMessage.error('修改失败！请填写密码！');
+                    return;
                 }
+                if(values.pwd1 != values.pwd2){
+                    YYMessage.error('修改失败！两次输入密码不匹配！');
+                    return;
+                }
+                var data = {
+                    userId:UserDate._id,
+                    userpwd:values.userpwd,
+                    pwd1:values.pwd1
+                };
+                ajax.postJSON(URL.ALTERUSERPWD,data,function (result) {
+                    if(result == 'OK'){
+                        YYMessage.info("修改密码成功");
+                        THIS.routeTo('/DB');
+                    }else if(result == 'loginError'){
+                        YYMessage.error("修改密码失败!登录密码错误!");
+                    }else{
+                        YYMessage.error("修改密码失败!");
+                    }
+                })
             });
         }
+    },
+    "message":{
+        onChange:function (keys) {
+           if(keys == MessageKeys.BASIC){
+
+           }else if(keys == MessageKeys.LOGIN){
+
+           }else{
+
+           }
+        }  
     },
     "P005076":{
         onViewWillMount:function(options){
@@ -415,8 +364,6 @@ var EventHanlder = {
 
 var MyParser = {};
 MyParser.saveChart = ChartDemo1;
-MyParser.userpwd = USERPWD;
-MyParser.pwd1 = PWD1;
 
 var SimplePage = YYClass.create({
     render:function(){
