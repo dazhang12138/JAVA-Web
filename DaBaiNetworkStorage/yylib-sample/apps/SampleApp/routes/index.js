@@ -21,6 +21,8 @@ var Login = lazy(require('bundle?lazy&name=example1!../modules/main/login'));
 //message
 var userMessage = lazy(require('bundle?lazy&name=example1!../modules/message/userMessage'));
 
+//EnterThe
+var enterThe = lazy(require('bundle?lazy&name=example1!../modules/EnterThe/enterThe'));
 
 module.exports = (
     <Route path="/" component={App}>
@@ -33,6 +35,7 @@ module.exports = (
         </Route>
         <Route path="DB" component={LazyPageRoutes}>
             <IndexRoute component={Login}/>
+            <Route path="enterThe" component={enterThe}/>
             <Route path="mainPage" component={mainPage}/>
             <Route path='userMessage' component={userMessage}/>
         </Route>
