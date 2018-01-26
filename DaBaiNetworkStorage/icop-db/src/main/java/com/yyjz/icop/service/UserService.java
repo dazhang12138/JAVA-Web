@@ -2,6 +2,7 @@ package com.yyjz.icop.service;
 
 import org.bson.Document;
 
+import com.yyjz.icop.vo.UserUpdatePwdVo;
 import com.yyjz.icop.vo.UserUpdateVo;
 import com.yyjz.icop.vo.UserVo;
 
@@ -34,5 +35,12 @@ public interface UserService {
 	 * @return
 	 */
 	Document updateUser(UserUpdateVo user);
+
+	/**
+	 * 修改用户密码
+	 * @param user
+	 * @return
+	 */
+	String alterUserPwd(UserUpdatePwdVo user);
 	
 }

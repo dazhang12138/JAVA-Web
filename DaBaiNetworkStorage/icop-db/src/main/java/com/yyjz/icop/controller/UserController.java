@@ -106,11 +106,17 @@ public class UserController {
 		return updateUser;
 	}
 	
+	/**
+	 * 修改用户密码
+	 * @param user
+	 * @return
+	 */
 	@RequestMapping(value = "alterUserPwd")
 	@ResponseBody
-	public Document alterPwd(@RequestBody UserUpdatePwdVo user){
-		
-		return null;
+	public String alterPwd(@RequestBody UserUpdatePwdVo user){
+		String result = "error";
+		result = userService.alterUserPwd(user);
+		return result;
 	}
 	
 }

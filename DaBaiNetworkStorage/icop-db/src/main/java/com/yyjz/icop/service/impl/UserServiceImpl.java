@@ -12,6 +12,7 @@ import com.yyjz.icop.dao.impl.FilesDaoImpl;
 import com.yyjz.icop.dao.impl.UserDaoImpl;
 import com.yyjz.icop.service.UserService;
 import com.yyjz.icop.util.FileUtils;
+import com.yyjz.icop.vo.UserUpdatePwdVo;
 import com.yyjz.icop.vo.UserUpdateVo;
 import com.yyjz.icop.vo.UserVo;
 
@@ -96,5 +97,21 @@ public class UserServiceImpl implements UserService {
 		Document update = new Document("$set", queryUser);
 		userDao.updateAllFilterUser(document, update);
 		return queryUser;
+	}
+
+	@Override
+	public String alterUserPwd(UserUpdatePwdVo user) {
+		String result = "error";
+		Document qUserDoc = new Document("_id", user.getUserId());
+		Document queryUser = userDao.queryUser(qUserDoc);
+		if(queryUser.getString("userPwd").equals(user.getUserpwd())){
+			queryUser.append("userPwd", user.getPwd1());
+			Document update = new Document("$set",queryUser);
+			userDao.updateAllFilterUser(qUserDoc, update );
+			result = "OK";
+		}else{
+			result = "loginError";
+		}
+		return result;
 	}
 }
