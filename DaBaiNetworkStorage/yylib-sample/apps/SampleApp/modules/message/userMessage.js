@@ -124,13 +124,13 @@ const formItemLayout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 12 },
 };
+
 var USERPWD = YYClass.create({
     render: function() {
         var { getFieldProps } = this.props.form;
-        const passwdProps = getFieldProps('passwd', {
+        const passwdProps = getFieldProps('userpwd', {
             rules: [
-                { required: true, whitespace: true, message: '请填写登录密码' },
-                { validator: this.checkPass },
+                { required: true, whitespace: true, message: '请填写密码' }
             ],
         });
         return (<div style={{width:'50%',display:'block'}}>
@@ -138,10 +138,67 @@ var USERPWD = YYClass.create({
                 {...formItemLayout}
                 label="登录密码"
                 hasFeedback>
-                <YYInput {...passwdProps} type="password" autoComplete="off"
+                <YYInput {...passwdProps} type="password" autoComplete="off" disabled={true}
                          onContextMenu={noop} onPaste={noop} onCopy={noop} onCut={noop}/>
             </YYFormItem>
         </div>)
+    }
+});
+var PWD1 = YYClass.create({
+    /*密码验证*/
+    checkPass(rule, value, callback) {
+        const { validateFields } = this.props.form;
+        if (value) {
+            validateFields(['pwd2'], { force: true });
+        }
+        callback();
+    },
+    checkPass2(rule, value, callback) {
+        const { getFieldValue } = this.props.form;
+        if (value && value !== getFieldValue('pwd1')) {
+            callback('两次输入密码不一致！');
+        } else {
+            callback();
+        }
+    },
+    render:function () {
+       var { getFieldProps } = this.props.form;
+       const passwdProps = getFieldProps('pwd1', {
+           rules: [
+               { required: true, whitespace: true, message: '请填写修改密码' },
+               { min:6, message:'密码至少6位'},
+               { validator: this.checkPass },
+           ],
+       });
+       const passwdProps2 = getFieldProps('pwd2', {
+           rules: [{
+               required: true,
+               whitespace: true,
+               message: '请再次输入密码',
+           }, {
+               validator: this.checkPass2,
+           }],
+       });
+       return (<div style={{width:'100%'}}>
+           <div style={{width:'50%',display:'block',float:'left'}}>
+               <YYFormItem
+                   {...formItemLayout}
+                   label="修改密码"
+                   hasFeedback>
+                   <YYInput {...passwdProps} type="password" autoComplete="off" disabled={true}
+                            onContextMenu={noop} onPaste={noop} onCopy={noop} onCut={noop}/>
+               </YYFormItem>
+           </div>
+           <div style={{width:'50%',display:'block',float:'left'}}>
+               <YYFormItem
+                   {...formItemLayout}
+                   label="确认密码"
+                   hasFeedback>
+                   <YYInput {...passwdProps2} type="password" autoComplete="off" disabled={true}
+                   onContextMenu={noop} onPaste={noop} onCopy={noop} onCut={noop}/>
+               </YYFormItem>
+            </div>
+       </div>)
     }
 });
 
@@ -240,19 +297,17 @@ function editLoginType() {
     alterMessage.visible = !alterMessage.visible;
     var closeEditLogin = THIS.findUI('closeEditLogin');
     closeEditLogin.visible = !closeEditLogin.visible;
-    var userpwd = THIS.findUI('userpwd');
+    var userpwd = document.getElementById('userpwd');
     userpwd.disabled = !userpwd.disabled;
-    var pwd1 = THIS.findUI('pwd1');
+    var pwd1 = document.getElementById('pwd1');
     pwd1.disabled = !pwd1.disabled;
-    var pwd2 = THIS.findUI('pwd2');
+    var pwd2 = document.getElementById('pwd2');
     pwd2.disabled = !pwd2.disabled;
     THIS.refresh();
 }
-
-
 var EventHanlder = {
     "openEditLogin":{
-        //启动登录信息编辑
+        //启用登录信息编辑
         onClick:function () {
             editLoginType();
         }
@@ -361,6 +416,7 @@ var EventHanlder = {
 var MyParser = {};
 MyParser.saveChart = ChartDemo1;
 MyParser.userpwd = USERPWD;
+MyParser.pwd1 = PWD1;
 
 var SimplePage = YYClass.create({
     render:function(){
