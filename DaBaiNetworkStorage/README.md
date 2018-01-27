@@ -60,10 +60,9 @@
 
 
 ## 项目目录
-	
-	——yylib-sample  --前端
-	——dabai --后端
 
+<a href="https://github.com/dazhang12138/JAVA-Web/blob/master/DaBaiNetworkStorage/DBCatalog.md">项目目录DBCatalog.md</a>
+	
 # 功能设想
 
 > 这里只是简单的对系统功能的设想，具体实现在实现记录中记录。
@@ -78,3 +77,7 @@
 ## 更新日志
 
 <a href="https://github.com/dazhang12138/JAVA-Web/blob/Mr.Da/DaBaiNetworkStorage/DBLog.md">日志文件DBLog.md</a>
+
+## BUG记录
+
+<a href="https://github.com/dazhang12138/JAVA-Web/blob/master/DaBaiNetworkStorage/DBBug.md">BUG文件DBBug.md</a>
