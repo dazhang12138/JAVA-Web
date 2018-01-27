@@ -6,3 +6,7 @@
 .yyui-dropdown .yyui-input .ant-input{
     width: 350px;
 }
+/*重置列表*/
+.resetListTable {
+    float: left;
+}

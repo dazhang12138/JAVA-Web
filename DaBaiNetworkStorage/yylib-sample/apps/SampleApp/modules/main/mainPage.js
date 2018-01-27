@@ -7,6 +7,7 @@ var ReactDOM = require('react-dom');
 var ajax = require('yylib-utils/ajax');
 var ReduxUtils = require('yylib-utils/ReduxUtils');
 var URL = require('./Url');
+var searchKeys = require('./searchKeys');
 require('./css/mainPage.css');
 var FilesInages = require('./filesInages');
 var THIS;
@@ -21,7 +22,10 @@ var usageChart;
 /*文件类型图标*/
 var filesImagesSrc;
 
-/*查询文件列表*/
+/**
+ * 查询文件列表
+ * @param queryParam
+ */
 function queryUserFileDateList(queryParam) {
     ajax.postJSON(URL.GETUSERFILES,queryParam,function (result) {
         var listTable = THIS.findUI('listTable');
@@ -30,7 +34,25 @@ function queryUserFileDateList(queryParam) {
     })
 }
 
-/*设置面包屑*/
+/***
+ * 文件搜索
+ * @param data
+ */
+function queryUserFileDataListCondition(data) {
+    ajax.postJSON(URL.QUERYFILES,data,function (result) {
+        if(result.length == 0){
+            YYMessage.info("查询无结果");
+        }else{
+            var listTable = THIS.findUI('listTable');
+            listTable.dataSource = result;
+            YYMessage.success("查询成功");
+            switchBut();
+        }
+    });
+}
+/**
+ * 面包屑设置
+ */
 function setitemsdata() {
     var foldersPath = THIS.findUI('foldersPath');
     var split = UserFilesPath.split('/');
@@ -44,7 +66,11 @@ function setitemsdata() {
     foldersPath.itemsData = itemsdata;
 }
 
-/*新建文件夹检测唯一值名称*/
+/**
+ * 新建文件夹检测唯一值名称
+ * @param filesName
+ * @returns {boolean}
+ */
 function newsFolderVerify(filesName) {
     var result = false;
     var listTable = THIS.findUI('listTable');
@@ -58,6 +84,10 @@ function newsFolderVerify(filesName) {
 }
 
 /*保存新建文件夹*/
+/**
+ * 保存新建文件夹
+ * @param queryParam
+ */
 function saveNewFolder(queryParam) {
     ajax.postJSON(URL.NEWFOLDER,queryParam,function (result) {
         if(result){
@@ -69,7 +99,11 @@ function saveNewFolder(queryParam) {
     })
 }
 
-/*表格双击事件*/
+/**
+ * 表格双击事件
+ * @param record 双击行的数据
+ * @param index 双击行的索引
+ */
 var onRowDoubleClick = function (record,index) {
     // console.log('行数据',record,index);
     if(record.type == 0){
@@ -80,13 +114,19 @@ var onRowDoubleClick = function (record,index) {
         setitemsdata();
     }
 };
-
-/*表格行点击事件*/
+/**
+ * 表格点击事件
+ * @param record 点击行的数据
+ * @param index 点击行的索引
+ */
 var onRowClick = function (record,index) {
     var listTable = THIS.findUI('listTable');
     // listTable.api.clearSelectRowKeys();
 }
-/*删除*/
+/**
+ * 删除文件
+ * @param deletef
+ */
 function deleteFiles(deletef) {
     ajax.postJSON(URL.DELETEFILES,deletef,function (result) {
         var flag = result.result;
@@ -101,7 +141,9 @@ function deleteFiles(deletef) {
     })
 }
 
-/*修改图表*/
+/**
+ * 修改图表
+ */
 function alterChart() {
     //使用银行家舍入法：四舍六入五考虑，五后非零就进一，五后为零看奇偶，五前为偶应舍去，五前为奇要进一。
     var data = (UserData.fileSize/UserData.maxFileSize).toFixed(5);
@@ -110,6 +152,44 @@ function alterChart() {
     // console.log(options,usageChart);
     usageChart.setOption(options);
 }
+
+/**
+ * 切换主页Button的显示隐藏状态
+ */
+function switchBut() {
+    var resetListTable = THIS.findUI('resetListTable');
+    if(resetListTable.visible == null){
+        resetListTable.visible = true;
+    }else{
+        resetListTable.visible = !resetListTable.visible;
+    }
+    var breakAll = THIS.findUI('breakAll');
+    if(breakAll.disabled == null){
+        breakAll.disabled = true;
+    }else{
+        breakAll.disabled = !breakAll.disabled;
+    }
+    var breakOne = THIS.findUI('breakOne');
+    if(breakOne.disabled == null){
+        breakOne.disabled = true;
+    }else{
+        breakOne.disabled = !breakOne.disabled;
+    }
+    var uploadFile = THIS.findUI('uploadFile');
+    if(uploadFile.disabled == null){
+        uploadFile.disabled = true;
+    }else{
+        uploadFile.disabled = !uploadFile.disabled;
+    }
+    var addFolder = THIS.findUI('addFolder');
+    if(addFolder.disabled == null){
+        addFolder.disabled = true;
+    }else{
+        addFolder.disabled = !addFolder.disabled;
+    }
+    THIS.refresh();
+}
+
 /*页面初始化*/
 /*logo*/
 var LOGO = YYClass.create({
@@ -457,6 +537,51 @@ var ChartDemo1 = YYClass.create({
 
 //页面初始化
 var EventHanlder = {
+    "search":{
+        /**
+         * 执行搜索
+         * @param type 类型 item：下拉，text：文本关键字，table：表格
+         * @param condition 执行条件
+         * @param keywords
+         * @param entityName
+         */
+        onSearch:function (type, condition, keywords, entityName) {
+            console.log('搜索',type,condition,keywords,entityName);
+            if(condition.length == 0){
+                YYMessage.info("请添加查询条件");
+                return;
+            }
+            var data = {
+                userId:UserData._id,
+                condition:[]
+            };
+            for (var i = 0; i < condition.length; i++){
+                var d = {
+                    compare:condition[i].compare,
+                    data:condition[i].data,
+                };
+                if(condition[i].field == searchKeys.NAME){
+                    d.field = 'fileName';
+                }else if(condition[i].field == searchKeys.SIZE){
+                    d.field = 'fileSize';
+                }else if(condition[i].field == searchKeys.TIME){
+                    d.field = 'fileEndTime';
+                }
+                data.condition.push(d);
+            }
+            queryUserFileDataListCondition(data);
+        }
+    },
+    "resetListTable":{
+        onClick:function () {
+            queryParam = {
+                userId: UserData._id,
+                filePath:UserFilesPath,
+            };
+            queryUserFileDateList(queryParam);
+            switchBut();
+        }
+    },
     "alter":{
         "onClick":function () {
             var listTable = THIS.findUI('listTable');

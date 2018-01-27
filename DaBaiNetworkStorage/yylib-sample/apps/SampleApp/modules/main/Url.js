@@ -14,6 +14,7 @@ var MainUrl = {
     UPLOADFILE: ADDR + ROOT_PATH + "/Files/UploadFile", //上传文件
     NEWFOLDER: ADDR + ROOT_PATH + "/Files/newFolder",//新建文件夹
     DELETEFILES: ADDR + ROOT_PATH + "/Files/deleteFiles",//删除所选文件夹
+    QUERYFILES:ADDR + ROOT_PATH + "/Files/queryFiles",//查询文件
 
 
     LOGINPATH: SHOWPATH + SHOWCODE + "/DB", //Login地址
