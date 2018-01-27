@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yyjz.icop.pubapp.platform.query.QuerySchema;
 import com.yyjz.icop.service.FilesService;
 import com.yyjz.icop.service.impl.FilesServiceImpl;
 import com.yyjz.icop.util.DateUtils;
 import com.yyjz.icop.util.FileUtils;
 import com.yyjz.icop.vo.DelFilesVo;
 import com.yyjz.icop.vo.FilesVo;
+import com.yyjz.icop.vo.QueryFilesVo;
 
 /**
  * 处理文件相关的Controller类
@@ -163,4 +165,24 @@ public class FilesController {
 		list.add(map);
 		return list;
 	}
+	
+	
+	@RequestMapping(value="queryFiles")
+	@ResponseBody
+	public List<Map<String, Object>> queryFiles(@RequestBody QueryFilesVo files){
+		List<Map<String, Object>> list = new ArrayList<>();
+		List<Document> queryFiles = filesService.queryFiles(files.getUserId(),files.getCondition());
+		for (Document document : queryFiles) {
+			Map<String, Object> m = new HashMap<>();
+			m.put("_id", document.get("_id").toString());
+			m.put("fileName", document.get("fileName"));
+			m.put("fileSize", document.get("fileSize"));
+			m.put("fileEndTime", DateUtils.DateOfString(document.getDate("fileEndTime")));
+			m.put("type", "1");
+			m.put("fileType", document.get("fileType"));
+			list.add(m);
+		}
+		return list;
+	}
+	
 }

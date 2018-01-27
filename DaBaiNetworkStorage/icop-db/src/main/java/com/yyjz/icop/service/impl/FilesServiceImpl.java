@@ -1,5 +1,6 @@
 package com.yyjz.icop.service.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -7,16 +8,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 import com.yyjz.icop.dao.FilesDao;
 import com.yyjz.icop.dao.UserDao;
 import com.yyjz.icop.dao.impl.FilesDaoImpl;
 import com.yyjz.icop.dao.impl.UserDaoImpl;
 import com.yyjz.icop.service.FilesService;
+import com.yyjz.icop.util.DateUtils;
 import com.yyjz.icop.util.FileType;
 import com.yyjz.icop.util.FileUtils;
 import com.yyjz.icop.util.GetFileType;
@@ -177,6 +182,23 @@ public class FilesServiceImpl implements FilesService {
 		map.put("unAll", unAll);
 		return map;
 	}
+	
+	@Override
+	public List<Document> queryFiles(ObjectId userId, List<Map<String, Object>> condition) {
+		Document qUserDoc = new Document();
+		BasicDBList condList = new BasicDBList(); 
+		condList.add(new BasicDBObject("userId",userId));
+		for (Map<String, Object> map : condition) {
+			BasicDBList disposeJSON = disposeJSON(map);
+			for (Object object : disposeJSON) {
+				condList.add(object);
+			}
+		}
+		qUserDoc.append("$and", condList);
+		List<Document> queryAllUserFile = filesDao.queryAllUserFile(qUserDoc);
+		return queryAllUserFile;
+	}
+	
 	
 	/**
 	 * 根据位置路径以及文件名称更新用户文档的文件夹存储
@@ -399,4 +421,49 @@ public class FilesServiceImpl implements FilesService {
 		}
 		return list;
 	}
+	
+	private BasicDBList  disposeJSON(Map<String, Object> condition){
+		BasicDBList basicList = new BasicDBList();
+		BasicDBObject  doc = new BasicDBObject ();
+		StringBuffer json = new StringBuffer();
+		String field = (String) condition.get("field");
+		if(field.equals("fileName")){
+			String sb = (String) condition.get("data");
+			for (int i = 0; i < sb.length(); i++) {
+				char c = sb.charAt(i);
+				if(c == '$' || c == '(' || c == ')' || c == '*' || c == '+' || c == '.' || c == '[' || c == '?' || c == '\\'
+						|| c == '^' || c == '{' || c == '|'){
+					json.append("\\" + c);
+				}else{
+					json.append(c);
+				}
+			}
+			Pattern pattern = Pattern.compile("^.*" + json.toString() + ".*$");
+			doc.append("fileName", pattern);
+			basicList.add(doc);
+		}else if(field.equals("fileSize")){
+			Integer data = (Integer) condition.get("data");
+			data *= 1024*1024;
+			String compare = (String) condition.get("compare");
+			doc.append("fileSize",new Document("$" + compare, data));
+			basicList.add(doc);
+		}else{
+			ArrayList<String> data = (ArrayList<String>) condition.get("data");
+			Date startTime = new Date();
+			Object endTime = new Date();
+			try {
+				startTime = DateUtils.StringOfDate(data.get(0));
+				endTime = DateUtils.StringOfDate(data.get(0));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			doc.append("fileEndTime",new Document("$gt", startTime));
+			basicList.add(doc);
+			doc = new BasicDBObject();
+			doc.append("fileEndTime",new Document("$lt", endTime));
+			basicList.add(doc);
+		}
+		return basicList;
+	}
+
 }

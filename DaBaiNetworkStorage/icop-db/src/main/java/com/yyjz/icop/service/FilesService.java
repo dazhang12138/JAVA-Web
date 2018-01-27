@@ -59,5 +59,13 @@ public interface FilesService {
 	 * @return
 	 */
 	Map<String, Long> getUserFileAllTypeSize(ObjectId userId);
+
+	/**
+	 * 通过查询条件查询用户下的相关文件信息
+	 * @param userId
+	 * @param condition
+	 * @return
+	 */
+	List<Document> queryFiles(ObjectId userId, List<Map<String, Object>> condition);
 	
 }
